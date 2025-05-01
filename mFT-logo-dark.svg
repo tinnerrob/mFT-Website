@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo Container with dark background -->
+  <rect width="200" height="60" fill="#203448" rx="4" />
+  
+  <defs>
+    <linearGradient id="brandGradientDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#00a651" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Dollar Sign -->
+  <path d="M30,15 C30,12 33,10 36,10 C39,10 42,12 42,15 C42,20 30,20 30,25 C30,28 33,30 36,30 C39,30 42,28 42,25" 
+        stroke="url(#brandGradientDark)" stroke-width="3" fill="none" stroke-linecap="round" />
+  <line x1="36" y1="8" x2="36" y2="32" stroke="url(#brandGradientDark)" stroke-width="3" stroke-linecap="round" />
+  
+  <!-- Bar Chart (upward trending) -->
+  <rect x="48" y="28" width="6" height="4" rx="1" fill="#ffffff" />
+  <rect x="56" y="24" width="6" height="8" rx="1" fill="#ffffff" />
+  <rect x="64" y="18" width="6" height="14" rx="1" fill="#ffffff" />
+  <rect x="72" y="10" width="6" height="22" rx="1" fill="#00a651" />
+  
+  <!-- Text "mFT" -->
+  <text x="102" y="33" font-family="'Segoe UI', Arial, sans-serif" font-size="28" font-weight="600">
+    <tspan fill="#ffffff">m</tspan><tspan fill="#00a651">FT</tspan>
+  </text>
+  
+  <!-- Optional thin separator line -->
+  <line x1="90" y1="15" x2="90" y2="45" stroke="#555555" stroke-width="1" />
+</svg> 
