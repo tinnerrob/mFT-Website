@@ -173,10 +173,13 @@ nav {
 }
 
 .logo {
-    font-size: clamp(1.2rem, 1.5vw, 1.5rem);
-    font-weight: 700;
-    color: var(--light-text);
-    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-height: 40px;
+    width: auto;
 }
 
 .nav-links {
@@ -475,31 +478,6 @@ main {
     left: auto;
 }
 
-.dots-container {
-    display: flex;
-    justify-content: center;
-    margin-top: clamp(1rem, 1.5vw, 1.5rem);
-    height: 30px;
-    position: relative;
-}
-
-.dot {
-    width: clamp(8px, 1vw, 12px);
-    height: clamp(8px, 1vw, 12px);
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.2);
-    margin: 0 5px;
-    cursor: pointer;
-    transition: var(--transition);
-    min-width: 12px;
-    min-height: 12px;
-    touch-action: manipulation;
-}
-
-.dot.active {
-    background-color: var(--primary-color);
-}
-
 .slide-arrows {
     position: absolute;
     top: 50%;
@@ -507,9 +485,18 @@ main {
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 50;
     pointer-events: none;
-    padding: 0;
+    padding: 0 10px;
+}
+
+.features-detail-slideshow .slide-arrows,
+.testimonials-slideshow .slide-arrows {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    z-index: 50;
 }
 
 .slide-arrow {
@@ -1213,6 +1200,15 @@ footer {
     min-width: clamp(180px, 18vw, 220px);
     margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem);
     margin-right: clamp(0.3rem, 0.5vw, 0.8rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo img {
+    max-height: 40px;
+    width: auto;
+    margin-bottom: 0.2rem;
 }
 
 .footer-logo h2 {
@@ -1954,9 +1950,9 @@ footer {
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 50;
     pointer-events: none;
-    padding: 0;
+    padding: 0 10px;
 }
 
 .slide-arrow {
@@ -1990,6 +1986,10 @@ footer {
     min-width: 12px;
     min-height: 12px;
     touch-action: manipulation;
+}
+
+.dot.active {
+    background-color: var(--primary-color);
 }
 
 /* Add smooth animations */
@@ -2098,4 +2098,13 @@ footer {
     position: relative;
     top: auto;
     left: auto;
+}
+
+.dots-container {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(1rem, 1.5vw, 1.5rem);
+    height: 40px;
+    position: relative;
+    z-index: 50;
 } 
