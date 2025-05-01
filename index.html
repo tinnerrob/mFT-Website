@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="js/app.js" defer></script>
+    <script src="js/script.js" defer></script>
 </head>
 <body>
     <header>
@@ -56,9 +57,174 @@
         <!-- Features Page -->
         <section id="features" class="page">
             <div class="content-container">
+                <h1>Key Features</h1>
+                <div class="features-slideshow">
+                    <!-- Move navigation arrows outside slides-container -->
+                    <div class="slide-arrows">
+                        <div class="slide-arrow prev">&#10094;</div>
+                        <div class="slide-arrow next">&#10095;</div>
+                    </div>
+                    
+                    <div class="slides-container">
+                        <!-- Slide 1 -->
+                        <div class="slide active">
+                            <div class="feature-detail">
+                                <h2>Financial Tracking Made Easy</h2>
+                                <div class="feature-content">
+                                    <img src="images/feature-tracking.png" alt="Financial Tracking">
+                                    <div class="feature-description">
+                                        <p>myFinancialTracker makes it simple to track all your financial data in one place. With our intuitive interface, you can:</p>
+                                        <ul>
+                                            <li>Categorize expenses automatically</li>
+                                            <li>Track multiple income sources</li>
+                                            <li>Monitor investments in real-time</li>
+                                            <li>Set and track budgets with customizable alerts</li>
+                                            <li>Import transactions from thousands of financial institutions</li>
+                                        </ul>
+                                        <p>Our clean design and powerful features make financial management accessible to everyone.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Other slides -->
+                        <div class="slide">
+                            <div class="feature-detail">
+                                <h2>Share With Family</h2>
+                                <div class="feature-content">
+                                    <img src="images/feature-family.png" alt="Family Sharing">
+                                    <div class="feature-description">
+                                        <p>Financial transparency is key to successful family planning. Our family sharing feature allows you to:</p>
+                                        <ul>
+                                            <li>Share selected accounts with family members</li>
+                                            <li>Set custom access levels for each person</li>
+                                            <li>Create shared budgets and goals</li>
+                                            <li>Monitor household expenses together</li>
+                                            <li>Receive notifications on important financial events</li>
+                                        </ul>
+                                        <p>Take the guess-work out of family finances and build a stronger financial future together.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="feature-detail">
+                                <h2>Sync to Database</h2>
+                                <div class="feature-content">
+                                    <img src="images/feature-sync.png" alt="Database Sync">
+                                    <div class="feature-description">
+                                        <p>Your financial data is seamlessly synced across all your devices through our secure cloud infrastructure:</p>
+                                        <ul>
+                                            <li>Access your data on any device at any time</li>
+                                            <li>Military-grade encryption protects your sensitive information</li>
+                                            <li>Automatic backups ensure your data is never lost</li>
+                                            <li>Offline mode for when you're not connected</li>
+                                            <li>Fast, reliable syncing that won't slow you down</li>
+                                        </ul>
+                                        <p>Experience the peace of mind that comes with knowing your financial data is always secure, up-to-date, and accessible.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="feature-detail">
+                                <h2>Financial Insights</h2>
+                                <div class="feature-content">
+                                    <img src="images/feature-insights.png" alt="Financial Insights">
+                                    <div class="feature-description">
+                                        <p>Gain valuable insights into your financial health with our advanced analytics:</p>
+                                        <ul>
+                                            <li>Visualize spending patterns with interactive charts</li>
+                                            <li>Identify spending categories that can be optimized</li>
+                                            <li>Track month-to-month changes in your financial position</li>
+                                            <li>Receive personalized recommendations based on your habits</li>
+                                            <li>Compare your finances to anonymized averages for your demographic</li>
+                                        </ul>
+                                        <p>Transform raw financial data into actionable insights that help you make better decisions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="feature-detail">
+                                <h2>Financial Projections</h2>
+                                <div class="feature-content">
+                                    <img src="images/feature-projections.png" alt="Financial Projections">
+                                    <div class="feature-description">
+                                        <p>Plan for your future with confidence using our powerful projection tools:</p>
+                                        <ul>
+                                            <li>Create multiple financial scenarios and compare outcomes</li>
+                                            <li>Model the impact of major life events on your finances</li>
+                                            <li>Project retirement savings with adjustable parameters</li>
+                                            <li>Visualize debt payoff strategies and timelines</li>
+                                            <li>Forecast cash flow for the next 12 months</li>
+                                        </ul>
+                                        <p>Move beyond reactive financial management to proactive financial planning with our projection tools.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="feature-detail">
+                                <h2>Credit Card & Loan Analysis</h2>
+                                <div class="feature-content">
+                                    <img src="images/feature-credit.png" alt="Credit Analysis">
+                                    <div class="feature-description">
+                                        <p>Optimize your debt management strategy with our comprehensive analysis tools:</p>
+                                        <ul>
+                                            <li>Compare different debt payoff strategies (snowball vs. avalanche)</li>
+                                            <li>Calculate interest savings from consolidation or refinancing</li>
+                                            <li>Monitor credit utilization across all accounts</li>
+                                            <li>Receive alerts about high-interest charges</li>
+                                            <li>Get personalized recommendations for optimizing your debt</li>
+                                        </ul>
+                                        <p>Take control of your debt and save thousands in interest with our smart analysis and recommendations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="feature-detail">
+                                <h2>Recurring Transactions</h2>
+                                <div class="feature-content">
+                                    <img src="images/feature-recurring.png" alt="Recurring Transactions">
+                                    <div class="feature-description">
+                                        <p>Never miss a bill or subscription payment with our recurring transaction management:</p>
+                                        <ul>
+                                            <li>Automatically detect recurring bills and subscriptions</li>
+                                            <li>Receive reminders before payments are due</li>
+                                            <li>Track subscription spending and identify opportunities to save</li>
+                                            <li>Schedule automatic payments for recurring expenses</li>
+                                            <li>Get notified about price increases in your subscriptions</li>
+                                        </ul>
+                                        <p>Simplify your financial life by automating the tracking and management of your recurring transactions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dots navigation -->
+                    <div class="dots-container">
+                        <!-- Dots will be generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Detail Page -->
+        <section id="features-detail" class="page">
+            <div class="content-container">
                 <h1>Features</h1>
                 <div class="features-detail-slideshow">
+                    <!-- Move navigation arrows outside slides-container -->
+                    <div class="slide-arrows">
+                        <div class="slide-arrow prev">&#10094;</div>
+                        <div class="slide-arrow next">&#10095;</div>
+                    </div>
+                    
                     <div class="slides-container">
+                        <!-- Feature detail slides -->
                         <div class="slide active">
                             <div class="feature-detail">
                                 <h2>Financial Tracking Made Easy</h2>
@@ -193,6 +359,8 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Dots navigation -->
                     <div class="dots-container">
                         <!-- Dots will be generated by JS -->
                     </div>
@@ -243,7 +411,14 @@
             <div class="content-container">
                 <h1>What Our Users Say</h1>
                 <div class="testimonials-slideshow">
+                    <!-- Move navigation arrows outside slides-container -->
+                    <div class="slide-arrows">
+                        <div class="slide-arrow prev">&#10094;</div>
+                        <div class="slide-arrow next">&#10095;</div>
+                    </div>
+                    
                     <div class="slides-container">
+                        <!-- Testimonial slides -->
                         <div class="slide active">
                             <div class="testimonial">
                                 <div class="testimonial-content">
@@ -315,6 +490,8 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Dots navigation -->
                     <div class="dots-container">
                         <!-- Dots will be generated by JS -->
                     </div>

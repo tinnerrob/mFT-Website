@@ -371,13 +371,18 @@ main {
     max-width: 800px;
     margin: 0 auto;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     background-color: transparent;
+    padding: 0;
 }
 
 .slides-container {
     width: 100%;
     position: relative;
+    height: 700px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: var(--medium-gray-bg);
 }
 
 .slide {
@@ -385,6 +390,30 @@ main {
     padding: 2rem;
     text-align: center;
     transition: var(--transition);
+    height: 100%;
+    overflow-y: visible;
+}
+
+.feature-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    text-align: left;
+    height: 100%;
+}
+
+.feature-content {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow: visible;
+}
+
+.feature-description {
+    flex: 1;
+    overflow-y: visible;
 }
 
 .slide.active {
@@ -396,6 +425,8 @@ main {
     display: flex;
     justify-content: center;
     margin-top: 1.5rem;
+    height: 30px;
+    position: relative;
 }
 
 .dot {
@@ -412,6 +443,82 @@ main {
     background-color: var(--primary-color);
 }
 
+.slide-arrows {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 10;
+    pointer-events: none;
+    padding: 0;
+}
+
+.slide-arrow {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    pointer-events: auto;
+    position: relative;
+}
+
+.slide-arrow.prev {
+    left: -25px;
+}
+
+.slide-arrow.next {
+    right: -25px;
+}
+
+.slide-arrow:hover {
+    background-color: var(--light-bg);
+    color: var(--secondary-color);
+    transform: scale(1.1);
+}
+
+/* Make sure arrows stay properly positioned on mobile */
+@media (max-width: 768px) {
+    .slide-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.8rem;
+    }
+    
+    .slide-arrow.prev {
+        left: -20px;
+    }
+    
+    .slide-arrow.next {
+        right: -20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide-arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
+    }
+    
+    .slide-arrow.prev {
+        left: -17px;
+    }
+    
+    .slide-arrow.next {
+        right: -17px;
+    }
+}
+
 /* Features Page Styles */
 #features {
     background: var(--light-gray-bg);
@@ -420,33 +527,15 @@ main {
     padding-top: 1rem;
 }
 
-.feature-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-    text-align: left;
-}
-
 .feature-detail h2 {
     width: 100%;
     margin-bottom: 0.5rem;
-}
-
-.feature-content {
-    display: flex;
-    gap: 2rem;
-    width: 100%;
 }
 
 .feature-detail img {
     max-width: 280px;
     border-radius: 10px;
     box-shadow: var(--shadow);
-}
-
-.feature-description {
-    flex: 1;
 }
 
 .feature-description ul {
@@ -503,9 +592,44 @@ main {
     color: var(--text-color);
 }
 
+.form-group select {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: var(--light-bg);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    height: 3.2rem;
+}
+
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: rgba(0, 0, 0, 0.4);
+}
+
+.support-form button[type="submit"] {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    text-align: center;
+    background-color: var(--secondary-color);
+    color: var(--light-text);
+    font-size: 1rem;
+    width: 100%;
+    max-width: 200px;
+    margin: 1rem auto 0;
+    display: block;
+}
+
+.support-form button[type="submit"]:hover {
+    background-color: #008c44;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
 }
 
 /* Testimonials Page Styles */
@@ -1130,6 +1254,16 @@ footer {
         font-size: 1.7rem;
     }
 
+    .slide-arrows {
+        padding: 0 10px;
+    }
+
+    .slide-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 2rem;
+    }
+
     .nav-links {
         position: fixed;
         right: -100%;
@@ -1222,6 +1356,12 @@ footer {
     .cta-buttons {
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .slide-arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 1.5rem;
     }
 
     .nav-links {
@@ -1321,6 +1461,13 @@ footer {
     background: var(--light-gray-bg);
     color: var(--text-color);
     padding-top: 1rem;
+}
+
+#privacy h1, 
+#privacy h2,
+#terms h1,
+#terms h2 {
+    text-align: center;
 }
 
 .legal-container {

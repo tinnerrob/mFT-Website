@@ -18,87 +18,14 @@ const accountMenuItems = document.querySelectorAll('.account-menu li');
 let isLoggedIn = false;
 let currentUser = null;
 let currentPage = 'home';
-let slideIntervals = {};
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
-    initSlideshows();
+    // We're using script.js for slideshow navigation now
     setupEventListeners();
     checkLoginStatus();
     initFaqAccordion();
 });
-
-// Initialize all slideshows
-function initSlideshows() {
-    initSlideshow('features-slideshow', 10000);
-    initSlideshow('features-detail-slideshow', 10000);
-    initSlideshow('testimonials-slideshow', 5000);
-}
-
-// Initialize a specific slideshow
-function initSlideshow(slideshowClass, interval) {
-    const slideshow = document.querySelector(`.${slideshowClass}`);
-    if (!slideshow) return;
-    
-    const slides = slideshow.querySelectorAll('.slide');
-    const dotsContainer = slideshow.querySelector('.dots-container');
-    
-    // Create dots for each slide
-    slides.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if (index === 0) dot.classList.add('active');
-        dot.setAttribute('data-index', index);
-        dot.addEventListener('click', () => goToSlide(slideshowClass, index));
-        dotsContainer.appendChild(dot);
-    });
-    
-    // Start the slideshow interval
-    if (slides.length > 1) {
-        slideIntervals[slideshowClass] = setInterval(() => {
-            nextSlide(slideshowClass);
-        }, interval);
-    }
-}
-
-// Go to a specific slide
-function goToSlide(slideshowClass, index) {
-    const slideshow = document.querySelector(`.${slideshowClass}`);
-    const slides = slideshow.querySelectorAll('.slide');
-    const dots = slideshow.querySelectorAll('.dot');
-    
-    // Reset all slides and dots
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-    
-    // Activate the target slide and dot
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-    
-    // Reset the interval to prevent immediate transition
-    resetSlideInterval(slideshowClass);
-}
-
-// Go to the next slide
-function nextSlide(slideshowClass) {
-    const slideshow = document.querySelector(`.${slideshowClass}`);
-    const slides = slideshow.querySelectorAll('.slide');
-    const dots = slideshow.querySelectorAll('.dot');
-    
-    let activeIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
-    let nextIndex = (activeIndex + 1) % slides.length;
-    
-    goToSlide(slideshowClass, nextIndex);
-}
-
-// Reset the slideshow interval
-function resetSlideInterval(slideshowClass) {
-    const interval = slideshowClass === 'testimonials-slideshow' ? 5000 : 10000;
-    clearInterval(slideIntervals[slideshowClass]);
-    slideIntervals[slideshowClass] = setInterval(() => {
-        nextSlide(slideshowClass);
-    }, interval);
-}
 
 // Set up all event listeners
 function setupEventListeners() {
