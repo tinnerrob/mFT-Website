@@ -7,12 +7,7 @@
       <stop offset="100%" stop-color="#00a651" />
     </linearGradient>
   </defs>
-  
-  <!-- Dollar Sign -->
-  <path d="M40,30 C40,25 44,22 48,22 C52,22 56,25 56,30 C56,38 40,38 40,46 C40,51 44,54 48,54 C52,54 56,51 56,46" 
-        stroke="url(#brandGradient)" stroke-width="4" fill="none" stroke-linecap="round" />
-  <line x1="48" y1="18" x2="48" y2="58" stroke="url(#brandGradient)" stroke-width="4" stroke-linecap="round" />
-  
+
   <!-- Bar Chart (upward trending) -->
   <rect x="66" y="48" width="8" height="10" rx="2" fill="#203448" />
   <rect x="78" y="42" width="8" height="16" rx="2" fill="#203448" />
