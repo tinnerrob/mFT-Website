@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign up for myFinancialTracker - Choose your subscription plan">
+    <title>Sign Up | myFinancialTracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/logo.png" alt="myFinancialTracker Logo">
+                <h1>myFinancialTracker</h1>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="signup.html" class="active">Sign Up</a></li>
+                </ul>
+            </nav>
+            
+            <button class="login-button">Login</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Signup Hero -->
+        <section class="hero">
+            <h2>Choose Your Plan</h2>
+            <p>Join thousands of users who've transformed their financial future with myFinancialTracker.</p>
+        </section>
+
+        <!-- Signup Form Section -->
+        <section class="signup-section">
+            <div class="container">
+                <div class="form-container signup-form-container">
+                    <div class="form-heading">
+                        <h3>Create Your Account</h3>
+                    </div>
+                    
+                    <form id="signup-form">
+                        <!-- Personal Information -->
+                        <div class="form-section">
+                            <h4 class="section-title">Personal Information</h4>
+                            
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password">Create Password</label>
+                                <input type="password" id="password" class="form-control" required>
+                                <small class="form-text">At least 8 characters with a number and special character</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm Password</label>
+                                <input type="password" id="confirm-password" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Choose Plan -->
+                        <div class="form-section">
+                            <h4 class="section-title">Choose Your Plan</h4>
+                            
+                            <div class="plan-options">
+                                <div class="plan-option">
+                                    <input type="radio" name="plan" id="plan-free" value="free">
+                                    <label for="plan-free" class="plan-label">
+                                        <h4>Free</h4>
+                                        <div class="plan-price">$0<span>/month</span></div>
+                                        <ul class="plan-features">
+                                            <li>Basic expense tracking</li>
+                                            <li>Up to 2 bank connections</li>
+                                            <li>Standard budget tools</li>
+                                            <li>Manual transaction entry</li>
+                                            <li>30-day data history</li>
+                                        </ul>
+                                    </label>
+                                </div>
+                                
+                                <div class="plan-option">
+                                    <input type="radio" name="plan" id="plan-monthly" value="monthly" checked>
+                                    <label for="plan-monthly" class="plan-label">
+                                        <h4>Premium Monthly</h4>
+                                        <div class="plan-price">$9.99<span>/month</span></div>
+                                        <ul class="plan-features">
+                                            <li>All Free features, plus:</li>
+                                            <li>Unlimited bank connections</li>
+                                            <li>Debt payoff planning</li>
+                                            <li>Advanced financial insights</li>
+                                            <li>Financial projections</li>
+                                            <li>Priority support</li>
+                                            <li>No ads</li>
+                                        </ul>
+                                    </label>
+                                </div>
+                                
+                                <div class="plan-option best-value">
+                                    <div class="best-value-tag">Best Value</div>
+                                    <input type="radio" name="plan" id="plan-yearly" value="yearly">
+                                    <label for="plan-yearly" class="plan-label">
+                                        <h4>Premium Yearly</h4>
+                                        <div class="plan-price">$89.99<span>/year</span></div>
+                                        <div class="savings">Save 25%</div>
+                                        <ul class="plan-features">
+                                            <li>All Premium Monthly features</li>
+                                            <li>Annual financial review</li>
+                                            <li>Tax optimization suggestions</li>
+                                            <li>Custom financial reports</li>
+                                            <li>Premium investment tracking</li>
+                                        </ul>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Information (for paid plans) -->
+                        <div class="form-section credit-card-section" id="payment-section">
+                            <h4 class="section-title">Payment Information</h4>
+                            
+                            <div class="form-group">
+                                <label for="cc-name">Name on Card</label>
+                                <input type="text" id="cc-name" class="form-control">
+                            </div>
+                            
+                            <div class="cc-inputs">
+                                <div class="form-group">
+                                    <label for="cc-number">Card Number</label>
+                                    <input type="text" id="cc-number" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="cc-exp">Expiration</label>
+                                    <input type="text" id="cc-exp" class="form-control" placeholder="MM/YY">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="cc-cvv">CVV</label>
+                                    <input type="text" id="cc-cvv" class="form-control" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group terms-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="terms" required>
+                                <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">Create Account</button>
+                        
+                        <div class="form-footer">
+                            <p>Already have an account? <a href="#" class="login-link">Log in</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plan Features Comparison -->
+        <section class="plan-comparison">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Compare Plans</h2>
+                    <p>Detailed comparison of all available features</p>
+                </div>
+                
+                <div class="comparison-table-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Free</th>
+                                <th>Premium Monthly</th>
+                                <th>Premium Yearly</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Expense Tracking</td>
+                                <td>Basic</td>
+                                <td>Advanced</td>
+                                <td>Advanced</td>
+                            </tr>
+                            <tr>
+                                <td>Bank Connections</td>
+                                <td>2</td>
+                                <td>Unlimited</td>
+                                <td>Unlimited</td>
+                            </tr>
+                            <tr>
+                                <td>Data History</td>
+                                <td>30 days</td>
+                                <td>Unlimited</td>
+                                <td>Unlimited</td>
+                            </tr>
+                            <tr>
+                                <td>Budget Tools</td>
+                                <td>Basic</td>
+                                <td>Advanced</td>
+                                <td>Advanced</td>
+                            </tr>
+                            <tr>
+                                <td>Financial Projections</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Debt Payoff Tools</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Family Sharing</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td>Up to 2 members</td>
+                                <td>Up to 5 members</td>
+                            </tr>
+                            <tr>
+                                <td>Investment Tracking</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td>Basic</td>
+                                <td>Premium</td>
+                            </tr>
+                            <tr>
+                                <td>Custom Reports</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Annual Financial Review</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Tax Optimization</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Priority Support</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Ad-Free Experience</td>
+                                <td><i class="fas fa-times"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                                <td><i class="fas fa-check"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section signup-faq">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Answers to common questions about our plans</p>
+                </div>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I switch plans later?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, you can upgrade, downgrade, or switch between monthly and yearly billing at any time. If you upgrade, the new features will be available immediately, and you'll be charged the prorated difference. If you downgrade, the change will take effect at the end of your current billing period.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is my payment information secure?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely. We use industry-standard encryption and security practices to protect your payment information. We never store your full credit card details on our servers – we use a trusted third-party payment processor that complies with the highest security standards (PCI DSS Level 1).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What happens when my subscription renews?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Your subscription will automatically renew at the end of your billing period (monthly or yearly). We'll send you a reminder email 7 days before renewal. You can cancel auto-renewal at any time from your account settings.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I get a refund if I'm not satisfied?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer a 30-day money-back guarantee for new subscribers. If you're not completely satisfied within the first 30 days, contact our support team, and we'll process a full refund of your subscription fee.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h3>myFinancialTracker</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="support.html">Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">User Guide</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Connect With Us</h3>
+                <ul>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 myFinancialTracker. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Toggle payment section visibility based on plan
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentSection = document.getElementById('payment-section');
+            const planOptions = document.querySelectorAll('input[name="plan"]');
+            
+            // Function to toggle payment section visibility
+            function togglePaymentSection() {
+                const selectedPlan = document.querySelector('input[name="plan"]:checked').value;
+                if (selectedPlan === 'free') {
+                    paymentSection.style.display = 'none';
+                } else {
+                    paymentSection.style.display = 'block';
+                }
+            }
+            
+            // Initial check
+            togglePaymentSection();
+            
+            // Check whenever plan selection changes
+            planOptions.forEach(option => {
+                option.addEventListener('change', togglePaymentSection);
+            });
+            
+            // Initialize FAQ toggle
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('.faq-toggle i');
+                
+                // Initially hide all answers
+                answer.style.display = 'none';
+                
+                question.addEventListener('click', function() {
+                    // Toggle answer visibility
+                    if (answer.style.display === 'none') {
+                        answer.style.display = 'block';
+                        icon.classList.remove('fa-plus');
+                        icon.classList.add('fa-minus');
+                    } else {
+                        answer.style.display = 'none';
+                        icon.classList.remove('fa-minus');
+                        icon.classList.add('fa-plus');
+                    }
+                });
+            });
+            
+            // Visual feedback when selecting a plan
+            const planLabels = document.querySelectorAll('.plan-label');
+            
+            planLabels.forEach(label => {
+                label.addEventListener('click', function() {
+                    // Remove selected class from all plans
+                    planLabels.forEach(l => {
+                        l.closest('.plan-option').classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked plan
+                    this.closest('.plan-option').classList.add('selected');
+                });
+            });
+            
+            // Initial selection
+            const checkedPlan = document.querySelector('input[name="plan"]:checked');
+            if (checkedPlan) {
+                checkedPlan.closest('.plan-option').classList.add('selected');
+            }
+        });
+    </script>
+</body>
+</html> 

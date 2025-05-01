@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your myFinancialTracker account and subscription">
+    <title>My Account | myFinancialTracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/logo.png" alt="myFinancialTracker Logo">
+                <h1>myFinancialTracker</h1>
+            </div>
+            
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="signup.html">Sign Up</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-dropdown">
+                <button class="user-button">
+                    <i class="fas fa-user-circle"></i>
+                    <span>John Doe</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="account.html" class="active">My Account</a>
+                    <a href="#">App Settings</a>
+                    <a href="#">Help Center</a>
+                    <a href="#" id="logout-link">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Account Hero -->
+        <section class="hero">
+            <h2>My Account</h2>
+            <p>Manage your profile, subscription, and payment methods.</p>
+        </section>
+
+        <!-- Account Dashboard -->
+        <section class="account-dashboard">
+            <div class="container">
+                <div class="dashboard-grid">
+                    <!-- Sidebar Navigation -->
+                    <div class="account-sidebar">
+                        <ul class="account-nav">
+                            <li class="active"><a href="#profile-section" data-section="profile-section">Profile</a></li>
+                            <li><a href="#subscription-section" data-section="subscription-section">Subscription</a></li>
+                            <li><a href="#payment-section" data-section="payment-section">Payment Methods</a></li>
+                            <li><a href="#billing-section" data-section="billing-section">Billing History</a></li>
+                            <li><a href="#security-section" data-section="security-section">Security</a></li>
+                            <li><a href="#preferences-section" data-section="preferences-section">Preferences</a></li>
+                        </ul>
+                        
+                        <div class="app-download">
+                            <p>Download the iOS App</p>
+                            <a href="#" class="app-store-button">
+                                <img src="images/app-store-badge.png" alt="Download on the App Store">
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Main Content Area -->
+                    <div class="account-content">
+                        <!-- Profile Section -->
+                        <div id="profile-section" class="account-section active">
+                            <div class="section-header">
+                                <h3>Profile Information</h3>
+                                <p>Manage your personal information and preferences</p>
+                            </div>
+                            
+                            <div class="profile-details">
+                                <div class="profile-avatar">
+                                    <img src="images/avatar-placeholder.jpg" alt="Profile Picture">
+                                    <button class="change-avatar-btn">Change Picture</button>
+                                </div>
+                                
+                                <div class="profile-info">
+                                    <form id="profile-form">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="full-name">Full Name</label>
+                                                <input type="text" id="full-name" class="form-control" value="John Doe">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="email">Email Address</label>
+                                                <input type="email" id="email" class="form-control" value="johndoe@example.com">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="phone">Phone Number</label>
+                                                <input type="tel" id="phone" class="form-control" value="(123) 456-7890">
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="timezone">Time Zone</label>
+                                                <select id="timezone" class="form-control">
+                                                    <option value="PST">Pacific Time (PST)</option>
+                                                    <option value="MST">Mountain Time (MST)</option>
+                                                    <option value="CST">Central Time (CST)</option>
+                                                    <option value="EST" selected>Eastern Time (EST)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-actions">
+                                            <button type="submit" class="action-button primary">Save Changes</button>
+                                            <button type="button" class="action-button secondary">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Subscription Section -->
+                        <div id="subscription-section" class="account-section">
+                            <div class="section-header">
+                                <h3>Subscription Details</h3>
+                                <p>Manage your current plan and billing cycle</p>
+                            </div>
+                            
+                            <div class="subscription-details">
+                                <div class="current-plan">
+                                    <div class="plan-info">
+                                        <h4>Premium (Monthly)</h4>
+                                        <p class="plan-status">Active</p>
+                                        <p>Your next billing date is <strong>October 15, 2023</strong></p>
+                                        <p>$9.99 per month</p>
+                                        
+                                        <div class="plan-features">
+                                            <ul>
+                                                <li>Unlimited bank connections</li>
+                                                <li>Advanced financial insights</li>
+                                                <li>Debt payoff planning</li>
+                                                <li>Priority support</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="plan-actions">
+                                        <button class="action-button primary">Change Plan</button>
+                                        <button class="action-button danger">Cancel Subscription</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Methods Section -->
+                        <div id="payment-section" class="account-section">
+                            <div class="section-header">
+                                <h3>Payment Methods</h3>
+                                <p>Manage your saved payment methods</p>
+                            </div>
+                            
+                            <div class="payment-methods">
+                                <div class="payment-card default">
+                                    <div class="card-info">
+                                        <div class="card-icon">
+                                            <i class="fab fa-cc-visa"></i>
+                                        </div>
+                                        <div class="card-details">
+                                            <h4>Visa ending in 4242</h4>
+                                            <p>Expires 05/2025</p>
+                                            <span class="default-badge">Default</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-actions">
+                                        <button class="action-button secondary">Edit</button>
+                                        <button class="action-button danger">Remove</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="payment-card">
+                                    <div class="card-info">
+                                        <div class="card-icon">
+                                            <i class="fab fa-cc-mastercard"></i>
+                                        </div>
+                                        <div class="card-details">
+                                            <h4>Mastercard ending in 8888</h4>
+                                            <p>Expires 11/2024</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-actions">
+                                        <button class="action-button secondary">Edit</button>
+                                        <button class="action-button danger">Remove</button>
+                                        <button class="action-button">Set as Default</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="add-payment-method">
+                                    <button class="add-method-button">
+                                        <i class="fas fa-plus"></i> Add Payment Method
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Billing History Section -->
+                        <div id="billing-section" class="account-section">
+                            <div class="section-header">
+                                <h3>Billing History</h3>
+                                <p>View your past transactions and invoices</p>
+                            </div>
+                            
+                            <div class="billing-history">
+                                <div class="billing-filters">
+                                    <div class="form-group">
+                                        <label for="date-range">Date Range</label>
+                                        <select id="date-range" class="form-control">
+                                            <option value="last-3">Last 3 months</option>
+                                            <option value="last-6" selected>Last 6 months</option>
+                                            <option value="last-12">Last 12 months</option>
+                                            <option value="all">All time</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <button class="action-button secondary">
+                                        <i class="fas fa-download"></i> Export
+                                    </button>
+                                </div>
+                                
+                                <div class="billing-table-container">
+                                    <table class="billing-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                                <th>Invoice</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Sep 15, 2023</td>
+                                                <td>Premium Monthly Subscription</td>
+                                                <td>$9.99</td>
+                                                <td><span class="status-badge success">Paid</span></td>
+                                                <td><a href="#" class="invoice-link">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Aug 15, 2023</td>
+                                                <td>Premium Monthly Subscription</td>
+                                                <td>$9.99</td>
+                                                <td><span class="status-badge success">Paid</span></td>
+                                                <td><a href="#" class="invoice-link">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jul 15, 2023</td>
+                                                <td>Premium Monthly Subscription</td>
+                                                <td>$9.99</td>
+                                                <td><span class="status-badge success">Paid</span></td>
+                                                <td><a href="#" class="invoice-link">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jun 15, 2023</td>
+                                                <td>Premium Monthly Subscription</td>
+                                                <td>$9.99</td>
+                                                <td><span class="status-badge success">Paid</span></td>
+                                                <td><a href="#" class="invoice-link">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>May 15, 2023</td>
+                                                <td>Premium Monthly Subscription</td>
+                                                <td>$9.99</td>
+                                                <td><span class="status-badge success">Paid</span></td>
+                                                <td><a href="#" class="invoice-link">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="pagination">
+                                    <button class="page-link disabled">Previous</button>
+                                    <button class="page-link active">1</button>
+                                    <button class="page-link">2</button>
+                                    <button class="page-link">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Security Section -->
+                        <div id="security-section" class="account-section">
+                            <div class="section-header">
+                                <h3>Security Settings</h3>
+                                <p>Manage your password and account security</p>
+                            </div>
+                            
+                            <div class="security-settings">
+                                <form id="password-form">
+                                    <h4>Change Password</h4>
+                                    
+                                    <div class="form-group">
+                                        <label for="current-password">Current Password</label>
+                                        <input type="password" id="current-password" class="form-control">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="new-password">New Password</label>
+                                        <input type="password" id="new-password" class="form-control">
+                                        <small class="form-text">At least 8 characters with a number and special character</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="confirm-new-password">Confirm New Password</label>
+                                        <input type="password" id="confirm-new-password" class="form-control">
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="submit" class="action-button primary">Update Password</button>
+                                    </div>
+                                </form>
+                                
+                                <div class="two-factor-auth">
+                                    <h4>Two-Factor Authentication</h4>
+                                    <p>Add an extra layer of security to your account</p>
+                                    
+                                    <div class="toggle-switch">
+                                        <label class="switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <span>Enable Two-Factor Authentication</span>
+                                    </div>
+                                    
+                                    <div class="security-info">
+                                        <p>Two-factor authentication is currently <strong>enabled</strong>.</p>
+                                        <button class="action-button secondary">Manage 2FA Settings</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="login-sessions">
+                                    <h4>Active Sessions</h4>
+                                    <p>Manage devices currently logged into your account</p>
+                                    
+                                    <div class="session-item">
+                                        <div class="session-info">
+                                            <div class="device-icon">
+                                                <i class="fas fa-laptop"></i>
+                                            </div>
+                                            <div class="device-details">
+                                                <h5>MacBook Pro - Chrome</h5>
+                                                <p>New York, US • Current Session</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="session-item">
+                                        <div class="session-info">
+                                            <div class="device-icon">
+                                                <i class="fas fa-mobile-alt"></i>
+                                            </div>
+                                            <div class="device-details">
+                                                <h5>iPhone 13 - iOS App</h5>
+                                                <p>New York, US • Last active 2 hours ago</p>
+                                            </div>
+                                        </div>
+                                        <button class="action-button danger small">Revoke</button>
+                                    </div>
+                                    
+                                    <div class="security-actions">
+                                        <button class="action-button danger">Sign Out of All Devices</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Preferences Section -->
+                        <div id="preferences-section" class="account-section">
+                            <div class="section-header">
+                                <h3>Email Preferences</h3>
+                                <p>Manage your notification settings</p>
+                            </div>
+                            
+                            <div class="notification-preferences">
+                                <div class="preference-group">
+                                    <h4>Email Notifications</h4>
+                                    
+                                    <div class="preference-item">
+                                        <div class="preference-info">
+                                            <h5>Billing & Subscription</h5>
+                                            <p>Receive emails about your billing and subscription status</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="preference-item">
+                                        <div class="preference-info">
+                                            <h5>Security Alerts</h5>
+                                            <p>Receive emails about security-related activities on your account</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="preference-item">
+                                        <div class="preference-info">
+                                            <h5>Product Updates</h5>
+                                            <p>Receive emails about new features and improvements</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="preference-item">
+                                        <div class="preference-info">
+                                            <h5>Tips & Tutorials</h5>
+                                            <p>Receive emails with financial tips and app tutorials</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="preference-item">
+                                        <div class="preference-info">
+                                            <h5>Special Offers</h5>
+                                            <p>Receive emails about special offers and promotions</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="button" class="action-button primary">Save Preferences</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h3>myFinancialTracker</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="support.html">Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">User Guide</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Connect With Us</h3>
+                <ul>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 myFinancialTracker. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Account section tabs functionality
+            const sectionLinks = document.querySelectorAll('.account-nav a');
+            const accountSections = document.querySelectorAll('.account-section');
+            
+            sectionLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get target section ID
+                    const targetId = this.getAttribute('data-section');
+                    
+                    // Remove active class from all links and sections
+                    sectionLinks.forEach(link => link.parentElement.classList.remove('active'));
+                    accountSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked link and target section
+                    this.parentElement.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // User dropdown functionality
+            const userButton = document.querySelector('.user-button');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            
+            userButton.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('active');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                    dropdownMenu.classList.remove('active');
+                }
+            });
+            
+            // Logout functionality
+            document.getElementById('logout-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('You have been logged out successfully.');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html> 
