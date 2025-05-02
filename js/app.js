@@ -13,18 +13,24 @@ const signupForm = document.getElementById('signupForm');
 const loginForm = document.getElementById('loginForm');
 const accountSections = document.querySelectorAll('.account-section');
 const accountMenuItems = document.querySelectorAll('.account-menu li');
+const featuresSlideshow = document.querySelector('.features-detail-slideshow');
+const testimonialsSlideshow = document.querySelector('.testimonials-slideshow');
 
 // State
 let isLoggedIn = false;
 let currentUser = null;
 let currentPage = 'home';
+let featuresCurrentSlide = 0;
+let testimonialsCurrentSlide = 0;
+let featuresSlideInterval;
+let testimonialsSlideInterval;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
-    // We're using script.js for slideshow navigation now
     setupEventListeners();
     checkLoginStatus();
     initFaqAccordion();
+    initSlideshows();
 });
 
 // Set up all event listeners
@@ -83,9 +89,74 @@ function setupEventListeners() {
     });
     
     // Billing toggle
-    billingToggle?.addEventListener('change', () => {
-        pricingPlans.classList.toggle('yearly-pricing');
-    });
+    if (billingToggle) {
+        const monthlyOption = document.querySelector('.monthly-option');
+        const yearlyOption = document.querySelector('.yearly-option');
+        
+        // Function to update toggle state
+        function updateToggleState(isYearly) {
+            if (isYearly) {
+                // Yearly is selected
+                pricingPlans.classList.add('yearly-pricing');
+                pricingPlans.classList.remove('monthly-pricing');
+                
+                // Update prices visibility
+                document.querySelectorAll('.price.monthly').forEach(price => {
+                    price.style.opacity = '0';
+                    price.style.visibility = 'hidden';
+                });
+                document.querySelectorAll('.price.yearly').forEach(price => {
+                    price.style.opacity = '1';
+                    price.style.visibility = 'visible';
+                });
+                
+                // Update toggle styling
+                monthlyOption.classList.remove('selected');
+                yearlyOption.classList.add('selected');
+                
+                // Update checkbox
+                billingToggle.checked = true;
+            } else {
+                // Monthly is selected
+                pricingPlans.classList.add('monthly-pricing');
+                pricingPlans.classList.remove('yearly-pricing');
+                
+                // Update prices visibility
+                document.querySelectorAll('.price.monthly').forEach(price => {
+                    price.style.opacity = '1';
+                    price.style.visibility = 'visible';
+                });
+                document.querySelectorAll('.price.yearly').forEach(price => {
+                    price.style.opacity = '0';
+                    price.style.visibility = 'hidden';
+                });
+                
+                // Update toggle styling
+                monthlyOption.classList.add('selected');
+                yearlyOption.classList.remove('selected');
+                
+                // Update checkbox
+                billingToggle.checked = false;
+            }
+        }
+        
+        // Toggle switch event
+        billingToggle.addEventListener('change', function() {
+            updateToggleState(this.checked);
+        });
+        
+        // Click on Monthly/Yearly text
+        monthlyOption.addEventListener('click', () => {
+            updateToggleState(false);
+        });
+        
+        yearlyOption.addEventListener('click', () => {
+            updateToggleState(true);
+        });
+
+        // Initialize the toggle state
+        updateToggleState(billingToggle.checked);
+    }
     
     // Login form submission
     loginForm?.addEventListener('submit', (e) => {
@@ -135,6 +206,209 @@ function setupEventListeners() {
             navigateTo(hash);
         }
     }
+}
+
+// Initialize slideshows
+function initSlideshows() {
+    // Features slideshow
+    if (featuresSlideshow) {
+        const slides = featuresSlideshow.querySelectorAll('.slide');
+        const dotsContainer = featuresSlideshow.querySelector('.dots-container');
+        const prevArrow = featuresSlideshow.querySelector('.slide-arrow.prev');
+        const nextArrow = featuresSlideshow.querySelector('.slide-arrow.next');
+        
+        // Create dots for each slide
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(featuresSlideshow, index, featuresCurrentSlide < index ? 'next' : 'prev');
+                featuresCurrentSlide = index;
+                resetFeaturesInterval();
+            });
+            dotsContainer.appendChild(dot);
+        });
+        
+        // Set up arrow navigation
+        prevArrow.addEventListener('click', () => {
+            const nextSlideIndex = (featuresCurrentSlide - 1 + slides.length) % slides.length;
+            goToSlide(featuresSlideshow, nextSlideIndex, 'prev');
+            featuresCurrentSlide = nextSlideIndex;
+            resetFeaturesInterval();
+        });
+        
+        nextArrow.addEventListener('click', () => {
+            const nextSlideIndex = (featuresCurrentSlide + 1) % slides.length;
+            goToSlide(featuresSlideshow, nextSlideIndex, 'next');
+            featuresCurrentSlide = nextSlideIndex;
+            resetFeaturesInterval();
+        });
+        
+        // Start automatic slideshow
+        startFeaturesInterval();
+        
+        // Pause slideshow on hover
+        featuresSlideshow.addEventListener('mouseenter', () => {
+            clearInterval(featuresSlideInterval);
+        });
+        
+        // Resume slideshow on mouse leave
+        featuresSlideshow.addEventListener('mouseleave', () => {
+            startFeaturesInterval();
+        });
+    }
+    
+    // Testimonials slideshow
+    if (testimonialsSlideshow) {
+        const slides = testimonialsSlideshow.querySelectorAll('.slide');
+        const dotsContainer = testimonialsSlideshow.querySelector('.dots-container');
+        const prevArrow = testimonialsSlideshow.querySelector('.slide-arrow.prev');
+        const nextArrow = testimonialsSlideshow.querySelector('.slide-arrow.next');
+        
+        // Create dots for each slide
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(testimonialsSlideshow, index, testimonialsCurrentSlide < index ? 'next' : 'prev');
+                testimonialsCurrentSlide = index;
+                resetTestimonialsInterval();
+            });
+            dotsContainer.appendChild(dot);
+        });
+        
+        // Set up arrow navigation
+        prevArrow.addEventListener('click', () => {
+            const nextSlideIndex = (testimonialsCurrentSlide - 1 + slides.length) % slides.length;
+            goToSlide(testimonialsSlideshow, nextSlideIndex, 'prev');
+            testimonialsCurrentSlide = nextSlideIndex;
+            resetTestimonialsInterval();
+        });
+        
+        nextArrow.addEventListener('click', () => {
+            const nextSlideIndex = (testimonialsCurrentSlide + 1) % slides.length;
+            goToSlide(testimonialsSlideshow, nextSlideIndex, 'next');
+            testimonialsCurrentSlide = nextSlideIndex;
+            resetTestimonialsInterval();
+        });
+        
+        // Start automatic slideshow
+        startTestimonialsInterval();
+        
+        // Pause slideshow on hover
+        testimonialsSlideshow.addEventListener('mouseenter', () => {
+            clearInterval(testimonialsSlideInterval);
+        });
+        
+        // Resume slideshow on mouse leave
+        testimonialsSlideshow.addEventListener('mouseleave', () => {
+            startTestimonialsInterval();
+        });
+    }
+}
+
+// Features slideshow interval
+function startFeaturesInterval() {
+    clearInterval(featuresSlideInterval);
+    featuresSlideInterval = setInterval(() => {
+        const nextSlideIndex = (featuresCurrentSlide + 1) % featuresSlideshow.querySelectorAll('.slide').length;
+        goToSlide(featuresSlideshow, nextSlideIndex, 'next');
+        featuresCurrentSlide = nextSlideIndex;
+    }, 10000); // 10 seconds
+}
+
+// Reset features interval
+function resetFeaturesInterval() {
+    clearInterval(featuresSlideInterval);
+    startFeaturesInterval();
+}
+
+// Testimonials slideshow interval
+function startTestimonialsInterval() {
+    clearInterval(testimonialsSlideInterval);
+    testimonialsSlideInterval = setInterval(() => {
+        const nextSlideIndex = (testimonialsCurrentSlide + 1) % testimonialsSlideshow.querySelectorAll('.slide').length;
+        goToSlide(testimonialsSlideshow, nextSlideIndex, 'next');
+        testimonialsCurrentSlide = nextSlideIndex;
+    }, 5000); // 5 seconds
+}
+
+// Reset testimonials interval
+function resetTestimonialsInterval() {
+    clearInterval(testimonialsSlideInterval);
+    startTestimonialsInterval();
+}
+
+// Navigate to a specific slide with direction animation
+function goToSlide(slideshow, index, direction) {
+    const slides = slideshow.querySelectorAll('.slide');
+    const dots = slideshow.querySelectorAll('.dot');
+    
+    // If no direction provided, don't animate
+    if (!direction) {
+        // Hide all slides and update dots
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active', 'next', 'prev', 'slide-left-in', 'slide-right-in', 'slide-left-out', 'slide-right-out');
+            dots[i].classList.remove('active');
+        });
+        
+        // Show the selected slide and update dot
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        return;
+    }
+    
+    // Find current active slide
+    const currentIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+    
+    // Remove any existing animation classes
+    slides.forEach(slide => {
+        slide.classList.remove('slide-left-in', 'slide-right-in', 'slide-left-out', 'slide-right-out');
+    });
+    
+    // Update dots
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+    
+    // Animate the current slide out
+    if (currentIndex !== -1) {
+        if (direction === 'next') {
+            slides[currentIndex].classList.add('slide-left-out');
+        } else {
+            slides[currentIndex].classList.add('slide-right-out');
+        }
+        
+        // After animation, remove active class
+        setTimeout(() => {
+            slides[currentIndex].classList.remove('active');
+        }, 500);
+    }
+    
+    // Animate the new slide in
+    if (direction === 'next') {
+        slides[index].classList.add('slide-left-in');
+    } else {
+        slides[index].classList.add('slide-right-in');
+    }
+    
+    // Show the new slide
+    slides[index].style.display = 'block';
+    
+    // After animation completes, clean up classes
+    setTimeout(() => {
+        slides.forEach((slide, i) => {
+            if (i === index) {
+                slide.classList.add('active');
+                slide.classList.remove('slide-left-in', 'slide-right-in');
+            } else {
+                slide.classList.remove('active', 'slide-left-out', 'slide-right-out');
+                slide.style.display = '';
+            }
+        });
+    }, 500);
 }
 
 // Navigate to a specific page
