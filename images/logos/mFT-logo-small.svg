@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo Container -->
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#203448" />
+      <stop offset="100%" stop-color="#00a651" />
+    </linearGradient>
+  </defs>
+
+  <!-- Bar Chart (upward trending) -->
+  <rect x="48" y="28" width="6" height="4" rx="1" fill="#203448" />
+  <rect x="56" y="24" width="6" height="8" rx="1" fill="#203448" />
+  <rect x="64" y="18" width="6" height="14" rx="1" fill="#203448" />
+  <rect x="72" y="10" width="6" height="22" rx="1" fill="#00a651" />
+  
+  <!-- Text "mFT" -->
+  <text x="102" y="33" font-family="'Segoe UI', Arial, sans-serif" font-size="28" font-weight="600" fill="#203448">
+    <tspan fill="#203448">m</tspan><tspan fill="#00a651">FT</tspan>
+  </text>
+  
+  <!-- Optional thin separator line -->
+  <line x1="90" y1="15" x2="90" y2="45" stroke="#E0E0E0" stroke-width="1" />
+</svg> 
