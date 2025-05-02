@@ -15,6 +15,7 @@ const accountSections = document.querySelectorAll('.account-section');
 const accountMenuItems = document.querySelectorAll('.account-menu li');
 const featuresSlideshow = document.querySelector('.features-detail-slideshow');
 const testimonialsSlideshow = document.querySelector('.testimonials-slideshow');
+const signupLink = document.querySelector('.signup-link');
 
 // State
 let isLoggedIn = false;
@@ -70,6 +71,13 @@ function setupEventListeners() {
         if (e.target === loginModal) {
             loginModal.style.display = 'none';
         }
+    });
+    
+    // Sign up link in login modal
+    signupLink?.addEventListener('click', (e) => {
+        // Close the modal and navigate to signup page
+        loginModal.style.display = 'none';
+        navigateTo('signup');
     });
     
     // Signup buttons

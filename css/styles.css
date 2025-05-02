@@ -111,7 +111,7 @@ img {
 }
 
 .btn.primary:hover {
-    background-color: #008c44;
+    background-color: #FF8C00;
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -122,7 +122,7 @@ img {
 }
 
 .btn.main:hover {
-    background-color: #008c44;
+    background-color: #FF8C00;
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -135,9 +135,9 @@ img {
 }
 
 .btn.secondary:hover {
-    background-color: #008c44;
+    background-color: #FF8C00;
     color: var(--light-text);
-    border-color: #008c44;
+    border-color: #FF8C00;
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -746,16 +746,16 @@ main {
 
 .support-form button[type="submit"] {
     display: inline-block;
-    padding: 0.8rem 2rem;
+    padding: clamp(0.6rem, 1vw, 0.8rem) clamp(1.2rem, 2vw, 1.5rem);
     border-radius: 30px;
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
     border: none;
     text-align: center;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: var(--light-text);
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 1vw, 1rem);
     width: 100%;
     max-width: 200px;
     margin: 0.5rem auto 0;
@@ -764,7 +764,7 @@ main {
 }
 
 .support-form button[type="submit"]:hover {
-    background-color: #008c44;
+    background-color: #FF8C00;
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -840,8 +840,8 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
-    gap: 1rem;
+    margin-bottom: 0.2rem;
+    gap: 0.8rem;
 }
 
 .pricing-toggle span {
@@ -973,7 +973,13 @@ input:checked ~ .pricing-toggle span:last-child {
 
 .pricing-plan.featured {
     border: 2px solid var(--primary-color);
-    transform: scale(1.05);
+    transform: scale(1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-plan.featured:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .featured-badge {
@@ -1001,6 +1007,14 @@ input:checked ~ .pricing-toggle span:last-child {
     justify-content: center;
 }
 
+.discount-message {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 1rem;
+}
+
 .price-container {
     margin: 0.3rem 0;
     height: 60px;
@@ -1009,6 +1023,7 @@ input:checked ~ .pricing-toggle span:last-child {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow: hidden; /* Ensure content doesn't overflow during transition */
 }
 
 .price {
@@ -1020,7 +1035,7 @@ input:checked ~ .pricing-toggle span:last-child {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: opacity 0.3s ease;
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .price.monthly, .price.yearly {
@@ -1032,23 +1047,27 @@ input:checked ~ .pricing-toggle span:last-child {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: opacity 0.3s ease;
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .price.yearly {
+    font-size: clamp(2rem, 2.5vw, 2.5rem);
     opacity: 0;
-    visibility: hidden;
+    transform: translate(30%, -50%);
+    pointer-events: none;
 }
 
 /* Show yearly pricing */
 .yearly-pricing .price.monthly {
     opacity: 0;
-    visibility: hidden;
+    transform: translate(-130%, -50%);
+    pointer-events: none;
 }
 
 .yearly-pricing .price.yearly {
     opacity: 1;
-    visibility: visible;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
 }
 
 .period {
@@ -1690,7 +1709,7 @@ footer {
 }
 
 .signup-btn:hover {
-    background-color: #008c44;
+    background-color: #FF8C00;
     box-shadow: var(--shadow);
 }
 
@@ -2062,9 +2081,9 @@ footer {
 
 .support-form input[type="submit"] {
     display: inline-block;
-    padding: 0.8rem 2rem;
+    padding: clamp(0.6rem, 1vw, 0.8rem) clamp(1.2rem, 2vw, 1.5rem);
     border-radius: 30px;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: var(--light-text);
     font-weight: 500;
     cursor: pointer;
@@ -2080,7 +2099,7 @@ footer {
 }
 
 .support-form input[type="submit"]:hover {
-    background-color: #008c44;
+    background-color: #FF8C00;
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -2148,6 +2167,12 @@ footer {
 }
 
 .pricing-plan.free .btn {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: var(--light-text);
+}
+
+.pricing-plan.free .btn:hover {
+    background-color: #FF8C00;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
 } 
