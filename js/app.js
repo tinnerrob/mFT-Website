@@ -9,12 +9,15 @@ const closeModal = document.querySelector('.close');
 const signupBtns = document.querySelectorAll('.signup-btn');
 const billingToggle = document.getElementById('billingToggle');
 const pricingPlans = document.querySelector('.pricing-plans');
-const signupForm = document.getElementById('signupForm');
+const subscriptionModal = document.getElementById('subscriptionModal');
+const subscriptionClose = document.querySelector('.subscription-close');
+const selectedPlanInfo = document.getElementById('selectedPlanInfo').querySelector('span');
+const subscriptionForm = document.getElementById('subscriptionForm');
 const loginForm = document.getElementById('loginForm');
 const accountSections = document.querySelectorAll('.account-section');
 const accountMenuItems = document.querySelectorAll('.account-menu li');
 const featuresSlideshow = document.querySelector('.features-detail-slideshow');
-const testimonialsSlideshow = document.querySelector('.testimonials-slideshow');
+const testimonialsSlideshow = document.querySelector('.testimonial-slides-container');
 const signupLink = document.querySelector('.signup-link');
 
 // State
@@ -25,6 +28,7 @@ let featuresCurrentSlide = 0;
 let testimonialsCurrentSlide = 0;
 let featuresSlideInterval;
 let testimonialsSlideInterval;
+let isBillingYearly = false;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
@@ -61,15 +65,23 @@ function setupEventListeners() {
         }
     });
     
-    // Close modal
+    // Close login modal
     closeModal.addEventListener('click', () => {
         loginModal.style.display = 'none';
     });
     
-    // Close modal when clicking outside
+    // Close subscription modal
+    subscriptionClose.addEventListener('click', () => {
+        subscriptionModal.style.display = 'none';
+    });
+    
+    // Close modals when clicking outside
     window.addEventListener('click', (e) => {
         if (e.target === loginModal) {
             loginModal.style.display = 'none';
+        }
+        if (e.target === subscriptionModal) {
+            subscriptionModal.style.display = 'none';
         }
     });
     
@@ -83,88 +95,22 @@ function setupEventListeners() {
     // Signup buttons
     signupBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Hide pricing plans and show signup form
-            document.querySelectorAll('.pricing-plan').forEach(plan => {
-                plan.style.display = 'none';
-            });
-            document.querySelector('.pricing-toggle').style.display = 'none';
-            signupForm.classList.remove('hidden');
-            
-            // Set the selected plan in the form
+            // Get the selected plan from the data attribute
             const selectedPlan = btn.getAttribute('data-plan');
-            // You would typically store this for submission
+            
+            // Set the plan info in the subscription modal
+            updateSelectedPlanInfo(selectedPlan);
+            
+            // Open the subscription modal
+            openSubscriptionModal();
         });
     });
     
     // Billing toggle
-    if (billingToggle) {
-        const monthlyOption = document.querySelector('.monthly-option');
-        const yearlyOption = document.querySelector('.yearly-option');
-        
-        // Function to update toggle state
-        function updateToggleState(isYearly) {
-            if (isYearly) {
-                // Yearly is selected
-                pricingPlans.classList.add('yearly-pricing');
-                pricingPlans.classList.remove('monthly-pricing');
-                
-                // Update prices visibility
-                document.querySelectorAll('.price.monthly').forEach(price => {
-                    price.style.opacity = '0';
-                    price.style.visibility = 'hidden';
-                });
-                document.querySelectorAll('.price.yearly').forEach(price => {
-                    price.style.opacity = '1';
-                    price.style.visibility = 'visible';
-                });
-                
-                // Update toggle styling
-                monthlyOption.classList.remove('selected');
-                yearlyOption.classList.add('selected');
-                
-                // Update checkbox
-                billingToggle.checked = true;
-            } else {
-                // Monthly is selected
-                pricingPlans.classList.add('monthly-pricing');
-                pricingPlans.classList.remove('yearly-pricing');
-                
-                // Update prices visibility
-                document.querySelectorAll('.price.monthly').forEach(price => {
-                    price.style.opacity = '1';
-                    price.style.visibility = 'visible';
-                });
-                document.querySelectorAll('.price.yearly').forEach(price => {
-                    price.style.opacity = '0';
-                    price.style.visibility = 'hidden';
-                });
-                
-                // Update toggle styling
-                monthlyOption.classList.add('selected');
-                yearlyOption.classList.remove('selected');
-                
-                // Update checkbox
-                billingToggle.checked = false;
-            }
-        }
-        
-        // Toggle switch event
-        billingToggle.addEventListener('change', function() {
-            updateToggleState(this.checked);
-        });
-        
-        // Click on Monthly/Yearly text
-        monthlyOption.addEventListener('click', () => {
-            updateToggleState(false);
-        });
-        
-        yearlyOption.addEventListener('click', () => {
-            updateToggleState(true);
-        });
-
-        // Initialize the toggle state
-        updateToggleState(billingToggle.checked);
-    }
+    billingToggle.addEventListener('change', () => {
+        isBillingYearly = billingToggle.checked;
+        updatePricingDisplay();
+    });
     
     // Login form submission
     loginForm?.addEventListener('submit', (e) => {
@@ -181,6 +127,26 @@ function setupEventListeners() {
             plan: 'Premium',
             memberSince: 'January 1, 2023',
             subscription: 'Premium (Yearly) - Renews on Jan 1, 2024'
+        });
+    });
+    
+    // Subscription form submission
+    subscriptionForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Here you would typically make an API call to process the subscription
+        alert('Thank you for subscribing! Your account has been created.');
+        
+        // Close the modal and redirect to account or dashboard
+        subscriptionModal.style.display = 'none';
+        
+        // For demo purposes, simulate login success
+        loginSuccess({
+            username: document.getElementById('fullName').value,
+            email: document.getElementById('signupEmail').value,
+            plan: selectedPlanInfo.textContent,
+            memberSince: new Date().toLocaleDateString(),
+            subscription: `${selectedPlanInfo.textContent} (${isBillingYearly ? 'Yearly' : 'Monthly'})`
         });
     });
     
@@ -216,232 +182,81 @@ function setupEventListeners() {
     }
 }
 
-// Initialize slideshows
-function initSlideshows() {
-    // Features slideshow
-    if (featuresSlideshow) {
-        const slides = featuresSlideshow.querySelectorAll('.slide');
-        const dotsContainer = featuresSlideshow.querySelector('.dots-container');
-        const prevArrow = featuresSlideshow.querySelector('.slide-arrow.prev');
-        const nextArrow = featuresSlideshow.querySelector('.slide-arrow.next');
-        
-        // Create dots for each slide
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                goToSlide(featuresSlideshow, index, featuresCurrentSlide < index ? 'next' : 'prev');
-                featuresCurrentSlide = index;
-                resetFeaturesInterval();
-            });
-            dotsContainer.appendChild(dot);
-        });
-        
-        // Set up arrow navigation
-        prevArrow.addEventListener('click', () => {
-            const nextSlideIndex = (featuresCurrentSlide - 1 + slides.length) % slides.length;
-            goToSlide(featuresSlideshow, nextSlideIndex, 'prev');
-            featuresCurrentSlide = nextSlideIndex;
-            resetFeaturesInterval();
-        });
-        
-        nextArrow.addEventListener('click', () => {
-            const nextSlideIndex = (featuresCurrentSlide + 1) % slides.length;
-            goToSlide(featuresSlideshow, nextSlideIndex, 'next');
-            featuresCurrentSlide = nextSlideIndex;
-            resetFeaturesInterval();
-        });
-        
-        // Start automatic slideshow
-        startFeaturesInterval();
-        
-        // Pause slideshow on hover
-        featuresSlideshow.addEventListener('mouseenter', () => {
-            clearInterval(featuresSlideInterval);
-        });
-        
-        // Resume slideshow on mouse leave
-        featuresSlideshow.addEventListener('mouseleave', () => {
-            startFeaturesInterval();
-        });
-    }
-    
-    // Testimonials slideshow
-    if (testimonialsSlideshow) {
-        const slides = testimonialsSlideshow.querySelectorAll('.slide');
-        const dotsContainer = testimonialsSlideshow.querySelector('.dots-container');
-        const prevArrow = testimonialsSlideshow.querySelector('.slide-arrow.prev');
-        const nextArrow = testimonialsSlideshow.querySelector('.slide-arrow.next');
-        
-        // Create dots for each slide
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                goToSlide(testimonialsSlideshow, index, testimonialsCurrentSlide < index ? 'next' : 'prev');
-                testimonialsCurrentSlide = index;
-                resetTestimonialsInterval();
-            });
-            dotsContainer.appendChild(dot);
-        });
-        
-        // Set up arrow navigation
-        prevArrow.addEventListener('click', () => {
-            const nextSlideIndex = (testimonialsCurrentSlide - 1 + slides.length) % slides.length;
-            goToSlide(testimonialsSlideshow, nextSlideIndex, 'prev');
-            testimonialsCurrentSlide = nextSlideIndex;
-            resetTestimonialsInterval();
-        });
-        
-        nextArrow.addEventListener('click', () => {
-            const nextSlideIndex = (testimonialsCurrentSlide + 1) % slides.length;
-            goToSlide(testimonialsSlideshow, nextSlideIndex, 'next');
-            testimonialsCurrentSlide = nextSlideIndex;
-            resetTestimonialsInterval();
-        });
-        
-        // Start automatic slideshow
-        startTestimonialsInterval();
-        
-        // Pause slideshow on hover
-        testimonialsSlideshow.addEventListener('mouseenter', () => {
-            clearInterval(testimonialsSlideInterval);
-        });
-        
-        // Resume slideshow on mouse leave
-        testimonialsSlideshow.addEventListener('mouseleave', () => {
-            startTestimonialsInterval();
-        });
-    }
+// Open login modal
+function openLoginModal() {
+    loginModal.style.display = 'flex';
 }
 
-// Features slideshow interval
-function startFeaturesInterval() {
-    clearInterval(featuresSlideInterval);
-    featuresSlideInterval = setInterval(() => {
-        const nextSlideIndex = (featuresCurrentSlide + 1) % featuresSlideshow.querySelectorAll('.slide').length;
-        goToSlide(featuresSlideshow, nextSlideIndex, 'next');
-        featuresCurrentSlide = nextSlideIndex;
-    }, 10000); // 10 seconds
+// Open subscription modal
+function openSubscriptionModal() {
+    subscriptionModal.style.display = 'flex';
 }
 
-// Reset features interval
-function resetFeaturesInterval() {
-    clearInterval(featuresSlideInterval);
-    startFeaturesInterval();
-}
-
-// Testimonials slideshow interval
-function startTestimonialsInterval() {
-    clearInterval(testimonialsSlideInterval);
-    testimonialsSlideInterval = setInterval(() => {
-        const nextSlideIndex = (testimonialsCurrentSlide + 1) % testimonialsSlideshow.querySelectorAll('.slide').length;
-        goToSlide(testimonialsSlideshow, nextSlideIndex, 'next');
-        testimonialsCurrentSlide = nextSlideIndex;
-    }, 5000); // 5 seconds
-}
-
-// Reset testimonials interval
-function resetTestimonialsInterval() {
-    clearInterval(testimonialsSlideInterval);
-    startTestimonialsInterval();
-}
-
-// Navigate to a specific slide with direction animation
-function goToSlide(slideshow, index, direction) {
-    const slides = slideshow.querySelectorAll('.slide');
-    const dots = slideshow.querySelectorAll('.dot');
+// Update plan information in the subscription modal
+function updateSelectedPlanInfo(plan) {
+    let planName = '';
+    let planPrice = '';
     
-    // If no direction provided, don't animate
-    if (!direction) {
-        // Hide all slides and update dots
-        slides.forEach((slide, i) => {
-            slide.classList.remove('active', 'next', 'prev', 'slide-left-in', 'slide-right-in', 'slide-left-out', 'slide-right-out');
-            dots[i].classList.remove('active');
-        });
-        
-        // Show the selected slide and update dot
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-        return;
-    }
-    
-    // Find current active slide
-    const currentIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
-    
-    // Remove any existing animation classes
-    slides.forEach(slide => {
-        slide.classList.remove('slide-left-in', 'slide-right-in', 'slide-left-out', 'slide-right-out');
-    });
-    
-    // Update dots
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-    });
-    
-    // Animate the current slide out
-    if (currentIndex !== -1) {
-        if (direction === 'next') {
-            slides[currentIndex].classList.add('slide-left-out');
-        } else {
-            slides[currentIndex].classList.add('slide-right-out');
-        }
-        
-        // After animation, remove active class
-        setTimeout(() => {
-            slides[currentIndex].classList.remove('active');
-        }, 500);
-    }
-    
-    // Animate the new slide in
-    if (direction === 'next') {
-        slides[index].classList.add('slide-left-in');
-    } else {
-        slides[index].classList.add('slide-right-in');
-    }
-    
-    // Show the new slide
-    slides[index].style.display = 'block';
-    
-    // After animation completes, clean up classes
-    setTimeout(() => {
-        slides.forEach((slide, i) => {
-            if (i === index) {
-                slide.classList.add('active');
-                slide.classList.remove('slide-left-in', 'slide-right-in');
-            } else {
-                slide.classList.remove('active', 'slide-left-out', 'slide-right-out');
-                slide.style.display = '';
+    // Find the selected plan details
+    const planElements = document.querySelectorAll('.pricing-plan');
+    planElements.forEach(planElement => {
+        const planButton = planElement.querySelector('.signup-btn');
+        if (planButton && planButton.getAttribute('data-plan') === plan) {
+            planName = planElement.querySelector('h2').textContent;
+            
+            // Get the appropriate price based on billing period
+            const priceElement = isBillingYearly ? 
+                planElement.querySelector('.price.yearly') : 
+                planElement.querySelector('.price.monthly') || planElement.querySelector('.price');
+                
+            if (priceElement) {
+                planPrice = priceElement.textContent;
             }
-        });
-    }, 500);
+        }
+    });
+    
+    // Set the plan info text
+    selectedPlanInfo.textContent = `${planName} - ${planPrice} ${isBillingYearly ? 'per year' : 'per month'}`;
+}
+
+// Update pricing display based on billing period
+function updatePricingDisplay() {
+    const pricingContainer = document.querySelector('.pricing-plans');
+    if (isBillingYearly) {
+        pricingContainer.classList.add('yearly-pricing');
+        document.querySelector('.monthly-option')?.classList.remove('selected');
+        document.querySelector('.yearly-option')?.classList.add('selected');
+    } else {
+        pricingContainer.classList.remove('yearly-pricing');
+        document.querySelector('.yearly-option')?.classList.remove('selected');
+        document.querySelector('.monthly-option')?.classList.add('selected');
+    }
+    
+    // Update any selected plan info if the modal is open
+    if (subscriptionModal.style.display === 'flex' && selectedPlanInfo.textContent) {
+        const currentPlan = selectedPlanInfo.textContent.split('-')[0].trim();
+        const planButtons = document.querySelectorAll('.signup-btn');
+        for (const btn of planButtons) {
+            const planElement = btn.closest('.pricing-plan');
+            if (planElement && planElement.querySelector('h2').textContent === currentPlan) {
+                updateSelectedPlanInfo(btn.getAttribute('data-plan'));
+                break;
+            }
+        }
+    }
 }
 
 // Navigate to a specific page
 function navigateTo(pageId) {
-    // If pageId is not valid, default to home
-    if (!document.getElementById(pageId)) {
-        pageId = 'home';
-    }
+    // Hide all pages
+    pages.forEach(page => {
+        page.classList.remove('active');
+    });
     
-    // If trying to access account page while not logged in
-    if (pageId === 'account' && !isLoggedIn) {
-        openLoginModal();
-        return;
-    }
+    // Show the selected page
+    document.getElementById(pageId).classList.add('active');
     
-    // Store the current page for animation direction
-    const oldPage = currentPage;
-    currentPage = pageId;
-    
-    // Determine slide direction
-    const pageIndex = Array.from(pages).findIndex(page => page.id === pageId);
-    const oldPageIndex = Array.from(pages).findIndex(page => page.id === oldPage);
-    const direction = pageIndex > oldPageIndex ? 'right' : 'left';
-    
-    // Update active states
+    // Update active navigation link
     navLinks.forEach(link => {
         if (link.getAttribute('data-page') === pageId) {
             link.classList.add('active');
@@ -450,131 +265,265 @@ function navigateTo(pageId) {
         }
     });
     
-    // Hide all pages and show the target page
-    pages.forEach(page => {
-        page.classList.remove('active');
-        page.style.animation = '';
-        // Reset scroll position when switching pages
-        setTimeout(() => {
-            page.scrollTop = 0;
-        }, 0);
-    });
+    // Update the current page
+    currentPage = pageId;
     
-    // Show the target page with animation
-    const targetPage = document.getElementById(pageId);
-    if (targetPage) {
-        targetPage.classList.add('active');
-        
-        // For FAQ page, initialize accordion if needed
-        if (pageId === 'faq') {
-            const faqItems = document.querySelectorAll('.faq-item');
-            if (faqItems.length > 0 && !faqItems[0].classList.contains('initialized')) {
-                faqItems.forEach(item => {
-                    item.classList.add('initialized');
-                });
-                // Make first FAQ item active by default for better UX
-                faqItems[0].classList.add('active');
-            }
-        }
-        
-        // Close mobile menu after navigation
-        if (nav.classList.contains('active')) {
-            nav.classList.remove('active');
-            burger.classList.remove('toggle');
-        }
+    // If on mobile, close the nav menu
+    if (window.innerWidth <= 768) {
+        nav.classList.remove('active');
+        burger.classList.remove('toggle');
     }
     
     // Update URL hash
-    window.location.hash = '#' + pageId;
+    window.location.hash = pageId;
 }
 
-// Open the login modal
-function openLoginModal() {
-    loginModal.style.display = 'flex';
-}
-
-// Check if user is logged in
+// Check login status
 function checkLoginStatus() {
-    // In a real app, you would check local storage, cookies, or session
-    // For now, we'll assume the user is not logged in initially
-    updateLoginUI();
-}
-
-// Update UI based on login status
-function updateLoginUI() {
-    const loginText = document.querySelector('.login-text');
-    
-    if (isLoggedIn && currentUser) {
-        loginText.textContent = currentUser.username;
-        
-        // Update account page info
-        document.getElementById('accountUsername').textContent = currentUser.username;
-        document.getElementById('accountEmail').textContent = currentUser.email;
-        document.getElementById('accountPlan').textContent = currentUser.plan + ' Plan';
-        document.getElementById('memberSince').textContent = currentUser.memberSince;
-        document.getElementById('subscriptionDetails').textContent = currentUser.subscription;
-        
-        // Add account link to navigation if not exists
-        if (!document.querySelector('[data-page="account"]')) {
-            const accountLink = document.createElement('li');
-            accountLink.setAttribute('data-page', 'account');
-            accountLink.innerHTML = '<a href="#account">My Account</a>';
-            accountLink.addEventListener('click', (e) => {
-                navigateTo('account');
-                e.preventDefault();
-            });
-            
-            nav.appendChild(accountLink);
-        }
-    } else {
-        loginText.textContent = 'Login';
-        
-        // Remove account link from navigation if exists
-        const accountLink = document.querySelector('[data-page="account"]');
-        if (accountLink) {
-            nav.removeChild(accountLink);
-        }
+    // In a real app, this would check for a valid session token
+    // For this demo, we'll just check localStorage
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+        currentUser = JSON.parse(user);
+        isLoggedIn = true;
+        updateUIForLoggedInUser();
     }
 }
 
-// Handle successful login
-function loginSuccess(user) {
-    isLoggedIn = true;
-    currentUser = user;
-    updateLoginUI();
-    loginModal.style.display = 'none';
-}
-
-// Handle logout
-function logout() {
-    isLoggedIn = false;
-    currentUser = null;
-    updateLoginUI();
-    navigateTo('home');
-}
-
-// Resize handler for responsive design
-window.addEventListener('resize', () => {
-    // Add any specific resize handlers here
-});
-
-// Initialize FAQ accordion functionality
-function initFaqAccordion() {
-    const faqItems = document.querySelectorAll('.faq-item');
+// Update UI for logged in user
+function updateUIForLoggedInUser() {
+    // Update the login button text
+    document.querySelector('.login-text').textContent = 'My Account';
     
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        
+    // Update account page if it exists
+    const accountName = document.querySelector('.account-name');
+    if (accountName) {
+        accountName.textContent = currentUser.username;
+    }
+    
+    const accountEmail = document.querySelector('.account-email');
+    if (accountEmail) {
+        accountEmail.textContent = currentUser.email;
+    }
+    
+    // Update plan information
+    const planInfo = document.querySelector('.plan-info');
+    if (planInfo) {
+        planInfo.textContent = currentUser.plan;
+    }
+    
+    const memberSince = document.querySelector('.member-since');
+    if (memberSince) {
+        memberSince.textContent = currentUser.memberSince;
+    }
+    
+    const subscriptionInfo = document.querySelector('.subscription-info');
+    if (subscriptionInfo) {
+        subscriptionInfo.textContent = currentUser.subscription;
+    }
+}
+
+// Login success handler
+function loginSuccess(user) {
+    currentUser = user;
+    isLoggedIn = true;
+    
+    // Store user info in localStorage
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    
+    // Update UI
+    updateUIForLoggedInUser();
+    
+    // Close login modal
+    loginModal.style.display = 'none';
+    
+    // Navigate to account page if it exists
+    if (document.getElementById('account')) {
+        navigateTo('account');
+    } else {
+        // Navigate to home by default
+        navigateTo('home');
+    }
+}
+
+// Initialize FAQ accordion
+function initFaqAccordion() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
-            // Close all other items
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('active');
-                }
+            // Check if this question is already active
+            const isActive = question.classList.contains('active');
+            
+            // Close all FAQ items first
+            faqQuestions.forEach(q => {
+                q.classList.remove('active');
+                q.nextElementSibling.style.maxHeight = '0';
             });
             
-            // Toggle current item
-            item.classList.toggle('active');
+            // If the clicked question wasn't active before, open it
+            if (!isActive) {
+                // Toggle active class on the question
+                question.classList.add('active');
+                
+                // Get the answer element
+                const answer = question.nextElementSibling;
+                
+                // Set the max-height to show the content with extra padding
+                answer.style.maxHeight = (answer.scrollHeight + 30) + 'px'; // Add 30px extra space
+            }
         });
+    });
+}
+
+// Initialize slideshows if they exist
+function initSlideshows() {
+    initFeaturesSlideshow();
+    initTestimonialsSlideshow();
+}
+
+// Initialize features slideshow
+function initFeaturesSlideshow() {
+    if (!featuresSlideshow) return;
+    
+    const slides = featuresSlideshow.querySelectorAll('.slide');
+    if (slides.length === 0) return;
+    
+    // Create dots for navigation
+    const dotsContainer = featuresSlideshow.querySelector('.dots-container');
+    if (dotsContainer) {
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(featuresSlideshow, index);
+                featuresCurrentSlide = index;
+                clearInterval(featuresSlideInterval);
+            });
+            dotsContainer.appendChild(dot);
+        });
+    }
+    
+    // Set up arrow navigation
+    const prevArrow = featuresSlideshow.querySelector('.prev');
+    const nextArrow = featuresSlideshow.querySelector('.next');
+    
+    if (prevArrow) {
+        prevArrow.addEventListener('click', () => {
+            featuresCurrentSlide = (featuresCurrentSlide - 1 + slides.length) % slides.length;
+            goToSlide(featuresSlideshow, featuresCurrentSlide);
+            clearInterval(featuresSlideInterval);
+        });
+    }
+    
+    if (nextArrow) {
+        nextArrow.addEventListener('click', () => {
+            featuresCurrentSlide = (featuresCurrentSlide + 1) % slides.length;
+            goToSlide(featuresSlideshow, featuresCurrentSlide);
+            clearInterval(featuresSlideInterval);
+        });
+    }
+    
+    // Auto-rotate slides
+    featuresSlideInterval = setInterval(() => {
+        featuresCurrentSlide = (featuresCurrentSlide + 1) % slides.length;
+        goToSlide(featuresSlideshow, featuresCurrentSlide);
+    }, 8000);
+}
+
+// Initialize testimonials slideshow
+function initTestimonialsSlideshow() {
+    if (!testimonialsSlideshow) return;
+    
+    const slides = testimonialsSlideshow.querySelectorAll('.testimonial-slide');
+    if (slides.length === 0) return;
+    
+    // Set up dots navigation
+    const dots = document.querySelectorAll('.testimonial-dot');
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            goToTestimonialSlide(index);
+            testimonialsCurrentSlide = index;
+            clearInterval(testimonialsSlideInterval);
+        });
+    });
+    
+    // Set up arrow navigation
+    const prevArrow = testimonialsSlideshow.querySelector('.testimonial-slide-arrow.prev');
+    const nextArrow = testimonialsSlideshow.querySelector('.testimonial-slide-arrow.next');
+    
+    if (prevArrow) {
+        prevArrow.addEventListener('click', () => {
+            testimonialsCurrentSlide = (testimonialsCurrentSlide - 1 + slides.length) % slides.length;
+            goToTestimonialSlide(testimonialsCurrentSlide);
+            clearInterval(testimonialsSlideInterval);
+        });
+    }
+    
+    if (nextArrow) {
+        nextArrow.addEventListener('click', () => {
+            testimonialsCurrentSlide = (testimonialsCurrentSlide + 1) % slides.length;
+            goToTestimonialSlide(testimonialsCurrentSlide);
+            clearInterval(testimonialsSlideInterval);
+        });
+    }
+    
+    // Auto-rotate testimonial slides
+    testimonialsSlideInterval = setInterval(() => {
+        testimonialsCurrentSlide = (testimonialsCurrentSlide + 1) % slides.length;
+        goToTestimonialSlide(testimonialsCurrentSlide);
+    }, 10000);
+}
+
+// Go to a specific testimonial slide
+function goToTestimonialSlide(index) {
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.testimonial-dot');
+    
+    // Update slides
+    slides.forEach((slide, i) => {
+        if (i === index) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    
+    // Update dots
+    dots.forEach((dot, i) => {
+        if (i === index) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+// Go to a specific slide
+function goToSlide(slideshow, index) {
+    const slides = slideshow.querySelectorAll('.slide');
+    const dots = slideshow.querySelectorAll('.dot');
+    
+    // Update slides
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active', 'next', 'prev', 'slide-left-out', 'slide-right-out', 'slide-left-in', 'slide-right-in');
+        
+        if (i === index) {
+            slide.classList.add('active');
+        } else if (i === (index + 1) % slides.length) {
+            slide.classList.add('next');
+        } else if (i === (index - 1 + slides.length) % slides.length) {
+            slide.classList.add('prev');
+        }
+    });
+    
+    // Update dots
+    dots.forEach((dot, i) => {
+        if (i === index) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
     });
 } 

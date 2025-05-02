@@ -149,6 +149,16 @@ img {
     padding: 0 0.8rem;
 }
 
+.content-container {
+    min-height: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}
+
 /* Header and Navigation */
 header {
     position: fixed;
@@ -257,30 +267,39 @@ nav {
 main {
     flex: 1;
     margin-top: var(--header-height);
-    margin-bottom: var(--footer-height);
     position: relative;
+    overflow-x: hidden;
+    background-color: var(--light-bg);
     min-height: calc(100vh - var(--header-height) - var(--footer-height));
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .page {
-    min-height: calc(100vh - var(--header-height) - var(--footer-height));
-    padding: var(--section-spacing) 0;
+    display: none;
+    min-height: 100%;
+    height: auto;
+    padding: 1.5rem 1rem;
+    background-color: var(--light-bg);
     transition: transform 0.5s ease, opacity 0.5s ease;
     position: absolute;
-    width: 100%;
-    left: 0;
     top: 0;
+    left: 0;
+    width: 100%;
     opacity: 0;
-    z-index: -1;
-    transform: translateX(100px);
-    overflow-y: auto;
+    z-index: 0;
+    flex: 1;
 }
 
 .page.active {
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.5s ease forwards;
     opacity: 1;
     z-index: 1;
-    transform: translateX(0);
+    position: relative;
+    height: auto;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
 }
 
 /* Animation for page transitions */
@@ -338,22 +357,23 @@ main {
     gap: clamp(1rem, 3vw, 2rem);
 }
 
-.hero-text {
-    flex: 1;
+.hero-image {
+    flex: 1.5;
+    display: flex;
+    justify-content: center;
     max-width: 600px;
 }
 
-.hero-image {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    max-width: 550px;
-}
-
 .hero-app-image {
-    max-width: clamp(200px, 30vw, 300px);
+    max-width: clamp(300px, 40vw, 450px);
     border-radius: 20px;
     box-shadow: var(--shadow);
+}
+
+.hero-text {
+    flex: 1;
+    max-width: 550px;
+    padding-left: 1rem;
 }
 
 .hero h1 {
@@ -1401,6 +1421,18 @@ footer {
     
     .hero-text {
         text-align: center;
+        padding-left: 0;
+        order: 2;
+    }
+
+    .hero-image {
+        order: 1;
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-app-image {
+        max-width: clamp(220px, 70vw, 350px);
     }
     
     .hero h1 {
