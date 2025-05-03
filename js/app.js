@@ -19,6 +19,9 @@ const accountMenuItems = document.querySelectorAll('.account-menu li');
 const featuresSlideshow = document.querySelector('.features-detail-slideshow');
 const testimonialsSlideshow = document.querySelector('.testimonial-slides-container');
 const signupLink = document.querySelector('.signup-link');
+const supportForm = document.getElementById('supportForm');
+const thankYouModal = document.getElementById('thankYouModal');
+const thankYouClose = document.querySelector('.thank-you-close');
 
 // State
 let isLoggedIn = false;
@@ -82,6 +85,9 @@ function setupEventListeners() {
         }
         if (e.target === subscriptionModal) {
             subscriptionModal.style.display = 'none';
+        }
+        if (e.target === thankYouModal) {
+            thankYouModal.style.display = 'none';
         }
     });
     
@@ -180,6 +186,34 @@ function setupEventListeners() {
             navigateTo(hash);
         }
     }
+    
+    // Support form submission
+    supportForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Get form data
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        
+        // In a real app, send email to support@myfinancialtracker.com 
+        // using a server-side API or email service
+        console.log(`Support request from ${name} (${email})`);
+        console.log(`Subject: ${subject}`);
+        console.log(`Message: ${message}`);
+        
+        // Show thank you modal
+        thankYouModal.style.display = 'flex';
+        
+        // Reset form
+        supportForm.reset();
+    });
+    
+    // Thank you modal close button
+    thankYouClose?.addEventListener('click', () => {
+        thankYouModal.style.display = 'none';
+    });
 }
 
 // Open login modal
