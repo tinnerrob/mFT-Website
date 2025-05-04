@@ -10,7 +10,7 @@
 /* ========== VARIABLES & BASE STYLES ========== */
 :root {
     /* Colors */
-    --primary-color: #203448;
+    --primary-color: #2C3E50;
     --secondary-color: #00a651;
     --accent-color: #e0f7fa;
     --hover-color: #FF8C00;
@@ -132,7 +132,7 @@ img {
 }
 
 .btn.main {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: var(--light-text);
 }
 
