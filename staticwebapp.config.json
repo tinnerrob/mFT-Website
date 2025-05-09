@@ -5,16 +5,5 @@
       "/js/*",
       "/css/*"
     ]
-  },
-  "routes": [
-    {
-      "route": "/*",
-      "rewrite": "/index.html",
-      "exclude": [
-        "/images/*.{png,jpg,gif,svg}",
-        "/css/*",
-        "/js/*"
-      ]
-    }
-  ]
+  }
 }
