@@ -2,7 +2,7 @@
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": [
-      "/.well-known/*",
+      "/js/*",
       "/css/*"
     ]
   },
