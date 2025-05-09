@@ -1,6 +1,15 @@
-{  
-  "navigationFallback": {  
-    "rewrite": "/index.html",  
-    "exclude": ["/.well-known/*", "/css/*"]  
-  }
-}  
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/.well-known/*",
+      "/css/*"
+    ]
+  },
+  "routes": [
+    {
+      "route": "/*",
+      "rewrite": "/index.html"
+    }
+  ]
+}
