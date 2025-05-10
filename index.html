@@ -16,11 +16,12 @@
             </div>
             <ul class="nav-links">
                 <li data-page="home" class="active"><a href="#home">Home</a></li>
+                <li data-page="about"><a href="#about">About</a></li>
                 <li data-page="features"><a href="#features">Features</a></li>
-                <li data-page="support"><a href="#support">Support</a></li>
                 <li data-page="testimonials"><a href="#testimonials">Testimonials</a></li>
                 <li data-page="signup"><a href="#signup">Sign Up</a></li>
                 <li data-page="faq"><a href="#faq">FAQ</a></li>
+                <li data-page="support"><a href="#support">Support</a></li>
             </ul>
             <div class="login-container">
                 <a href="#login" class="login-link" id="loginBtn">
@@ -38,18 +39,65 @@
     <main>
         <!-- Home Page -->
         <section id="home" class="page active">
-            <div class="hero">
-                <div class="hero-content">
-                    <div class="hero-image">
-                        <img src="images/app-showcase.png" alt="myFinancialTracker App" class="hero-app-image">
-                    </div>
-                    <div class="hero-text">
-                        <h1>Personal Finances<br>at Your Fingertips</h1>
-                        <p>Take control of your finances with myFinancialTracker</p>
-                        <div class="cta-buttons">
-                            <a href="#signup" class="btn primary">Get Started</a>
-                            <a href="#features" class="btn secondary">Learn More</a>
+            <div class="content-container">
+                <div class="hero">
+                    <div class="hero-content">
+                        <div class="hero-image">
+                            <img src="images/app-showcase.png" alt="myFinancialTracker App" class="hero-app-image">
                         </div>
+                        <div class="hero-text">
+                            <h1>Personal Finances<br>at Your Fingertips</h1>
+                            <p>Take control of your finances with myFinancialTracker</p>
+                            <div class="cta-buttons">
+                                <a href="#signup" class="btn primary">Get Started</a>
+                                <a href="#features" class="btn secondary">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Page -->
+        <section id="about" class="page">
+            <div class="content-container">
+                <h1>About Us</h1>
+                <div class="cards-stack-container about-stack">
+                    <div class="card-stack-item" data-card="0">
+                        <h2>Our Mission</h2>
+                        <p>At myFinancialTracker, we believe that everyone deserves to have control over their financial future. Our mission is to empower individuals and families with the tools and insights they need to make informed financial decisions and achieve their goals.</p>
+                    </div>
+                    <div class="card-stack-item" data-card="1">
+                        <h2>Our Story</h2>
+                        <p>Founded in 2023, myFinancialTracker was born from a simple observation: managing personal finances shouldn't be complicated. Our team of financial experts and technology innovators came together to create a solution that makes financial management accessible, intuitive, and effective for everyone.</p>
+                    </div>
+                    <div class="card-stack-item" data-card="2">
+                        <h2>Our Values</h2>
+                        <ul>
+                            <li><b>Transparency:</b> We believe in clear, honest communication about our services and how we handle your data.</li>
+                            <li><b>Security:</b> Your financial data security is our top priority. We use industry-leading encryption and security practices.</li>
+                            <li><b>Innovation:</b> We continuously improve our platform to provide the best possible experience for our users.</li>
+                            <li><b>Accessibility:</b> We're committed to making financial management tools available to everyone.</li>
+                        </ul>
+                    </div>
+                    <div class="card-stack-item" data-card="3">
+                        <h2>Our Team</h2>
+                        <p>Our diverse team brings together expertise in finance, technology, and user experience design. We're passionate about creating tools that make a real difference in people's lives.</p>
+                    </div>
+                    <div class="card-stack-item" data-card="4">
+                        <h2>Join Our Journey</h2>
+                        <p>Whether you're just starting your financial journey or looking to take your financial management to the next level, we're here to help. Join thousands of satisfied users who have transformed their financial lives with myFinancialTracker.</p>
+                        <div class="about-cta-buttons">
+                            <a href="#signup" class="btn primary">Get Started</a>
+                            <a href="#features" class="btn secondary">Explore Features</a>
+                        </div>
+                    </div>
+                    <div class="stack-arrows">
+                        <div class="stack-arrow prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="stack-arrow next"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="stack-dots-container">
+                        <!-- Dots will be generated by JS -->
                     </div>
                 </div>
             </div>
@@ -59,231 +107,192 @@
         <section id="features" class="page">
             <div class="content-container">
                 <h1>Features</h1>
-                <div class="features-detail-slideshow">
-                    <div class="slides-container">
-                        <div class="slide active">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/features/dashboard.png" alt="Financial Tracking">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Personal Finances at Your Fingertips</h2>
-                                        <div class="feature-description">
-                                            <p>myFinancialTracker makes it simple to track all your financial data in one place. With our intuitive interface, you can:</p>
-                                            <ul>
-                                                <li>Categorize expenses automatically</li>
-                                                <li>Track multiple income sources</li>
-                                                <li>Monitor investments in real-time</li>
-                                                <li>Set and track budgets with customizable alerts</li>
-                                                <li>Import transactions from thousands of financial institutions</li>
-                                            </ul>
-                                            <p>Our clean design and powerful features make financial management accessible to everyone.</p>
-                                        </div>
-                                    </div>
+                <div class="cards-stack-container features-stack">
+                    <div class="card-stack-item image-left" data-card="0">
+                        <div class="feature-detail">
+                            <div class="feature-content">
+                                <div class="feature-image-container">
+                                    <img src="images/features/dashboard.png" alt="Financial Tracking">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="slide">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/features/transactions.png" alt="Income & Expense Transactions Tracking">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Income & Expense Transactions Tracking</h2>
-                                        <div class="feature-description">
-                                            <p>Stay on top of your finances with powerful transaction management:</p>
-                                            <ul>
-                                                <li>Sort and filter your transactions by income or expense</li>
-                                                <li>View current period's income vs. expenses, plus up-to-date totals</li>
-                                                <li>Easily add new income or expense transactions with a single tap</li>
-                                            </ul>
-                                            <p>Visualize your financial flow, track your progress, and make informed decisions with ease.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/features/budget.png" alt="Budget Tracking">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Budget Tracking</h2>
-                                        <div class="feature-description">
-                                            <p>Take control of your spending with flexible budget management:</p>
-                                            <ul>
-                                                <li>Create custom budgets for any category</li>
-                                                <li>See both comprehensive and detailed budget breakdowns</li>
-                                                <li>Quickly create new Weekly, Monthly, and Yearly budgets</li>
-                                            </ul>
-                                            <p>Stay on track and make smarter financial decisions with clear, visual budget insights.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/features/insights.png" alt="Financial Insights">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Financial Insights</h2>
-                                        <div class="feature-description">
-                                            <p>Gain valuable insights into your financial health with our advanced analytics:</p>
-                                            <ul>
-                                                <li>Visualize spending patterns with interactive charts</li>
-                                                <li>Identify spending categories that can be optimized</li>
-                                                <li>Track month-to-month changes in your financial position</li>
-                                                <li>Receive personalized recommendations based on your habits</li>
-                                                <li>Compare your finances to anonymized averages for your demographic</li>
-                                            </ul>
-                                            <p>Transform raw financial data into actionable insights that help you make better decisions.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/features/credit.png" alt="Credit Line Management">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Credit Line Management</h2>
-                                        <div class="feature-description">
-                                            <p>Stay on top of your credit with powerful management tools:</p>
-                                            <ul>
-                                                <li>Create and track both credit lines and credit cards</li>
-                                                <li>See comprehensive and detailed credit breakdowns</li>
-                                                <li>Monitor total credit limit, utilization, and available credit at a glance</li>
-                                            </ul>
-                                            <p>Gain insights into your credit health and make smarter borrowing decisions.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/feature-projections.png" alt="Financial Projections">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Financial Projections</h2>
-                                        <div class="feature-description">
-                                            <p>Plan for your future with confidence using our powerful projection tools:</p>
-                                            <ul>
-                                                <li>Create multiple financial scenarios and compare outcomes</li>
-                                                <li>Model the impact of major life events on your finances</li>
-                                                <li>Project retirement savings with adjustable parameters</li>
-                                                <li>Visualize debt payoff strategies and timelines</li>
-                                                <li>Forecast cash flow for the next 12 months</li>
-                                            </ul>
-                                            <p>Move beyond reactive financial management to proactive financial planning with our projection tools.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/features/creditpayoff.png" alt="Credit Analysis">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Credit Card & Loan Analysis</h2>
-                                        <div class="feature-description">
-                                            <p>Optimize your debt management strategy with our comprehensive analysis tools:</p>
-                                            <ul>
-                                                <li>Compare different debt payoff strategies (snowball vs. avalanche)</li>
-                                                <li>Calculate interest savings from consolidation or refinancing</li>
-                                                <li>Monitor credit utilization across all accounts</li>
-                                                <li>Receive alerts about high-interest charges</li>
-                                                <li>Get personalized recommendations for optimizing your debt</li>
-                                            </ul>
-                                            <p>Take control of your debt and save thousands in interest with our smart analysis and recommendations.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/feature-recurring.png" alt="Recurring Transactions">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Recurring Transactions</h2>
-                                        <div class="feature-description">
-                                            <p>Never miss a bill or subscription payment with our recurring transaction management:</p>
-                                            <ul>
-                                                <li>Automatically detect recurring bills and subscriptions</li>
-                                                <li>Receive reminders before payments are due</li>
-                                                <li>Track subscription spending and identify opportunities to save</li>
-                                                <li>Schedule automatic payments for recurring expenses</li>
-                                                <li>Get notified about price increases in your subscriptions</li>
-                                            </ul>
-                                            <p>Simplify your financial life by automating the tracking and management of your recurring transactions.</p>
-                                        </div>
+                                <div class="feature-content-container">
+                                    <h2>Personal Finances at Your Fingertips</h2>
+                                    <div class="feature-description">
+                                        <p>myFinancialTracker makes it simple to track all your financial data in one place. With our intuitive interface, you can:</p>
+                                        <ul>
+                                            <li>Categorize expenses automatically</li>
+                                            <li>Track multiple income sources</li>
+                                            <li>Monitor investments in real-time</li>
+                                            <li>Set and track budgets with customizable alerts</li>
+                                            <li>Import transactions from thousands of financial institutions</li>
+                                        </ul>
+                                        <p>Our clean design and powerful features make financial management accessible to everyone.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="slide-arrows">
-                        <div class="slide-arrow prev"><i class="fas fa-chevron-left"></i></div>
-                        <div class="slide-arrow next"><i class="fas fa-chevron-right"></i></div>
+                    <div class="card-stack-item image-right" data-card="1">
+                        <div class="feature-detail">
+                            <div class="feature-content">
+                                <div class="feature-image-container">
+                                    <img src="images/features/transactions.png" alt="Income & Expense Transactions Tracking">
+                                </div>
+                                <div class="feature-content-container">
+                                    <h2>Income & Expense Transactions Tracking</h2>
+                                    <div class="feature-description">
+                                        <p>Stay on top of your finances with powerful transaction management:</p>
+                                        <ul>
+                                            <li>Sort and filter your transactions by income or expense</li>
+                                            <li>View current period's income vs. expenses, plus up-to-date totals</li>
+                                            <li>Easily add new income or expense transactions with a single tap</li>
+                                        </ul>
+                                        <p>Visualize your financial flow, track your progress, and make informed decisions with ease.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="dots-container">
+                    <div class="card-stack-item image-left" data-card="2">
+                        <div class="feature-detail">
+                            <div class="feature-content">
+                                <div class="feature-image-container">
+                                    <img src="images/features/budget.png" alt="Budget Tracking">
+                                </div>
+                                <div class="feature-content-container">
+                                    <h2>Budget Tracking</h2>
+                                    <div class="feature-description">
+                                        <p>Take control of your spending with flexible budget management:</p>
+                                        <ul>
+                                            <li>Create custom budgets for any category</li>
+                                            <li>See both comprehensive and detailed budget breakdowns</li>
+                                            <li>Quickly create new Weekly, Monthly, and Yearly budgets</li>
+                                        </ul>
+                                        <p>Stay on track and make smarter financial decisions with clear, visual budget insights.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-stack-item image-right" data-card="3">
+                        <div class="feature-detail">
+                            <div class="feature-content">
+                                <div class="feature-image-container">
+                                    <img src="images/features/insights.png" alt="Financial Insights">
+                                </div>
+                                <div class="feature-content-container">
+                                    <h2>Financial Insights</h2>
+                                    <div class="feature-description">
+                                        <p>Gain valuable insights into your financial health with our advanced analytics:</p>
+                                        <ul>
+                                            <li>Visualize spending patterns with interactive charts</li>
+                                            <li>Identify spending categories that can be optimized</li>
+                                            <li>Track month-to-month changes in your financial position</li>
+                                            <li>Receive personalized recommendations based on your habits</li>
+                                            <li>Compare your finances to anonymized averages for your demographic</li>
+                                        </ul>
+                                        <p>Transform raw financial data into actionable insights that help you make better decisions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-stack-item image-left" data-card="4">
+                        <div class="feature-detail">
+                            <div class="feature-content">
+                                <div class="feature-image-container">
+                                    <img src="images/features/credit.png" alt="Credit Line Management">
+                                </div>
+                                <div class="feature-content-container">
+                                    <h2>Credit Line Management</h2>
+                                    <div class="feature-description">
+                                        <p>Stay on top of your credit with powerful management tools:</p>
+                                        <ul>
+                                            <li>Create and track both credit lines and credit cards</li>
+                                            <li>See comprehensive and detailed credit breakdowns</li>
+                                            <li>Monitor total credit limit, utilization, and available credit at a glance</li>
+                                        </ul>
+                                        <p>Gain insights into your credit health and make smarter borrowing decisions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-stack-item image-right" data-card="5">
+                        <div class="feature-detail">
+                            <div class="feature-content">
+                                <div class="feature-image-container">
+                                    <img src="images/feature-projections.png" alt="Financial Projections">
+                                </div>
+                                <div class="feature-content-container">
+                                    <h2>Financial Projections</h2>
+                                    <div class="feature-description">
+                                        <p>Plan for your future with confidence using our powerful projection tools:</p>
+                                        <ul>
+                                            <li>Create multiple financial scenarios and compare outcomes</li>
+                                            <li>Model the impact of major life events on your finances</li>
+                                            <li>Project retirement savings with adjustable parameters</li>
+                                            <li>Visualize debt payoff strategies and timelines</li>
+                                            <li>Forecast cash flow for the next 12 months</li>
+                                        </ul>
+                                        <p>Move beyond reactive financial management to proactive financial planning with our projection tools.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-stack-item image-left" data-card="6">
+                        <div class="feature-detail">
+                            <div class="feature-content">
+                                <div class="feature-image-container">
+                                    <img src="images/features/creditpayoff.png" alt="Credit Analysis">
+                                </div>
+                                <div class="feature-content-container">
+                                    <h2>Credit Card & Loan Analysis</h2>
+                                    <div class="feature-description">
+                                        <p>Optimize your debt management strategy with our comprehensive analysis tools:</p>
+                                        <ul>
+                                            <li>Compare different debt payoff strategies (snowball vs. avalanche)</li>
+                                            <li>Calculate interest savings from consolidation or refinancing</li>
+                                            <li>Monitor credit utilization across all accounts</li>
+                                            <li>Receive alerts about high-interest charges</li>
+                                            <li>Get personalized recommendations for optimizing your debt</li>
+                                        </ul>
+                                        <p>Take control of your debt and save thousands in interest with our smart analysis and recommendations.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-stack-item image-right" data-card="7">
+                        <div class="feature-detail">
+                            <div class="feature-content">
+                                <div class="feature-image-container">
+                                    <img src="images/feature-recurring.png" alt="Recurring Transactions">
+                                </div>
+                                <div class="feature-content-container">
+                                    <h2>Recurring Transactions</h2>
+                                    <div class="feature-description">
+                                        <p>Never miss a bill or subscription payment with our recurring transaction management:</p>
+                                        <ul>
+                                            <li>Automatically detect recurring bills and subscriptions</li>
+                                            <li>Receive reminders before payments are due</li>
+                                            <li>Track subscription spending and identify opportunities to save</li>
+                                            <li>Schedule automatic payments for recurring expenses</li>
+                                            <li>Get notified about price increases in your subscriptions</li>
+                                        </ul>
+                                        <p>Simplify your financial life by automating the tracking and management of your recurring transactions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stack-arrows">
+                        <div class="stack-arrow prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="stack-arrow next"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="stack-dots-container">
                         <!-- Dots will be generated by JS -->
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Support Page -->
-        <section id="support" class="page">
-            <div class="content-container">
-                <h1>Support & Suggestions</h1>
-                <div class="support-container">
-                    <div class="support-intro">
-                        <p>Have a question or suggestion? We'd love to hear from you! Fill out the form below and our team will get back to you as soon as possible.</p>
-                    </div>
-                    <form id="supportForm" class="support-form">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <select id="subject" name="subject" required>
-                                <option value="">Select an option</option>
-                                <option value="technical">Technical Support</option>
-                                <option value="billing">Billing Question</option>
-                                <option value="feature">Feature Suggestion</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn primary">Submit</button>
-                    </form>
                 </div>
             </div>
         </section>
@@ -292,244 +301,15 @@
         <section id="testimonials" class="page">
             <div class="content-container">
                 <h1>What Our Users Say</h1>
-                <div class="testimonial-slides-container">
-                    <!-- Slide 1 -->
-                    <div class="testimonial-slide active">
-                        <div class="testimonials-grid">
-                            <!-- Third testimonial (white, moved to rows 1-2, column 1) -->
-                            <div class="testimonial-card white" style="grid-column: 1; grid-row: 1 / span 2; height: 524px;">
-                                <div class="testimonial-content">
-                                    <p>"Such a life-changing experience. Highly recommended!"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/kira.jpg" alt="Kira Whittle">
-                                    <div class="author-details">
-                                        <h3>Kira Whittle</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- First testimonial (teal, moved to row 1, columns 2-3) -->
-                            <div class="testimonial-card teal" style="grid-column: 2 / span 2; grid-row: 1;">
-                                <div class="testimonial-content">
-                                    <p>"I received a job offer mid-course, and the subjects I learned were current, if not more so, in the company I joined. I honestly feel I got every penny's worth."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/daniel.jpg" alt="Daniel Clifford">
-                                    <div class="author-details">
-                                        <h3>Daniel Clifford</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Second testimonial (now light-orange, moved to row 1, column 4) -->
-                            <div class="testimonial-card light-orange" style="grid-column: 4; grid-row: 1;">
-                                <div class="testimonial-content">
-                                    <p>"The team was very supportive and kept me motivated"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/jonathan.jpg" alt="Jonathan Walters">
-                                    <div class="author-details">
-                                        <h3>Jonathan Walters</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Fourth testimonial (white, moved to row 2, column 2) -->
-                            <div class="testimonial-card white" style="grid-column: 2; grid-row: 2;">
-                                <div class="testimonial-content">
-                                    <p>"An overall wonderful and rewarding experience"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/jeanette.jpg" alt="Jeanette Harmon">
-                                    <div class="author-details">
-                                        <h3>Jeanette Harmon</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Fifth testimonial (light-purple, moved to row 2, columns 3-4) -->
-                            <div class="testimonial-card light-purple" style="grid-column: 3 / span 2; grid-row: 2;">
-                                <div class="testimonial-content">
-                                    <p>"Awesome teaching support from TAs who did the bootcamp themselves. Getting guidance from them and learning from their experiences was easy."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/patrick.jpg" alt="Patrick Abrams">
-                                    <div class="author-details">
-                                        <h3>Patrick Abrams</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="cards-stack-container testimonial-stack">
+                    <!-- Cards will be dynamically generated by JS -->
+                    <div class="stack-arrows">
+                        <div class="stack-arrow prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="stack-arrow next"><i class="fas fa-chevron-right"></i></div>
                     </div>
-                    
-                    <!-- Slide 2 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonials-grid">
-                            <!-- Eighth testimonial (light-orange, moved to row 1, column 1) -->
-                            <div class="testimonial-card light-orange" style="grid-column: 1; grid-row: 1;">
-                                <div class="testimonial-content">
-                                    <p>"As a college student, this app has been a game-changer. It's teaching me financial habits that I wish I'd learned years ago."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/sophia.jpg" alt="Sophia Garcia">
-                                    <div class="author-details">
-                                        <h3>Sophia Garcia</h3>
-                                        <p>Student</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Sixth testimonial (green, moved to column 2, still spans 2 rows) -->
-                            <div class="testimonial-card green" style="grid-column: 2; grid-row: 1 / span 2; height: 524px;">
-                                <div class="testimonial-content">
-                                    <p>"The financial insights feature has completely transformed how I budget. I've saved over $2,000 in just the first three months of using myFinancialTracker!"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/rebecca.jpg" alt="Rebecca Johnson">
-                                    <div class="author-details">
-                                        <h3>Rebecca Johnson</h3>
-                                        <p>Accountant</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Seventh testimonial (purple, remains in columns 3-4) -->
-                            <div class="testimonial-card purple" style="grid-column: 3 / span 2; grid-row: 1;">
-                                <div class="testimonial-content">
-                                    <p>"After years of struggling with debt, the payoff strategies recommended by the app have put me on track to be debt-free within two years."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/james.jpg" alt="James Wilson">
-                                    <div class="author-details">
-                                        <h3>James Wilson</h3>
-                                        <p>Small Business Owner</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Ninth testimonial (white, moved to row 2, column 1) -->
-                            <div class="testimonial-card white" style="grid-column: 1; grid-row: 2;">
-                                <div class="testimonial-content">
-                                    <p>"The family sharing feature has transformed how my spouse and I communicate about money. No more financial disagreements!"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/michael.jpg" alt="Michael Thompson">
-                                    <div class="author-details">
-                                        <h3>Michael Thompson</h3>
-                                        <p>Software Engineer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Tenth testimonial (dark-gray, remains in row 2, columns 3-4) -->
-                            <div class="testimonial-card dark-gray" style="grid-column: span 2; grid-row: 2;">
-                                <div class="testimonial-content">
-                                    <p>"I've tried at least five different financial apps, and myFinancialTracker is by far the most intuitive and comprehensive. The automatic categorization feature saves me hours every month."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/emma.jpg" alt="Emma Rodriguez">
-                                    <div class="author-details">
-                                        <h3>Emma Rodriguez</h3>
-                                        <p>Financial Advisor</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="stack-dots-container">
+                        <!-- Dots will be generated by JS -->
                     </div>
-                    
-                    <!-- Slide 3 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonials-grid">
-                            <!-- Eleventh testimonial (now gray) -->
-                            <div class="testimonial-card gray">
-                                <div class="testimonial-content">
-                                    <p>"As a retiree, keeping track of my fixed income is crucial. This app has given me peace of mind and confidence in my financial situation. The projection tools are especially valuable for planning my future expenses."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/robert.jpg" alt="Robert Chen">
-                                    <div class="author-details">
-                                        <h3>Robert Chen</h3>
-                                        <p>Retired Teacher</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Twelfth testimonial (now purple) -->
-                            <div class="testimonial-card purple">
-                                <div class="testimonial-content">
-                                    <p>"The investment tracking feature has completely changed how I manage my portfolio. Seeing all my investments in one place is incredibly convenient."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/olivia.jpg" alt="Olivia Patel">
-                                    <div class="author-details">
-                                        <h3>Olivia Patel</h3>
-                                        <p>Investment Analyst</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Thirteenth testimonial (white) -->
-                            <div class="testimonial-card white">
-                                <div class="testimonial-content">
-                                    <p>"I travel frequently for work, and being able to track expenses in different currencies has been invaluable. This app does it automatically!"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/david.jpg" alt="David Kim">
-                                    <div class="author-details">
-                                        <h3>David Kim</h3>
-                                        <p>International Consultant</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Fourteenth testimonial (white) -->
-                            <div class="testimonial-card white">
-                                <div class="testimonial-content">
-                                    <p>"The customer support is exceptional. When I had questions about setting up my budget, they responded within hours with detailed guidance."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/sarah.jpg" alt="Sarah Mitchell">
-                                    <div class="author-details">
-                                        <h3>Sarah Mitchell</h3>
-                                        <p>Marketing Director</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Fifteenth testimonial (now teal) -->
-                            <div class="testimonial-card teal">
-                                <div class="testimonial-content">
-                                    <p>"I started using this app when I was deep in debt. The debt payoff strategies and bill reminders helped me become debt-free in 18 months. I can't recommend it enough to anyone struggling with financial organization."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/thomas.jpg" alt="Thomas Anderson">
-                                    <div class="author-details">
-                                        <h3>Thomas Anderson</h3>
-                                        <p>Healthcare Professional</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Navigation Arrows -->
-                    <div class="testimonial-slide-arrows">
-                        <div class="testimonial-slide-arrow prev"><i class="fas fa-chevron-left"></i></div>
-                        <div class="testimonial-slide-arrow next"><i class="fas fa-chevron-right"></i></div>
-                    </div>
-                </div>
-                
-                <!-- Navigation Dots -->
-                <div class="testimonial-dots-container">
-                    <div class="testimonial-dot active" data-slide="0"></div>
-                    <div class="testimonial-dot" data-slide="1"></div>
-                    <div class="testimonial-dot" data-slide="2"></div>
                 </div>
             </div>
         </section>
@@ -614,6 +394,111 @@
             </div>
         </section>
 
+        <!-- FAQ Page -->
+        <section id="faq" class="page">
+            <div class="content-container">
+                <h1>Frequently Asked Questions</h1>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What is myFinancialTracker?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>myFinancialTracker is a powerful iOS app that helps you manage your personal finances with ease. It offers features like expense tracking, family sharing, financial insights, projections, debt analysis, and more.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How secure is my financial data?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We take security seriously. All your data is encrypted with military-grade encryption both during transmission and when stored in our database. We never share your financial information with third parties without your explicit consent.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I cancel my subscription at any time?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, you can cancel your subscription at any time from your account settings. Your subscription will remain active until the end of your current billing period.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How does family sharing work?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>With family sharing, you can invite up to 4 family members (for Premium) or 10 team members (for Business) to view and manage shared financial accounts. You have full control over what information each member can access.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Which financial institutions can I connect to?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>myFinancialTracker connects to over 10,000 financial institutions worldwide, including major banks, credit card companies, investment platforms, and more. If you have trouble connecting to a specific institution, please contact our support team.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Is there a free version available?</h3>
+                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer a 14-day free trial for all new users. After the trial period, you'll need to choose one of our subscription plans to continue using the app. We don't currently offer a permanent free tier.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Page -->
+        <section id="support" class="page">
+            <div class="content-container">
+                <h1>Support & Suggestions</h1>
+                <div class="support-container">
+                    <div class="support-intro">
+                        <p>Have a question or suggestion? We'd love to hear from you! Fill out the form below and our team will get back to you as soon as possible.</p>
+                    </div>
+                    <form id="supportForm" class="support-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select an option</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="billing">Billing Question</option>
+                                <option value="feature">Feature Suggestion</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
         <!-- Account Page (hidden by default) -->
         <section id="account" class="page">
             <div class="content-container">
@@ -652,7 +537,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Billing Section -->
                         <div class="account-section billing">
                             <h2>Billing Information</h2>
@@ -689,7 +574,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <!-- Security Section -->
                         <div class="account-section security">
                             <h2>Security Settings</h2>
@@ -717,80 +602,61 @@
             </div>
         </section>
 
-        <!-- FAQ Page -->
-        <section id="faq" class="page">
-            <div class="content-container">
-                <h1>Frequently Asked Questions</h1>
-                <div class="faq-container">
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>What is myFinancialTracker?</h3>
-                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>myFinancialTracker is a powerful iOS app that helps you manage your personal finances with ease. It offers features like expense tracking, family sharing, financial insights, projections, debt analysis, and more.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>How secure is my financial data?</h3>
-                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>We take security seriously. All your data is encrypted with military-grade encryption both during transmission and when stored in our database. We never share your financial information with third parties without your explicit consent.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>Can I cancel my subscription at any time?</h3>
-                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Yes, you can cancel your subscription at any time from your account settings. Your subscription will remain active until the end of your current billing period.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>How does family sharing work?</h3>
-                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>With family sharing, you can invite up to 4 family members (for Premium) or 10 team members (for Business) to view and manage shared financial accounts. You have full control over what information each member can access.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>Which financial institutions can I connect to?</h3>
-                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>myFinancialTracker connects to over 10,000 financial institutions worldwide, including major banks, credit card companies, investment platforms, and more. If you have trouble connecting to a specific institution, please contact our support team.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>Is there a free version available?</h3>
-                            <span class="faq-toggle"><i class="fas fa-plus"></i></span>
-                        </div>
-                        <div class="faq-answer">
-                            <p>We offer a 14-day free trial for all new users. After the trial period, you'll need to choose one of our subscription plans to continue using the app. We don't currently offer a permanent free tier.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Privacy Policy Page -->
         <section id="privacy" class="page">
             <div class="content-container">
                 <h1>Privacy Policy</h1>
                 <div class="legal-container">
-                    <div class="legal-content" id="privacy-content"></div>
+                    <div class="legal-content">
+                        <p class="legal-date">Last updated: June 15, 2023</p>
+                        <p>At myFinancialTracker, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information.</p>
+
+                        <h2>Information We Collect</h2>
+                        <p>We collect information you provide directly to us, such as:</p>
+                        <ul>
+                            <li>Account information (name, email, password)</li>
+                            <li>Financial information (account details, transactions, balances)</li>
+                            <li>Payment information (credit card details for subscription)</li>
+                            <li>Communication data (when you contact our support team)</li>
+                        </ul>
+
+                        <h2>How We Use Your Information</h2>
+                        <p>We use your information to:</p>
+                        <ul>
+                            <li>Provide and maintain our services</li>
+                            <li>Process transactions and payments</li>
+                            <li>Send notifications and updates about your account</li>
+                            <li>Improve our services and develop new features</li>
+                            <li>Comply with legal obligations</li>
+                        </ul>
+
+                        <h2>Data Security</h2>
+                        <p>We implement appropriate security measures to protect your personal information. These include encryption, secure servers, and regular security audits. However, no method of transmission over the Internet or electronic storage is 100% secure.</p>
+
+                        <h2>Sharing Your Information</h2>
+                        <p>We do not sell your personal information to third parties. We may share information with:</p>
+                        <ul>
+                            <li>Service providers who help us operate our business</li>
+                            <li>Partners with your explicit consent</li>
+                            <li>Law enforcement or government bodies when required by law</li>
+                        </ul>
+
+                        <h2>Your Rights</h2>
+                        <p>Depending on your location, you may have rights to:</p>
+                        <ul>
+                            <li>Access or download your personal information</li>
+                            <li>Correct inaccurate information</li>
+                            <li>Delete your personal information</li>
+                            <li>Object to certain processing of your data</li>
+                            <li>Withdraw consent where applicable</li>
+                        </ul>
+
+                        <h2>Updates to This Policy</h2>
+                        <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by email or through the app.</p>
+
+                        <h2>Contact Us</h2>
+                        <p>If you have questions about this Privacy Policy, please contact us at privacy@myfinancialtracker.com.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -800,7 +666,45 @@
             <div class="content-container">
                 <h1>Terms of Service</h1>
                 <div class="legal-container">
-                    <div class="legal-content" id="terms-content"></div>
+                    <div class="legal-content">
+                        <p class="legal-date">Last updated: June 15, 2023</p>
+                        <p>These Terms of Service ("Terms") govern your access to and use of myFinancialTracker services. By using our services, you agree to these Terms.</p>
+
+                        <h2>Your Account</h2>
+                        <p>To use our services, you must create an account. You are responsible for maintaining the security of your account and password. You agree to provide accurate information and to update it when necessary.</p>
+
+                        <h2>Subscription and Payments</h2>
+                        <p>myFinancialTracker offers subscription-based services. When you subscribe, you agree to pay the fees associated with your chosen plan. Unless you cancel before the end of your current billing period, your subscription will automatically renew.</p>
+                        <p>We may change our subscription fees at any time, but we'll provide notice before changes take effect. If you don't agree to the new fees, you should cancel your subscription before they take effect.</p>
+
+                        <h2>Acceptable Use</h2>
+                        <p>You agree to use our services only for lawful purposes and in accordance with these Terms. You agree not to:</p>
+                        <ul>
+                            <li>Use our services in any way that violates any law or regulation</li>
+                            <li>Attempt to gain unauthorized access to our systems</li>
+                            <li>Interfere with or disrupt the integrity of our services</li>
+                            <li>Reproduce, distribute, or publicly display any content from our services</li>
+                            <li>Use our services to distribute malware or harmful code</li>
+                        </ul>
+
+                        <h2>Intellectual Property</h2>
+                        <p>myFinancialTracker and its content, features, and functionality are owned by us and are protected by copyright, trademark, and other intellectual property laws. You may not copy, modify, distribute, or create derivative works based on our services without our explicit permission.</p>
+
+                        <h2>Limitation of Liability</h2>
+                        <p>To the maximum extent permitted by law, myFinancialTracker shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly.</p>
+
+                        <h2>Termination</h2>
+                        <p>We may terminate or suspend your account and access to our services at any time, without prior notice or liability, for any reason, including if you breach these Terms.</p>
+
+                        <h2>Changes to These Terms</h2>
+                        <p>We may modify these Terms at any time. If we make material changes, we will notify you before they take effect. By continuing to use our services after the changes take effect, you agree to the revised Terms.</p>
+
+                        <h2>Governing Law</h2>
+                        <p>These Terms shall be governed by and construed in accordance with the laws of the United States, without regard to its conflict of law principles.</p>
+
+                        <h2>Contact Us</h2>
+                        <p>If you have questions about these Terms, please contact us at legal@myfinancialtracker.com.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -832,7 +736,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Subscription Modal -->
     <div id="subscriptionModal" class="modal">
         <div class="modal-content subscription-modal-content">
