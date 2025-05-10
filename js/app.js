@@ -490,7 +490,7 @@ function setupModalPopups() {
             const selectedPlan = btn.getAttribute('data-plan');
             if (selectedPlanInfo) {
                 selectedPlanInfo.textContent = selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1);
-            }
+}
         });
     });
     // Close modals on close button
@@ -1059,7 +1059,7 @@ function initTestimonialStackNavigation() {
         arrow.addEventListener('click', () => {
             if (arrow.classList.contains('prev')) {
                 goBackward();
-            } else {
+        } else {
                 goForward();
         }
     });
