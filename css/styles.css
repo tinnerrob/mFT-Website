@@ -64,16 +64,33 @@ body {
     min-height: 100vh;
 }
 
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
+/* Consolidated heading styles */
+h1 {
+    font-size: var(--h1-size);
     font-weight: 600;
     line-height: 1.3;
     margin-bottom: 1rem;
 }
-
-h1 { font-size: var(--h1-size); }
-h2 { font-size: var(--h2-size); }
-h3 { font-size: var(--h3-size); }
+h2 {
+    font-size: var(--h2-size);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+}
+h3 {
+    font-size: var(--h3-size);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.8rem;
+    margin-top: 1.2rem;
+}
+h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
 
 a {
     text-decoration: none;
@@ -305,12 +322,14 @@ main {
     flex-direction: column;
 }
 
+/* Consolidated page styles */
 .page {
     display: none;
     min-height: 100%;
     height: auto;
     padding: 1.5rem 1rem;
     background-color: var(--light-bg);
+    color: var(--text-color);
     transition: transform 0.5s ease, opacity 0.5s ease;
     position: absolute;
     top: 0;
@@ -319,6 +338,7 @@ main {
     opacity: 0;
     z-index: 0;
     flex: 1;
+    text-align: center;
 }
 
 .page.active {
@@ -2259,4 +2279,19 @@ input:checked + .slider:before {
 
 .features-stack .card-stack-item.image-right .feature-content {
     flex-direction: row-reverse;
+}
+
+#about .content-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Consolidated section header styles */
+.content-container > h1 {
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: var(--h1-size);
+    font-weight: 600;
+    line-height: 1.3;
 } 
