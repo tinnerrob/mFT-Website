@@ -33,12 +33,111 @@ let featuresSlideInterval;
 let testimonialsSlideInterval;
 let isBillingYearly = false;
 
+// --- Testimonial Pool ---
+const testimonialPool = [
+    {
+        text: '"Such a life-changing experience. Highly recommended!"',
+        img: 'images/testimonials/kira.jpg',
+        name: 'Kira Whittle',
+        role: 'Verified Graduate'
+    },
+    {
+        text: '"I received a job offer mid-course, and the subjects I learned were current, if not more so, in the company I joined. I honestly feel I got every penny\'s worth."',
+        img: 'images/testimonials/daniel.jpg',
+        name: 'Daniel Clifford',
+        role: 'Verified Graduate'
+    },
+    {
+        text: '"The team was very supportive and kept me motivated"',
+        img: 'images/testimonials/jonathan.jpg',
+        name: 'Jonathan Walters',
+        role: 'Verified Graduate'
+    },
+    {
+        text: '"An overall wonderful and rewarding experience"',
+        img: 'images/testimonials/jeanette.jpg',
+        name: 'Jeanette Harmon',
+        role: 'Verified Graduate'
+    },
+    {
+        text: '"Awesome teaching support from TAs who did the bootcamp themselves. Getting guidance from them and learning from their experiences was easy."',
+        img: 'images/testimonials/patrick.jpg',
+        name: 'Patrick Abrams',
+        role: 'Verified Graduate'
+    },
+    {
+        text: '"As a college student, this app has been a game-changer. It\'s teaching me financial habits that I wish I\'d learned years ago."',
+        img: 'images/testimonials/sophia.jpg',
+        name: 'Sophia Garcia',
+        role: 'Student'
+    },
+    {
+        text: '"The financial insights feature has completely transformed how I budget. I\'ve saved over $2,000 in just the first three months of using myFinancialTracker!"',
+        img: 'images/testimonials/rebecca.jpg',
+        name: 'Rebecca Johnson',
+        role: 'Accountant'
+    },
+    {
+        text: '"After years of struggling with debt, the payoff strategies recommended by the app have put me on track to be debt-free within two years."',
+        img: 'images/testimonials/james.jpg',
+        name: 'James Wilson',
+        role: 'Small Business Owner'
+    },
+    {
+        text: '"The family sharing feature has transformed how my spouse and I communicate about money. No more financial disagreements!"',
+        img: 'images/testimonials/michael.jpg',
+        name: 'Michael Thompson',
+        role: 'Software Engineer'
+    },
+    {
+        text: '"I\'ve tried at least five different financial apps, and myFinancialTracker is by far the most intuitive and comprehensive. The automatic categorization feature saves me hours every month."',
+        img: 'images/testimonials/emma.jpg',
+        name: 'Emma Rodriguez',
+        role: 'Financial Advisor'
+    },
+    {
+        text: '"As a retiree, keeping track of my fixed income is crucial. This app has given me peace of mind and confidence in my financial situation. The projection tools are especially valuable for planning my future expenses."',
+        img: 'images/testimonials/robert.jpg',
+        name: 'Robert Chen',
+        role: 'Retired Teacher'
+    },
+    {
+        text: '"The investment tracking feature has completely changed how I manage my portfolio. Seeing all my investments in one place is incredibly convenient."',
+        img: 'images/testimonials/olivia.jpg',
+        name: 'Olivia Patel',
+        role: 'Investment Analyst'
+    },
+    {
+        text: '"I travel frequently for work, and being able to track expenses in different currencies has been invaluable. This app does it automatically!"',
+        img: 'images/testimonials/david.jpg',
+        name: 'David Kim',
+        role: 'International Consultant'
+    },
+    {
+        text: '"The customer support is exceptional. When I had questions about setting up my budget, they responded within hours with detailed guidance."',
+        img: 'images/testimonials/sarah.jpg',
+        name: 'Sarah Mitchell',
+        role: 'Marketing Director'
+    },
+    {
+        text: '"I started using this app when I was deep in debt. The debt payoff strategies and bill reminders helped me become debt-free in 18 months. I can\'t recommend it enough to anyone struggling with financial organization."',
+        img: 'images/testimonials/thomas.jpg',
+        name: 'Thomas Anderson',
+        role: 'Healthcare Professional'
+    }
+];
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     checkLoginStatus();
     initFaqAccordion();
     initSlideshows();
+    initTestimonialsStackSlideshow();
+    renderRandomTestimonials();
+    initTestimonialsSlideshow();
+    renderScatteredTestimonials();
+    initTestimonialStackNavigation();
 });
 
 // Set up all event listeners
@@ -413,7 +512,8 @@ function initFaqAccordion() {
 // Initialize slideshows if they exist
 function initSlideshows() {
     initFeaturesSlideshow();
-    initTestimonialsSlideshow();
+    initAboutStack();
+    initTestimonialsStack();
 }
 
 // Initialize features slideshow
@@ -468,96 +568,388 @@ function initFeaturesSlideshow() {
 
 // Initialize testimonials slideshow
 function initTestimonialsSlideshow() {
+    const testimonialsSlideshow = document.querySelector('.testimonials-slideshow');
     if (!testimonialsSlideshow) return;
-    
-    const slides = testimonialsSlideshow.querySelectorAll('.testimonial-slide');
-    if (slides.length === 0) return;
-    
-    // Set up dots navigation
-    const dots = document.querySelectorAll('.testimonial-dot');
-    dots.forEach((dot, index) => {
+    const slidesContainer = testimonialsSlideshow.querySelector('.slides-container');
+    let slides = testimonialsSlideshow.querySelectorAll('.slide');
+    const arrows = testimonialsSlideshow.querySelectorAll('.slide-arrow');
+    const dotsContainer = testimonialsSlideshow.querySelector('.dots-container');
+    let current = 0;
+    let interval;
+
+    // Remove old dots
+    if (dotsContainer) dotsContainer.innerHTML = '';
+    // Create dots
+    slides = testimonialsSlideshow.querySelectorAll('.slide');
+    slides.forEach((_, idx) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (idx === 0 ? ' active' : '');
         dot.addEventListener('click', () => {
-            goToTestimonialSlide(index);
-            testimonialsCurrentSlide = index;
-            clearInterval(testimonialsSlideInterval);
+            goToSlide(testimonialsSlideshow, idx);
+            current = idx;
+            clearInterval(interval);
         });
+        dotsContainer.appendChild(dot);
     });
-    
-    // Set up arrow navigation
-    const prevArrow = testimonialsSlideshow.querySelector('.testimonial-slide-arrow.prev');
-    const nextArrow = testimonialsSlideshow.querySelector('.testimonial-slide-arrow.next');
-    
-    if (prevArrow) {
+
+    function goToSlide(slideshow, idx) {
+        const slides = slideshow.querySelectorAll('.slide');
+        const dots = slideshow.querySelectorAll('.dot');
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active', 'next', 'prev', 'slide-left-out', 'slide-right-out', 'slide-left-in', 'slide-right-in');
+            if (i === idx) {
+                slide.classList.add('active');
+            } else if (i === (idx + 1) % slides.length) {
+                slide.classList.add('next');
+            } else if (i === (idx - 1 + slides.length) % slides.length) {
+                slide.classList.add('prev');
+            }
+        });
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === idx);
+        });
+    }
+
+    // Arrow navigation
+    if (arrows.length) {
+        const prevArrow = arrows[0];
+        const nextArrow = arrows[1];
         prevArrow.addEventListener('click', () => {
-            testimonialsCurrentSlide = (testimonialsCurrentSlide - 1 + slides.length) % slides.length;
-            goToTestimonialSlide(testimonialsCurrentSlide);
-            clearInterval(testimonialsSlideInterval);
+            current = (current - 1 + slides.length) % slides.length;
+            goToSlide(testimonialsSlideshow, current);
+            clearInterval(interval);
         });
-    }
-    
-    if (nextArrow) {
         nextArrow.addEventListener('click', () => {
-            testimonialsCurrentSlide = (testimonialsCurrentSlide + 1) % slides.length;
-            goToTestimonialSlide(testimonialsCurrentSlide);
-            clearInterval(testimonialsSlideInterval);
+            current = (current + 1) % slides.length;
+            goToSlide(testimonialsSlideshow, current);
+            clearInterval(interval);
         });
     }
-    
-    // Auto-rotate testimonial slides
-    testimonialsSlideInterval = setInterval(() => {
-        testimonialsCurrentSlide = (testimonialsCurrentSlide + 1) % slides.length;
-        goToTestimonialSlide(testimonialsCurrentSlide);
-    }, 10000);
+
+    // Auto-rotate
+    interval = setInterval(() => {
+        current = (current + 1) % slides.length;
+        goToSlide(testimonialsSlideshow, current);
+    }, 8000);
 }
 
-// Go to a specific testimonial slide
-function goToTestimonialSlide(index) {
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const dots = document.querySelectorAll('.testimonial-dot');
-    
-    // Update slides
-    slides.forEach((slide, i) => {
-        if (i === index) {
-            slide.classList.add('active');
-        } else {
-            slide.classList.remove('active');
-        }
-    });
-    
-    // Update dots
-    dots.forEach((dot, i) => {
-        if (i === index) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
-    });
+function randomGrey() {
+    // Generate a random grey between #b0b0b0 and #e0e0e0
+    const v = Math.floor(Math.random() * 64) + 176; // 176-239
+    return `rgb(${v},${v},${v})`;
 }
 
-// Go to a specific slide
-function goToSlide(slideshow, index) {
-    const slides = slideshow.querySelectorAll('.slide');
-    const dots = slideshow.querySelectorAll('.dot');
+function initAboutStack() {
+    initStackedCards('.about-stack');
+}
+
+function initTestimonialsStack() {
+    const testimonialData = [
+        {
+            content: "Such a life-changing experience. Highly recommended!",
+            author: "Kira Whittle",
+            role: "Verified Graduate",
+            image: "images/testimonials/kira.jpg"
+        },
+        {
+            content: "I received a job offer mid-course, and the subjects I learned were current, if not more so, in the company I joined. I honestly feel I got every penny's worth.",
+            author: "Daniel Clifford",
+            role: "Verified Graduate",
+            image: "images/testimonials/daniel.jpg"
+        },
+        {
+            content: "The team was very supportive and kept me motivated",
+            author: "Jonathan Walters",
+            role: "Verified Graduate",
+            image: "images/testimonials/jonathan.jpg"
+        },
+        {
+            content: "An overall wonderful and rewarding experience",
+            author: "Jeanette Harmon",
+            role: "Verified Graduate",
+            image: "images/testimonials/jeanette.jpg"
+        },
+        {
+            content: "Awesome teaching support from TAs who did the bootcamp themselves. Getting guidance from them and learning from their experiences was easy.",
+            author: "Patrick Abrams",
+            role: "Verified Graduate",
+            image: "images/testimonials/patrick.jpg"
+        },
+        {
+            content: "As a college student, this app has been a game-changer. It's teaching me financial habits that I wish I'd learned years ago.",
+            author: "Sophia Garcia",
+            role: "Student",
+            image: "images/testimonials/sophia.jpg"
+        },
+        {
+            content: "The financial insights feature has completely transformed how I budget. I've saved over $2,000 in just the first three months of using myFinancialTracker!",
+            author: "Rebecca Johnson",
+            role: "Accountant",
+            image: "images/testimonials/rebecca.jpg"
+        },
+        {
+            content: "After years of struggling with debt, the payoff strategies recommended by the app have put me on track to be debt-free within two years.",
+            author: "James Wilson",
+            role: "Small Business Owner",
+            image: "images/testimonials/james.jpg"
+        }
+    ];
+
+    // Shuffle and select 8 random testimonials
+    const shuffledTestimonials = shuffleArray([...testimonialData]).slice(0, 8);
     
-    // Update slides
-    slides.forEach((slide, i) => {
-        slide.classList.remove('active', 'next', 'prev', 'slide-left-out', 'slide-right-out', 'slide-left-in', 'slide-right-in');
+    // Create testimonial cards
+    const container = document.querySelector('.testimonial-stack');
+    shuffledTestimonials.forEach((testimonial, index) => {
+        const card = document.createElement('div');
+        card.className = 'card-stack-item';
+        card.dataset.card = index;
         
-        if (i === index) {
-            slide.classList.add('active');
-        } else if (i === (index + 1) % slides.length) {
-            slide.classList.add('next');
-        } else if (i === (index - 1 + slides.length) % slides.length) {
-            slide.classList.add('prev');
-        }
+        card.innerHTML = `
+            <div class="testimonial-content">
+                <p>"${testimonial.content}"</p>
+            </div>
+            <div class="testimonial-author">
+                <img src="${testimonial.image}" alt="${testimonial.author}">
+                <div class="author-details">
+                    <h3>${testimonial.author}</h3>
+                    <p>${testimonial.role}</p>
+                </div>
+            </div>
+        `;
+        
+        container.insertBefore(card, container.firstChild);
     });
+
+    // Initialize the stack
+    initStackedCards('.testimonial-stack');
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function randomTestimonialGrey() {
+    const v = Math.floor(Math.random() * 64) + 176;
+    return `rgb(${v},${v},${v})`;
+}
+
+function initStackedCards(containerSelector, options = {}) {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    const cards = Array.from(container.querySelectorAll('.card-stack-item'));
+    const dotsContainer = container.querySelector('.stack-dots-container');
+    const prevArrow = container.querySelector('.stack-arrow.prev');
+    const nextArrow = container.querySelector('.stack-arrow.next');
     
-    // Update dots
-    dots.forEach((dot, i) => {
-        if (i === index) {
-            dot.classList.add('active');
+    let currentIndex = 0;
+    const totalCards = cards.length;
+
+    // Generate dots
+    cards.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'stack-dot' + (index === 0 ? ' active' : '');
+        dot.dataset.card = index;
+        dot.addEventListener('click', () => goToCard(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = Array.from(dotsContainer.querySelectorAll('.stack-dot'));
+
+    // Set initial random positions for all cards except the first one
+    cards.forEach((card, index) => {
+        if (index === 0) {
+            card.classList.add('active');
+            return;
+        }
+        
+        const randomRotate = (Math.random() * 20 - 10); // -10deg to +10deg
+        const randomX = (Math.random() * 240 - 120);    // -120px to +120px
+        const randomY = (Math.random() * 120 - 60);     // -60px to +60px
+        const randomGrey = Math.floor(Math.random() * 40) + 200;
+        
+        card.style.setProperty('--stack-rotate', `${randomRotate}deg`);
+        card.style.setProperty('--stack-x', `${randomX}px`);
+        card.style.setProperty('--stack-y', `${randomY}px`);
+        card.style.setProperty('--stack-grey', `rgb(${randomGrey}, ${randomGrey}, ${randomGrey})`);
+        card.classList.add('inactive-grey');
+    });
+
+    function updateStack() {
+        cards.forEach((card, index) => {
+            card.classList.remove('active', 'move-out-right', 'move-out-left', 'move-back-in');
+            
+            if (index === currentIndex) {
+                card.classList.add('active');
+            } else {
+                card.classList.add('inactive-grey');
+            }
+        });
+
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    function goToCard(index) {
+        if (index === currentIndex) return;
+        
+        const oldIndex = currentIndex;
+        currentIndex = index;
+        
+        const oldCard = cards[oldIndex];
+        const newCard = cards[currentIndex];
+        
+        // Determine direction
+        const direction = index > oldIndex ? 'right' : 'left';
+        
+        // Move old card out
+        oldCard.classList.add(direction === 'right' ? 'move-out-left' : 'move-out-right');
+        
+        // Move new card in
+        newCard.classList.add('move-back-in');
+        
+        // Update stack after animation
+        setTimeout(updateStack, 500);
+    }
+
+    function goForward() {
+        const nextIndex = (currentIndex + 1) % totalCards;
+        goToCard(nextIndex);
+    }
+
+    function goBackward() {
+        const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
+        goToCard(prevIndex);
+    }
+
+    // Event listeners
+    prevArrow.addEventListener('click', goBackward);
+    nextArrow.addEventListener('click', goForward);
+
+    // Initialize
+    updateStack();
+}
+
+function initTestimonialStackNavigation() {
+    const container = document.querySelector('.testimonial-cards-stack-container');
+    if (!container) return;
+    const cards = Array.from(container.querySelectorAll('.testimonial-card-stack-item'));
+    const arrows = document.querySelectorAll('.testimonial-arrow');
+    const dots = document.querySelectorAll('.testimonial-dot');
+    let stackOrder = cards.map((_, i) => i);
+    let transforms = cards.map(() => ({
+        rotate: (Math.random() * 24 - 12).toFixed(1),
+        x: (Math.random() * 600 - 300).toFixed(1),
+        y: (Math.random() * 320 - 160).toFixed(1)
+    }));
+    // Assign initial random greys
+    cards.forEach((card, i) => {
+        if (i !== 0) {
+            card.classList.add('inactive-grey');
+            card.style.setProperty('--testimonial-grey', randomTestimonialGrey());
         } else {
-            dot.classList.remove('active');
+            card.classList.remove('inactive-grey');
+            card.style.setProperty('--testimonial-grey', '#fff');
         }
     });
+    function updateStack() {
+        cards.forEach((card, i) => {
+            card.classList.remove('active', 'move-out-right', 'move-out-left', 'move-back-in', 'animate');
+            card.style.zIndex = 2 + (cards.length - stackOrder.indexOf(i));
+            card.style.opacity = 1;
+            card.style.pointerEvents = 'none';
+            const t = transforms[i];
+            card.style.setProperty('--testimonial-rotate', `${t.rotate}deg`);
+            card.style.setProperty('--testimonial-x', `${t.x}px`);
+            card.style.setProperty('--testimonial-y', `${t.y}px`);
+            if (stackOrder[0] !== i) {
+                card.classList.add('inactive-grey');
+            } else {
+                card.classList.remove('inactive-grey');
+            }
+        });
+        // Top card
+        const topIdx = stackOrder[0];
+        cards[topIdx].classList.add('active');
+        cards[topIdx].style.zIndex = 20;
+        cards[topIdx].style.pointerEvents = 'auto';
+        cards[topIdx].style.setProperty('--testimonial-x', '0px');
+        cards[topIdx].style.setProperty('--testimonial-y', '0px');
+        cards[topIdx].style.setProperty('--testimonial-grey', '#fff');
+        // Dots
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === topIdx);
+        });
+    }
+    function goForward() {
+        const topIdx = stackOrder[0];
+        const card = cards[topIdx];
+        const dir = Math.random() < 0.5 ? 'right' : 'left';
+        const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
+        card.style.zIndex = 30;
+        card.classList.add(moveClass);
+        setTimeout(() => {
+            stackOrder.push(stackOrder.shift());
+            card.classList.add('inactive-grey');
+            card.style.setProperty('--testimonial-grey', randomTestimonialGrey());
+            card.classList.add('move-back-in');
+            updateStack();
+            setTimeout(() => {
+                card.classList.remove(moveClass, 'move-back-in');
+            }, 500);
+        }, 500);
+    }
+    function goBackward() {
+        const newTopIdx = stackOrder[stackOrder.length - 1];
+        const card = cards[newTopIdx];
+        const dir = Math.random() < 0.5 ? 'right' : 'left';
+        const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
+        card.classList.add('move-back-in');
+        card.classList.add('inactive-grey');
+        card.style.setProperty('--testimonial-grey', '#fff');
+        card.style.zIndex = 30;
+        stackOrder.unshift(stackOrder.pop());
+        updateStack();
+        setTimeout(() => {
+            card.classList.remove('move-back-in');
+            card.classList.remove('inactive-grey');
+            cards.forEach((c, i) => {
+                if (i !== stackOrder[0]) {
+                    c.classList.add('inactive-grey');
+                    c.style.setProperty('--testimonial-grey', randomTestimonialGrey());
+                }
+            });
+        }, 500);
+    }
+    // Arrow navigation
+    arrows.forEach(arrow => {
+        arrow.addEventListener('click', () => {
+            if (arrow.classList.contains('prev')) {
+                goBackward();
+            } else {
+                goForward();
+            }
+        });
+    });
+    // Dot navigation
+    dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => {
+            const topIdx = stackOrder[0];
+            if (idx === topIdx) return;
+            const currentPos = stackOrder.indexOf(idx);
+            if (currentPos === -1) return;
+            if (currentPos < cards.length / 2) {
+                for (let i = 0; i < currentPos; i++) goForward();
+            } else {
+                for (let i = 0; i < cards.length - currentPos; i++) goBackward();
+            }
+        });
+    });
+    updateStack();
 } 

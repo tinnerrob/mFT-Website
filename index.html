@@ -16,11 +16,12 @@
             </div>
             <ul class="nav-links">
                 <li data-page="home" class="active"><a href="#home">Home</a></li>
+                <li data-page="about"><a href="#about">About</a></li>
                 <li data-page="features"><a href="#features">Features</a></li>
-                <li data-page="support"><a href="#support">Support</a></li>
                 <li data-page="testimonials"><a href="#testimonials">Testimonials</a></li>
                 <li data-page="signup"><a href="#signup">Sign Up</a></li>
                 <li data-page="faq"><a href="#faq">FAQ</a></li>
+                <li data-page="support"><a href="#support">Support</a></li>
             </ul>
             <div class="login-container">
                 <a href="#login" class="login-link" id="loginBtn">
@@ -65,7 +66,7 @@
                             <div class="feature-detail">
                                 <div class="feature-content">
                                     <div class="feature-image-container">
-                                        <img src="images/features/Dashboard.png" alt="Dashboard">
+                                        <img src="images/features/dashboard.png" alt="Financial Tracking">
                                     </div>
                                     <div class="feature-content-container">
                                         <h2>Personal Finances at Your Fingertips</h2>
@@ -88,7 +89,7 @@
                             <div class="feature-detail">
                                 <div class="feature-content">
                                     <div class="feature-image-container">
-                                        <img src="images/features/Transactions.png" alt="Income & Expense Transactions Tracking">
+                                        <img src="images/features/transactions.png" alt="Income & Expense Transactions Tracking">
                                     </div>
                                     <div class="feature-content-container">
                                         <h2>Income & Expense Transactions Tracking</h2>
@@ -109,7 +110,7 @@
                             <div class="feature-detail">
                                 <div class="feature-content">
                                     <div class="feature-image-container">
-                                        <img src="images/features/Budget.png" alt="Budget Tracking">
+                                        <img src="images/features/budget.png" alt="Budget Tracking">
                                     </div>
                                     <div class="feature-content-container">
                                         <h2>Budget Tracking</h2>
@@ -130,7 +131,7 @@
                             <div class="feature-detail">
                                 <div class="feature-content">
                                     <div class="feature-image-container">
-                                        <img src="images/features/Insights.png" alt="Financial Insights">
+                                        <img src="images/features/insights.png" alt="Financial Insights">
                                     </div>
                                     <div class="feature-content-container">
                                         <h2>Financial Insights</h2>
@@ -153,7 +154,7 @@
                             <div class="feature-detail">
                                 <div class="feature-content">
                                     <div class="feature-image-container">
-                                        <img src="images/features/Credit.png" alt="Credit Line Management">
+                                        <img src="images/features/credit.png" alt="Credit Line Management">
                                     </div>
                                     <div class="feature-content-container">
                                         <h2>Credit Line Management</h2>
@@ -174,7 +175,30 @@
                             <div class="feature-detail">
                                 <div class="feature-content">
                                     <div class="feature-image-container">
-                                        <img src="images/features/CreditPayoff.png" alt="Credit Analysis">
+                                        <img src="images/feature-projections.png" alt="Financial Projections">
+                                    </div>
+                                    <div class="feature-content-container">
+                                        <h2>Financial Projections</h2>
+                                        <div class="feature-description">
+                                            <p>Plan for your future with confidence using our powerful projection tools:</p>
+                                            <ul>
+                                                <li>Create multiple financial scenarios and compare outcomes</li>
+                                                <li>Model the impact of major life events on your finances</li>
+                                                <li>Project retirement savings with adjustable parameters</li>
+                                                <li>Visualize debt payoff strategies and timelines</li>
+                                                <li>Forecast cash flow for the next 12 months</li>
+                                            </ul>
+                                            <p>Move beyond reactive financial management to proactive financial planning with our projection tools.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="feature-detail">
+                                <div class="feature-content">
+                                    <div class="feature-image-container">
+                                        <img src="images/features/creditpayoff.png" alt="Credit Analysis">
                                     </div>
                                     <div class="feature-content-container">
                                         <h2>Credit Card & Loan Analysis</h2>
@@ -211,29 +235,6 @@
                                                 <li>Get notified about price increases in your subscriptions</li>
                                             </ul>
                                             <p>Simplify your financial life by automating the tracking and management of your recurring transactions.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide">
-                            <div class="feature-detail">
-                                <div class="feature-content">
-                                    <div class="feature-image-container">
-                                        <img src="images/feature-projections.png" alt="Financial Projections">
-                                    </div>
-                                    <div class="feature-content-container">
-                                        <h2>Financial Projections</h2>
-                                        <div class="feature-description">
-                                            <p>Plan for your future with confidence using our powerful projection tools:</p>
-                                            <ul>
-                                                <li>Create multiple financial scenarios and compare outcomes</li>
-                                                <li>Model the impact of major life events on your finances</li>
-                                                <li>Project retirement savings with adjustable parameters</li>
-                                                <li>Visualize debt payoff strategies and timelines</li>
-                                                <li>Forecast cash flow for the next 12 months</li>
-                                            </ul>
-                                            <p>Move beyond reactive financial management to proactive financial planning with our projection tools.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -292,244 +293,15 @@
         <section id="testimonials" class="page">
             <div class="content-container">
                 <h1>What Our Users Say</h1>
-                <div class="testimonial-slides-container">
-                    <!-- Slide 1 -->
-                    <div class="testimonial-slide active">
-                        <div class="testimonials-grid">
-                            <!-- Third testimonial (white, moved to rows 1-2, column 1) -->
-                            <div class="testimonial-card white" style="grid-column: 1; grid-row: 1 / span 2; height: 524px;">
-                                <div class="testimonial-content">
-                                    <p>"Such a life-changing experience. Highly recommended!"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/kira.jpg" alt="Kira Whittle">
-                                    <div class="author-details">
-                                        <h3>Kira Whittle</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- First testimonial (teal, moved to row 1, columns 2-3) -->
-                            <div class="testimonial-card teal" style="grid-column: 2 / span 2; grid-row: 1;">
-                                <div class="testimonial-content">
-                                    <p>"I received a job offer mid-course, and the subjects I learned were current, if not more so, in the company I joined. I honestly feel I got every penny's worth."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/daniel.jpg" alt="Daniel Clifford">
-                                    <div class="author-details">
-                                        <h3>Daniel Clifford</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Second testimonial (now light-orange, moved to row 1, column 4) -->
-                            <div class="testimonial-card light-orange" style="grid-column: 4; grid-row: 1;">
-                                <div class="testimonial-content">
-                                    <p>"The team was very supportive and kept me motivated"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/jonathan.jpg" alt="Jonathan Walters">
-                                    <div class="author-details">
-                                        <h3>Jonathan Walters</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Fourth testimonial (white, moved to row 2, column 2) -->
-                            <div class="testimonial-card white" style="grid-column: 2; grid-row: 2;">
-                                <div class="testimonial-content">
-                                    <p>"An overall wonderful and rewarding experience"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/jeanette.jpg" alt="Jeanette Harmon">
-                                    <div class="author-details">
-                                        <h3>Jeanette Harmon</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Fifth testimonial (light-purple, moved to row 2, columns 3-4) -->
-                            <div class="testimonial-card light-purple" style="grid-column: 3 / span 2; grid-row: 2;">
-                                <div class="testimonial-content">
-                                    <p>"Awesome teaching support from TAs who did the bootcamp themselves. Getting guidance from them and learning from their experiences was easy."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/patrick.jpg" alt="Patrick Abrams">
-                                    <div class="author-details">
-                                        <h3>Patrick Abrams</h3>
-                                        <p>Verified Graduate</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="cards-stack-container testimonial-stack">
+                    <!-- Cards will be dynamically generated by JS -->
+                    <div class="stack-arrows">
+                        <div class="stack-arrow prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="stack-arrow next"><i class="fas fa-chevron-right"></i></div>
                     </div>
-                    
-                    <!-- Slide 2 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonials-grid">
-                            <!-- Eighth testimonial (light-orange, moved to row 1, column 1) -->
-                            <div class="testimonial-card light-orange" style="grid-column: 1; grid-row: 1;">
-                                <div class="testimonial-content">
-                                    <p>"As a college student, this app has been a game-changer. It's teaching me financial habits that I wish I'd learned years ago."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/sophia.jpg" alt="Sophia Garcia">
-                                    <div class="author-details">
-                                        <h3>Sophia Garcia</h3>
-                                        <p>Student</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Sixth testimonial (green, moved to column 2, still spans 2 rows) -->
-                            <div class="testimonial-card green" style="grid-column: 2; grid-row: 1 / span 2; height: 524px;">
-                                <div class="testimonial-content">
-                                    <p>"The financial insights feature has completely transformed how I budget. I've saved over $2,000 in just the first three months of using myFinancialTracker!"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/rebecca.jpg" alt="Rebecca Johnson">
-                                    <div class="author-details">
-                                        <h3>Rebecca Johnson</h3>
-                                        <p>Accountant</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Seventh testimonial (purple, remains in columns 3-4) -->
-                            <div class="testimonial-card purple" style="grid-column: 3 / span 2; grid-row: 1;">
-                                <div class="testimonial-content">
-                                    <p>"After years of struggling with debt, the payoff strategies recommended by the app have put me on track to be debt-free within two years."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/james.jpg" alt="James Wilson">
-                                    <div class="author-details">
-                                        <h3>James Wilson</h3>
-                                        <p>Small Business Owner</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Ninth testimonial (white, moved to row 2, column 1) -->
-                            <div class="testimonial-card white" style="grid-column: 1; grid-row: 2;">
-                                <div class="testimonial-content">
-                                    <p>"The family sharing feature has transformed how my spouse and I communicate about money. No more financial disagreements!"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/michael.jpg" alt="Michael Thompson">
-                                    <div class="author-details">
-                                        <h3>Michael Thompson</h3>
-                                        <p>Software Engineer</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Tenth testimonial (dark-gray, remains in row 2, columns 3-4) -->
-                            <div class="testimonial-card dark-gray" style="grid-column: span 2; grid-row: 2;">
-                                <div class="testimonial-content">
-                                    <p>"I've tried at least five different financial apps, and myFinancialTracker is by far the most intuitive and comprehensive. The automatic categorization feature saves me hours every month."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/emma.jpg" alt="Emma Rodriguez">
-                                    <div class="author-details">
-                                        <h3>Emma Rodriguez</h3>
-                                        <p>Financial Advisor</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="stack-dots-container">
+                        <!-- Dots will be generated by JS -->
                     </div>
-                    
-                    <!-- Slide 3 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonials-grid">
-                            <!-- Eleventh testimonial (now gray) -->
-                            <div class="testimonial-card gray">
-                                <div class="testimonial-content">
-                                    <p>"As a retiree, keeping track of my fixed income is crucial. This app has given me peace of mind and confidence in my financial situation. The projection tools are especially valuable for planning my future expenses."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/robert.jpg" alt="Robert Chen">
-                                    <div class="author-details">
-                                        <h3>Robert Chen</h3>
-                                        <p>Retired Teacher</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Twelfth testimonial (now purple) -->
-                            <div class="testimonial-card purple">
-                                <div class="testimonial-content">
-                                    <p>"The investment tracking feature has completely changed how I manage my portfolio. Seeing all my investments in one place is incredibly convenient."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/olivia.jpg" alt="Olivia Patel">
-                                    <div class="author-details">
-                                        <h3>Olivia Patel</h3>
-                                        <p>Investment Analyst</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Thirteenth testimonial (white) -->
-                            <div class="testimonial-card white">
-                                <div class="testimonial-content">
-                                    <p>"I travel frequently for work, and being able to track expenses in different currencies has been invaluable. This app does it automatically!"</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/david.jpg" alt="David Kim">
-                                    <div class="author-details">
-                                        <h3>David Kim</h3>
-                                        <p>International Consultant</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Fourteenth testimonial (white) -->
-                            <div class="testimonial-card white">
-                                <div class="testimonial-content">
-                                    <p>"The customer support is exceptional. When I had questions about setting up my budget, they responded within hours with detailed guidance."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/sarah.jpg" alt="Sarah Mitchell">
-                                    <div class="author-details">
-                                        <h3>Sarah Mitchell</h3>
-                                        <p>Marketing Director</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Fifteenth testimonial (now teal) -->
-                            <div class="testimonial-card teal">
-                                <div class="testimonial-content">
-                                    <p>"I started using this app when I was deep in debt. The debt payoff strategies and bill reminders helped me become debt-free in 18 months. I can't recommend it enough to anyone struggling with financial organization."</p>
-                                </div>
-                                <div class="testimonial-author">
-                                    <img src="images/testimonials/thomas.jpg" alt="Thomas Anderson">
-                                    <div class="author-details">
-                                        <h3>Thomas Anderson</h3>
-                                        <p>Healthcare Professional</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Navigation Arrows -->
-                    <div class="testimonial-slide-arrows">
-                        <div class="testimonial-slide-arrow prev"><i class="fas fa-chevron-left"></i></div>
-                        <div class="testimonial-slide-arrow next"><i class="fas fa-chevron-right"></i></div>
-                    </div>
-                </div>
-                
-                <!-- Navigation Dots -->
-                <div class="testimonial-dots-container">
-                    <div class="testimonial-dot active" data-slide="0"></div>
-                    <div class="testimonial-dot" data-slide="1"></div>
-                    <div class="testimonial-dot" data-slide="2"></div>
                 </div>
             </div>
         </section>
@@ -887,6 +659,51 @@
                         
                         <h2>Contact Us</h2>
                         <p>If you have questions about these Terms, please contact us at legal@myfinancialtracker.com.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Page -->
+        <section id="about" class="page">
+            <div class="content-container">
+                <h1>About Us</h1>
+                <div class="cards-stack-container about-stack">
+                    <div class="card-stack-item" data-card="0">
+                        <h2>Our Mission</h2>
+                        <p>At myFinancialTracker, we believe that everyone deserves to have control over their financial future. Our mission is to empower individuals and families with the tools and insights they need to make informed financial decisions and achieve their goals.</p>
+                    </div>
+                    <div class="card-stack-item" data-card="1">
+                        <h2>Our Story</h2>
+                        <p>Founded in 2023, myFinancialTracker was born from a simple observation: managing personal finances shouldn't be complicated. Our team of financial experts and technology innovators came together to create a solution that makes financial management accessible, intuitive, and effective for everyone.</p>
+                    </div>
+                    <div class="card-stack-item" data-card="2">
+                        <h2>Our Values</h2>
+                        <ul>
+                            <li><b>Transparency:</b> We believe in clear, honest communication about our services and how we handle your data.</li>
+                            <li><b>Security:</b> Your financial data security is our top priority. We use industry-leading encryption and security practices.</li>
+                            <li><b>Innovation:</b> We continuously improve our platform to provide the best possible experience for our users.</li>
+                            <li><b>Accessibility:</b> We're committed to making financial management tools available to everyone.</li>
+                        </ul>
+                    </div>
+                    <div class="card-stack-item" data-card="3">
+                        <h2>Our Team</h2>
+                        <p>Our diverse team brings together expertise in finance, technology, and user experience design. We're passionate about creating tools that make a real difference in people's lives.</p>
+                    </div>
+                    <div class="card-stack-item" data-card="4">
+                        <h2>Join Our Journey</h2>
+                        <p>Whether you're just starting your financial journey or looking to take your financial management to the next level, we're here to help. Join thousands of satisfied users who have transformed their financial lives with myFinancialTracker.</p>
+                        <div class="about-cta-buttons">
+                            <a href="#signup" class="btn primary">Get Started</a>
+                            <a href="#features" class="btn secondary">Explore Features</a>
+                        </div>
+                    </div>
+                    <div class="stack-arrows">
+                        <div class="stack-arrow prev"><i class="fas fa-chevron-left"></i></div>
+                        <div class="stack-arrow next"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="stack-dots-container">
+                        <!-- Dots will be generated by JS -->
                     </div>
                 </div>
             </div>
