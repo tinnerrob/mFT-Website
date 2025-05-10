@@ -291,43 +291,6 @@ function shuffleArray(array) {
     return array;
 }
 
-function populateTestimonialStack() {
-    const container = document.querySelector('.testimonial-stack');
-    if (!container) return;
-    // Remove any existing testimonial cards
-    container.querySelectorAll('.card-stack-item').forEach(card => card.remove());
-    // Shuffle and select 8 testimonials
-    const selected = shuffleArray([...testimonialData]).slice(0, 8);
-    selected.forEach((testimonial, index) => {
-        const card = document.createElement('div');
-        card.className = 'card-stack-item';
-        card.dataset.card = index;
-        card.innerHTML = `
-            <div class="testimonial-content">
-                <p>"${testimonial.content}"</p>
-            </div>
-            <div class="testimonial-author">
-                <img src="${testimonial.image}" alt="${testimonial.author}">
-                <div class="author-details">
-                    <h3>${testimonial.author}</h3>
-                    <p>${testimonial.role}</p>
-                </div>
-            </div>
-        `;
-        // Insert before navigation arrows/dots
-        const nav = container.querySelector('.stack-arrows');
-        container.insertBefore(card, nav);
-    });
-}
-
-// Initialize all stacks
-const initAllStacks = () => {
-    StackedCards.init('.about-stack');
-    StackedCards.init('.features-stack');
-    populateTestimonialStack();
-    StackedCards.init('.testimonial-stack');
-};
-
 // Setup event listeners
 const setupEventListeners = () => {
     // Login button
@@ -386,7 +349,6 @@ const setupEventListeners = () => {
     
     // Billing toggle
     billingToggle.addEventListener('change', () => {
-        isBillingYearly = billingToggle.checked;
         updatePricingDisplay();
     });
     
@@ -452,7 +414,7 @@ const setupEventListeners = () => {
         const email = document.getElementById('email').value;
         const subject = document.getElementById('subject').value;
         const message = document.getElementById('message').value;
-            
+    
         // In a real app, send email to support@myfinancialtracker.com 
         // using a server-side API or email service
         console.log(`Support request from ${name} (${email})`);
@@ -478,7 +440,7 @@ function setupModalPopups() {
     loginBtn.addEventListener('click', (e) => {
         e.preventDefault();
         closeAllModals();
-        loginModal.style.display = 'flex';
+    loginModal.style.display = 'flex';
     });
     // Open Subscription Modal (Sign Up)
     signupBtns.forEach(btn => {
@@ -510,7 +472,7 @@ function setupModalPopups() {
     signupLink?.addEventListener('click', (e) => {
         e.preventDefault();
         loginModal.style.display = 'none';
-        subscriptionModal.style.display = 'flex';
+    subscriptionModal.style.display = 'flex';
     });
 }
 // Utility to close all modals
@@ -520,6 +482,312 @@ function closeAllModals() {
     thankYouModal.style.display = 'none';
 }
 
+// --- Pure JS CSV Parser ---
+function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let inQuotes = false;
+    let value = '';
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (char === '"') {
+            if (inQuotes && text[i + 1] === '"') {
+                value += '"';
+                i++;
+            } else {
+                inQuotes = !inQuotes;
+            }
+        } else if (char === ',' && !inQuotes) {
+            row.push(value);
+            value = '';
+        } else if ((char === '\n' || char === '\r') && !inQuotes) {
+            if (value || row.length > 0) row.push(value);
+            if (row.length > 0) rows.push(row);
+            row = [];
+            value = '';
+            if (char === '\r' && text[i + 1] === '\n') i++;
+        } else {
+            value += char;
+}
+    }
+    if (value || row.length > 0) row.push(value);
+    if (row.length > 0) rows.push(row);
+    // Convert to array of objects using header row
+    const headers = rows[0];
+    return rows.slice(1).map(r => {
+        const obj = {};
+        headers.forEach((h, i) => obj[h.trim()] = (r[i] || '').trim());
+        return obj;
+    });
+}
+
+// --- CSV Loading Utility ---
+async function loadCSV(url) {
+    const res = await fetch(url);
+    const text = await res.text();
+    return parseCSV(text);
+    }
+    
+// --- Populate About Stack from CSV ---
+async function populateAboutStack() {
+    const data = await loadCSV('data/about.csv');
+    console.log('About CSV data:', data);
+    const container = document.querySelector('.about-stack');
+    if (!container) return;
+    container.querySelectorAll('.card-stack-item').forEach(card => card.remove());
+    data.forEach((item, idx) => {
+        console.log('About card data:', item);
+        // Randomly choose left or right for image
+        const imageSide = Math.random() < 0.5 ? 'image-left' : 'image-right';
+        const card = document.createElement('div');
+        card.className = 'card-stack-item ' + imageSide;
+        card.dataset.card = idx;
+        let descHtml = '';
+        if (item.title === 'Our Values' && item.description.includes(';')) {
+            const bullets = item.description.split(';').map(s => s.trim()).filter(Boolean);
+            descHtml = '<ul>' + bullets.map(b => `<li>${b}</li>`).join('') + '</ul>';
+        } else {
+            descHtml = `<p>${item.description}</p>`;
+        }
+        card.innerHTML = `
+            <div class="about-card-flex">
+                <div class="about-image-container">
+                    <img src="${item.image}" alt="${item.title}" style="width:100px;height:100px;object-fit:cover;border-radius:12px;">
+                </div>
+                <div class="about-content-container">
+                    <h2>${item.title}</h2>
+                    ${descHtml}
+                </div>
+            </div>
+        `;
+        const nav = container.querySelector('.stack-arrows');
+        container.insertBefore(card, nav);
+    });
+}
+
+// --- Populate Features Stack from CSV ---
+async function populateFeaturesStack() {
+    const data = await loadCSV('data/features.csv');
+    console.log('Features CSV data:', data);
+    const container = document.querySelector('.features-stack');
+    if (!container) return;
+    container.querySelectorAll('.card-stack-item').forEach(card => card.remove());
+    data.forEach((item, idx) => {
+        console.log('Feature card data:', item);
+        const card = document.createElement('div');
+        card.className = 'card-stack-item ' + (idx % 2 === 0 ? 'image-left' : 'image-right');
+        card.dataset.card = idx;
+        let bulletsHtml = '';
+        if (item.bullets) {
+            const bullets = item.bullets.split(';').map(s => s.trim()).filter(Boolean);
+            bulletsHtml = '<ul>' + bullets.map(b => `<li>${b}</li>`).join('') + '</ul>';
+        }
+        card.innerHTML = `
+            <div class="feature-detail">
+                <div class="feature-content">
+                    <div class="feature-image-container">
+                        <img src="${item.image}" alt="${item.title}">
+                    </div>
+                    <div class="feature-content-container">
+                        <h2>${item.title}</h2>
+                        <div class="feature-description">
+                            <p>${item.description}</p>
+                            ${bulletsHtml}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        const nav = container.querySelector('.stack-arrows');
+        container.insertBefore(card, nav);
+    });
+}
+
+// --- Populate Testimonials Stack from CSV ---
+async function populateTestimonialStack() {
+    const data = await loadCSV('data/testimonials.csv');
+    console.log('Testimonials CSV data:', data);
+    const container = document.querySelector('.testimonial-stack');
+    if (!container) return;
+    container.querySelectorAll('.card-stack-item').forEach(card => card.remove());
+    // Shuffle and select 8
+    const selected = shuffleArray([...data]).slice(0, 8);
+    selected.forEach((item, idx) => {
+        console.log('Testimonial card data:', item);
+        const card = document.createElement('div');
+        card.className = 'card-stack-item';
+        card.dataset.card = idx;
+        card.innerHTML = `
+            <div class="testimonial-content">
+                <p>"${item.content}"</p>
+            </div>
+            <div class="testimonial-author">
+                <img src="${item.image}" alt="${item.author}">
+                <div class="author-details">
+                    <h3>${item.author}</h3>
+                    <p>${item.role}</p>
+                </div>
+            </div>
+        `;
+        const nav = container.querySelector('.stack-arrows');
+        container.insertBefore(card, nav);
+    });
+}
+
+// --- Populate FAQ from CSV ---
+async function populateFaqSection() {
+    const data = await loadCSV('data/faq.csv');
+    console.log('FAQ CSV data:', data);
+    const faqContainer = document.querySelector('.faq-container');
+    if (!faqContainer) return;
+    faqContainer.innerHTML = '';
+    data.forEach((item, idx) => {
+        const faqItem = document.createElement('div');
+        faqItem.className = 'faq-item';
+        faqItem.innerHTML = `
+            <div class="faq-question">
+                <h3>${item.question}</h3>
+                <span class="faq-toggle"><i class="fas fa-plus"></i></span>
+            </div>
+            <div class="faq-answer">
+                <p>${item.answer}</p>
+            </div>
+        `;
+        faqContainer.appendChild(faqItem);
+    });
+    // Initialize accordion after populating FAQs
+    initFaqAccordion();
+}
+
+// Initialize FAQ accordion
+function initFaqAccordion() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    console.log('Initializing FAQ accordion with', faqQuestions.length, 'questions');
+    
+    faqQuestions.forEach(question => {
+        // Add click event to both the question and the toggle icon
+        const toggleIcon = question.querySelector('.faq-toggle');
+        const clickableElements = [question, toggleIcon];
+        
+        clickableElements.forEach(element => {
+            if (element) {
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('FAQ clicked');
+                    
+                    // Get the answer element
+                    const answer = question.nextElementSibling;
+                    const isActive = question.classList.contains('active');
+                    
+                    // Close all FAQ items
+                    faqQuestions.forEach(q => {
+                        const a = q.nextElementSibling;
+                        q.classList.remove('active');
+                        a.style.maxHeight = '0';
+                    });
+                    
+                    // If the clicked question wasn't active, open it
+                    if (!isActive) {
+                        question.classList.add('active');
+                        // Set max-height to the scroll height plus some padding
+                        answer.style.maxHeight = `${answer.scrollHeight + 32}px`;
+                    }
+                });
+            }
+        });
+    });
+}
+
+// --- Populate Legal Section (Privacy or Terms) from CSV ---
+async function populateLegalSection(section) {
+    const csvFile = section === 'privacy' ? 'data/privacy.csv' : 'data/terms.csv';
+    const container = document.getElementById(section + '-content');
+    if (!container) return;
+    const data = await loadCSV(csvFile);
+    container.innerHTML = '';
+    // Always show meta rows (date and intro)
+    data.filter(row => row.section === 'meta').forEach(row => {
+        if (row.heading && row.heading.toLowerCase().includes('last updated')) {
+            const dateP = document.createElement('p');
+            dateP.className = 'legal-date';
+            dateP.textContent = `Last updated: ${row.content}`;
+            container.appendChild(dateP);
+        } else if (row.content) {
+            const introP = document.createElement('p');
+            introP.className = 'legal-intro';
+            introP.textContent = row.content;
+            container.appendChild(introP);
+        }
+    });
+    // Render each section as an accordion
+    data.filter(row => row.section === 'section').forEach((row, idx) => {
+        const item = document.createElement('div');
+        item.className = 'legal-accordion-item';
+        // Question/heading
+        const question = document.createElement('div');
+        question.className = 'legal-accordion-question';
+        question.innerHTML = `<h2>${row.heading}</h2><span class="legal-toggle"><i class="fas fa-plus"></i></span>`;
+        // Answer/content
+        const answer = document.createElement('div');
+        answer.className = 'legal-accordion-answer';
+        let html = `<p>${row.content}</p>`;
+        if (row.bullets) {
+            const bullets = row.bullets.split(';').map(b => b.trim()).filter(Boolean);
+            html += '<ul>' + bullets.map(b => `<li>${b}</li>`).join('') + '</ul>';
+        }
+        answer.innerHTML = html;
+        item.appendChild(question);
+        item.appendChild(answer);
+        container.appendChild(item);
+    });
+    // Initialize accordion
+    initLegalAccordion(section);
+}
+
+function initLegalAccordion(section) {
+    const container = document.getElementById(section + '-content');
+    if (!container) return;
+    const questions = container.querySelectorAll('.legal-accordion-question');
+    questions.forEach(question => {
+        const toggleIcon = question.querySelector('.legal-toggle');
+        [question, toggleIcon].forEach(element => {
+            if (element) {
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const answer = question.nextElementSibling;
+                    const isActive = question.classList.contains('active');
+                    // Close all
+                    questions.forEach(q => {
+                        const a = q.nextElementSibling;
+                        q.classList.remove('active');
+                        a.style.maxHeight = '0';
+                    });
+                    // Open if not already
+                    if (!isActive) {
+                        question.classList.add('active');
+                        answer.style.maxHeight = `${answer.scrollHeight + 32}px`;
+                    }
+                });
+            }
+        });
+    });
+}
+
+// --- Initialize all stacks from CSV ---
+const initAllStacks = async () => {
+    await populateAboutStack();
+    await populateFeaturesStack();
+    await populateTestimonialStack();
+    StackedCards.init('.about-stack');
+    StackedCards.init('.features-stack');
+    StackedCards.init('.testimonial-stack');
+    await populateFaqSection();
+    await populateLegalSection('privacy');
+    await populateLegalSection('terms');
+};
+
 // On DOMContentLoaded
 window.addEventListener('DOMContentLoaded', () => {
     new PageNavigator();
@@ -528,12 +796,6 @@ window.addEventListener('DOMContentLoaded', () => {
     initAllStacks();
     checkLoginStatus();
     initFaqAccordion();
-    initSlideshows();
-    initTestimonialsStackSlideshow();
-    renderRandomTestimonials();
-    initTestimonialsSlideshow();
-    renderScatteredTestimonials();
-    initTestimonialStackNavigation();
 });
 
 // Check login status
@@ -604,36 +866,6 @@ function loginSuccess(user) {
     }
 }
 
-// Initialize FAQ accordion
-function initFaqAccordion() {
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            // Check if this question is already active
-            const isActive = question.classList.contains('active');
-            
-            // Close all FAQ items first
-            faqQuestions.forEach(q => {
-                q.classList.remove('active');
-                q.nextElementSibling.style.maxHeight = '0';
-            });
-            
-            // If the clicked question wasn't active before, open it
-            if (!isActive) {
-                // Toggle active class on the question
-                question.classList.add('active');
-                
-                // Get the answer element
-                const answer = question.nextElementSibling;
-                
-                // Set the max-height to show the content with extra padding
-                answer.style.maxHeight = (answer.scrollHeight + 30) + 'px'; // Add 30px extra space
-            }
-        });
-    });
-}
-
 // Initialize slideshows if they exist
 function initSlideshows() {
     // Remove old features slideshow logic
@@ -690,7 +922,7 @@ function initTestimonialsSlideshow() {
             dot.classList.toggle('active', i === idx);
         });
     }
-
+    
     // Arrow navigation
     if (arrows.length) {
         const prevArrow = arrows[0];
@@ -720,363 +952,22 @@ function randomGrey() {
     return `rgb(${v},${v},${v})`;
 }
 
-function initAboutStack() {
-    initStackedCards('.about-stack');
+// Add this function to update pricing display
+function updatePricingDisplay() {
+    if (billingToggle && pricingPlans) {
+        if (billingToggle.checked) {
+            pricingPlans.classList.add('yearly-pricing');
+        } else {
+            pricingPlans.classList.remove('yearly-pricing');
+        }
+    }
 }
 
-function initTestimonialsStack() {
-    const testimonialData = [
-        {
-            content: "Such a life-changing experience. Highly recommended!",
-            author: "Kira Whittle",
-            role: "Verified Graduate",
-            image: "images/testimonials/kira.jpg"
-        },
-        {
-            content: "I received a job offer mid-course, and the subjects I learned were current, if not more so, in the company I joined. I honestly feel I got every penny's worth.",
-            author: "Daniel Clifford",
-            role: "Verified Graduate",
-            image: "images/testimonials/daniel.jpg"
-        },
-        {
-            content: "The team was very supportive and kept me motivated",
-            author: "Jonathan Walters",
-            role: "Verified Graduate",
-            image: "images/testimonials/jonathan.jpg"
-        },
-        {
-            content: "An overall wonderful and rewarding experience",
-            author: "Jeanette Harmon",
-            role: "Verified Graduate",
-            image: "images/testimonials/jeanette.jpg"
-        },
-        {
-            content: "Awesome teaching support from TAs who did the bootcamp themselves. Getting guidance from them and learning from their experiences was easy.",
-            author: "Patrick Abrams",
-            role: "Verified Graduate",
-            image: "images/testimonials/patrick.jpg"
-        },
-        {
-            content: "As a college student, this app has been a game-changer. It's teaching me financial habits that I wish I'd learned years ago.",
-            author: "Sophia Garcia",
-            role: "Student",
-            image: "images/testimonials/sophia.jpg"
-        },
-        {
-            content: "The financial insights feature has completely transformed how I budget. I've saved over $2,000 in just the first three months of using myFinancialTracker!",
-            author: "Rebecca Johnson",
-            role: "Accountant",
-            image: "images/testimonials/rebecca.jpg"
-        },
-        {
-            content: "After years of struggling with debt, the payoff strategies recommended by the app have put me on track to be debt-free within two years.",
-            author: "James Wilson",
-            role: "Small Business Owner",
-            image: "images/testimonials/james.jpg"
-        }
-    ];
-
-    // Shuffle and select 8 random testimonials
-    const shuffledTestimonials = shuffleArray([...testimonialData]).slice(0, 8);
-    
-    // Create testimonial cards
-    const container = document.querySelector('.testimonial-stack');
-    shuffledTestimonials.forEach((testimonial, index) => {
-        const card = document.createElement('div');
-        card.className = 'card-stack-item';
-        card.dataset.card = index;
-        
-        card.innerHTML = `
-            <div class="testimonial-content">
-                <p>"${testimonial.content}"</p>
-            </div>
-            <div class="testimonial-author">
-                <img src="${testimonial.image}" alt="${testimonial.author}">
-                <div class="author-details">
-                    <h3>${testimonial.author}</h3>
-                    <p>${testimonial.role}</p>
-                </div>
-            </div>
-        `;
-        
-        container.insertBefore(card, container.firstChild);
+// Update event listener for billingToggle
+if (billingToggle) {
+    billingToggle.addEventListener('change', () => {
+        updatePricingDisplay();
     });
-    
-    // Initialize the stack
-    initStackedCards('.testimonial-stack');
-}
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function initStackedCards(containerSelector, options = {}) {
-    const container = document.querySelector(containerSelector);
-    if (!container) return;
-
-    const cards = Array.from(container.querySelectorAll('.card-stack-item'));
-    const dotsContainer = container.querySelector('.stack-dots-container');
-    const prevArrow = container.querySelector('.stack-arrow.prev');
-    const nextArrow = container.querySelector('.stack-arrow.next');
-    
-    let stackOrder = cards.map((_, i) => i); // 0 is top, last is bottom
-    const totalCards = cards.length;
-    let cardRotations = cards.map(() => (Math.random() * 20 - 10)); // Store random rotation for each card
-
-    // Generate dots
-    dotsContainer.innerHTML = '';
-    cards.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.className = 'stack-dot' + (index === 0 ? ' active' : '');
-        dot.dataset.card = index;
-        dot.addEventListener('click', () => goToCard(index));
-        dotsContainer.appendChild(dot);
-    });
-
-    const dots = Array.from(dotsContainer.querySelectorAll('.stack-dot'));
-
-    // Set initial random positions for all cards except the first one
-    cards.forEach((card, index) => {
-        if (index === 0) {
-            card.classList.add('active');
-            card.style.setProperty('--stack-rotate', '0deg');
-            return;
-        }
-        const randomRotate = cardRotations[index];
-        const randomX = (Math.random() * 440 - 220);    // -220px to +220px (more horizontal scatter)
-        const randomY = (Math.random() * 120 - 60);     // -60px to +60px
-        const randomGrey = Math.floor(Math.random() * 40) + 200;
-        card.style.setProperty('--stack-rotate', `${randomRotate}deg`);
-        card.style.setProperty('--stack-x', `${randomX}px`);
-        card.style.setProperty('--stack-y', `${randomY}px`);
-        card.style.setProperty('--stack-grey', `rgb(${randomGrey}, ${randomGrey}, ${randomGrey})`);
-        card.classList.add('inactive-grey');
-    });
-
-    function updateStack() {
-        cards.forEach((card, i) => {
-            card.classList.remove('active', 'move-out-right', 'move-out-left', 'move-back-in');
-            card.style.zIndex = 2 + (cards.length - stackOrder.indexOf(i));
-            card.style.opacity = 1;
-            card.style.pointerEvents = 'none';
-            if (stackOrder[0] !== i) {
-                card.classList.add('inactive-grey');
-                // Set random rotation for inactive cards
-                card.style.setProperty('--stack-rotate', `${cardRotations[i]}deg`);
-            } else {
-                card.classList.remove('inactive-grey');
-                // Top card: no rotation
-                card.style.setProperty('--stack-rotate', '0deg');
-            }
-        });
-        // Top card
-        const topIdx = stackOrder[0];
-        cards[topIdx].classList.add('active');
-        cards[topIdx].style.zIndex = 20;
-        cards[topIdx].style.pointerEvents = 'auto';
-        cards[topIdx].style.setProperty('--stack-x', '0px');
-        cards[topIdx].style.setProperty('--stack-y', '0px');
-        cards[topIdx].style.setProperty('--stack-grey', '#fff');
-        // Dots
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === topIdx);
-        });
-    }
-
-    function goForward() {
-        const topIdx = stackOrder[0];
-        const card = cards[topIdx];
-        // Randomly choose direction
-        const dir = Math.random() < 0.5 ? 'right' : 'left';
-        const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
-        card.style.zIndex = 30;
-        card.classList.add(moveClass);
-        setTimeout(() => {
-            stackOrder.push(stackOrder.shift()); // Move first to last
-            // Assign a new random rotation and scatter to the card that just left the top
-            cardRotations[topIdx] = Math.random() * 20 - 10;
-            const randomX = (Math.random() * 440 - 220);    // -220px to +220px
-            const randomY = (Math.random() * 120 - 60);     // -60px to +60px
-            card.style.setProperty('--stack-x', `${randomX}px`);
-            card.style.setProperty('--stack-y', `${randomY}px`);
-            card.classList.add('inactive-grey');
-            card.style.setProperty('--stack-grey', randomTestimonialGrey());
-            card.classList.add('move-back-in');
-            updateStack();
-            setTimeout(() => {
-                card.classList.remove(moveClass, 'move-back-in');
-            }, 500);
-        }, 500);
-    }
-
-    function goBackward() {
-        // The card that will become active is currently at the end of the stackOrder
-        const newTopIdx = stackOrder[stackOrder.length - 1];
-        const card = cards[newTopIdx];
-        // Assign a new random rotation and scatter to the card that is about to leave the top (current top)
-        const oldTopIdx = stackOrder[0];
-        cardRotations[oldTopIdx] = Math.random() * 20 - 10;
-        const randomX = (Math.random() * 440 - 220);    // -220px to +220px
-        const randomY = (Math.random() * 120 - 60);     // -60px to +60px
-        cards[oldTopIdx].style.setProperty('--stack-x', `${randomX}px`);
-        cards[oldTopIdx].style.setProperty('--stack-y', `${randomY}px`);
-        // Randomly choose direction
-        const dir = Math.random() < 0.5 ? 'right' : 'left';
-        const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
-        card.classList.add('move-back-in');
-        card.classList.add('inactive-grey');
-        card.style.setProperty('--stack-grey', '#fff'); // Will become active (white)
-        card.style.zIndex = 30;
-        stackOrder.unshift(stackOrder.pop());
-        updateStack();
-        setTimeout(() => {
-            card.classList.remove('move-back-in');
-            card.classList.remove('inactive-grey');
-            // All other cards get a new random grey
-            cards.forEach((c, i) => {
-                if (i !== stackOrder[0]) {
-                    c.classList.add('inactive-grey');
-                    c.style.setProperty('--stack-grey', randomTestimonialGrey());
-                }
-            });
-        }, 500);
-    }
-
-    function goToCard(index) {
-        // Find the position of the desired card in stackOrder
-        const currentPos = stackOrder.indexOf(index);
-        if (currentPos === -1 || currentPos === 0) return;
-        if (currentPos < cards.length / 2) {
-            for (let i = 0; i < currentPos; i++) goForward();
-        } else {
-            for (let i = 0; i < cards.length - currentPos; i++) goBackward();
-        }
-    }
-
-    prevArrow.addEventListener('click', goBackward);
-    nextArrow.addEventListener('click', goForward);
-
-    updateStack();
-}
-
-function initTestimonialStackNavigation() {
-    const container = document.querySelector('.testimonial-cards-stack-container');
-    if (!container) return;
-    const cards = Array.from(container.querySelectorAll('.testimonial-card-stack-item'));
-    const arrows = document.querySelectorAll('.testimonial-arrow');
-    const dots = document.querySelectorAll('.testimonial-dot');
-    let stackOrder = cards.map((_, i) => i);
-    let transforms = cards.map(() => ({
-        rotate: (Math.random() * 24 - 12).toFixed(1),
-        x: (Math.random() * 600 - 300).toFixed(1),
-        y: (Math.random() * 320 - 160).toFixed(1)
-    }));
-    // Assign initial random greys
-    cards.forEach((card, i) => {
-        if (i !== 0) {
-            card.classList.add('inactive-grey');
-            card.style.setProperty('--testimonial-grey', randomTestimonialGrey());
-        } else {
-            card.classList.remove('inactive-grey');
-            card.style.setProperty('--testimonial-grey', '#fff');
-        }
-    });
-    function updateStack() {
-        cards.forEach((card, i) => {
-            card.classList.remove('active', 'move-out-right', 'move-out-left', 'move-back-in', 'animate');
-            card.style.zIndex = 2 + (cards.length - stackOrder.indexOf(i));
-            card.style.opacity = 1;
-            card.style.pointerEvents = 'none';
-            const t = transforms[i];
-            card.style.setProperty('--testimonial-rotate', `${t.rotate}deg`);
-            card.style.setProperty('--testimonial-x', `${t.x}px`);
-            card.style.setProperty('--testimonial-y', `${t.y}px`);
-            if (stackOrder[0] !== i) {
-                card.classList.add('inactive-grey');
-            } else {
-                card.classList.remove('inactive-grey');
-            }
-        });
-        // Top card
-        const topIdx = stackOrder[0];
-        cards[topIdx].classList.add('active');
-        cards[topIdx].style.zIndex = 20;
-        cards[topIdx].style.pointerEvents = 'auto';
-        cards[topIdx].style.setProperty('--testimonial-x', '0px');
-        cards[topIdx].style.setProperty('--testimonial-y', '0px');
-        cards[topIdx].style.setProperty('--testimonial-grey', '#fff');
-        // Dots
-    dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === topIdx);
-        });
-    }
-    function goForward() {
-        const topIdx = stackOrder[0];
-        const card = cards[topIdx];
-        const dir = Math.random() < 0.5 ? 'right' : 'left';
-        const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
-        card.style.zIndex = 30;
-        card.classList.add(moveClass);
-        setTimeout(() => {
-            stackOrder.push(stackOrder.shift());
-            card.classList.add('inactive-grey');
-            card.style.setProperty('--testimonial-grey', randomTestimonialGrey());
-            card.classList.add('move-back-in');
-            updateStack();
-            setTimeout(() => {
-                card.classList.remove(moveClass, 'move-back-in');
-            }, 500);
-        }, 500);
-    }
-    function goBackward() {
-        const newTopIdx = stackOrder[stackOrder.length - 1];
-        const card = cards[newTopIdx];
-        const dir = Math.random() < 0.5 ? 'right' : 'left';
-        const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
-        card.classList.add('move-back-in');
-        card.classList.add('inactive-grey');
-        card.style.setProperty('--testimonial-grey', '#fff');
-        card.style.zIndex = 30;
-        stackOrder.unshift(stackOrder.pop());
-        updateStack();
-        setTimeout(() => {
-            card.classList.remove('move-back-in');
-            card.classList.remove('inactive-grey');
-            cards.forEach((c, i) => {
-                if (i !== stackOrder[0]) {
-                    c.classList.add('inactive-grey');
-                    c.style.setProperty('--testimonial-grey', randomTestimonialGrey());
-                }
-            });
-        }, 500);
-    }
-    // Arrow navigation
-    arrows.forEach(arrow => {
-        arrow.addEventListener('click', () => {
-            if (arrow.classList.contains('prev')) {
-                goBackward();
-        } else {
-                goForward();
-        }
-    });
-    });
-    // Dot navigation
-    dots.forEach((dot, idx) => {
-        dot.addEventListener('click', () => {
-            const topIdx = stackOrder[0];
-            if (idx === topIdx) return;
-            const currentPos = stackOrder.indexOf(idx);
-            if (currentPos === -1) return;
-            if (currentPos < cards.length / 2) {
-                for (let i = 0; i < currentPos; i++) goForward();
-        } else {
-                for (let i = 0; i < cards.length - currentPos; i++) goBackward();
-        }
-        });
-    });
-    updateStack();
+    // Set initial state on page load
+    updatePricingDisplay();
 } 

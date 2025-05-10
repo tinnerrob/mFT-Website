@@ -1981,85 +1981,74 @@ input:checked + .slider:before {
 
 /* FAQ Accordion Styles */
 .faq-item {
-    margin-bottom: 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-bottom: 1rem;
-}
-
-.faq-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .faq-question {
+    padding: 20px;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
-    padding: 0.5rem 0;
-    transition: color 0.3s ease;
+    background: #fff;
+    transition: all 0.3s ease;
 }
 
-.faq-question:hover h3 {
-    color: var(--hover-color);
+.faq-question:hover {
+    background: #fff5eb;
+    border-color: #ff6b00;
 }
 
 .faq-question h3 {
     margin: 0;
-    flex: 1;
-    font-size: 1.2rem;
-    color: var(--primary-color);
+    font-size: 1.1rem;
+    color: #333;
     transition: color 0.3s ease;
 }
 
+.faq-question:hover h3 {
+    color: #ff6b00;
+}
+
 .faq-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    color: var(--primary-color);
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+    color: #666;
+    transition: all 0.3s ease;
 }
 
-.faq-toggle i {
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.faq-question.active .faq-toggle i {
-    transform: rotate(45deg);
-    color: var(--hover-color);
+.faq-question:hover .faq-toggle {
+    color: #ff6b00;
 }
 
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-                opacity 0.4s ease, 
-                transform 0.4s ease,
-                padding 0.2s ease;
-    padding: 0;
-    margin: 0;
+    transition: all 0.3s ease;
+    padding: 0 20px;
+    background: #fff;
 }
 
 .faq-question.active + .faq-answer {
-    max-height: 2000px; /* Larger max-height to accommodate various content lengths */
-    opacity: 1;
-    transform: translateY(0);
-    padding: 0.5rem 0 2rem 0;
-    margin-bottom: 0.8rem;
+    max-height: 500px;
+    padding: 0 20px 20px;
+    border-top: 1px solid #e0e0e0;
 }
 
-.faq-answer p {
-    margin-bottom: 1.2rem;
-    line-height: 1.7;
+.faq-question.active {
+    background: #fff5eb;
+    border-color: #ff6b00;
 }
 
-.faq-answer p:last-child {
-    margin-bottom: 0.5rem;
+.faq-question.active h3 {
+    color: #ff6b00;
+}
+
+.faq-question.active .faq-toggle {
+    transform: rotate(45deg);
+    color: #ff6b00;
 }
 
 /* Light orange testimonial */
@@ -2334,4 +2323,82 @@ h1 {
     background: unset;
     color: unset;
     padding-top: unset;
+}
+
+/* Legal Accordion Styles (Privacy/Terms) */
+.legal-accordion-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+.legal-accordion-question {
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+.legal-accordion-question:hover {
+    background: #fff5eb;
+    border-color: #ff6b00;
+}
+.legal-accordion-question h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+    transition: color 0.3s ease;
+}
+.legal-accordion-question:hover h2 {
+    color: #ff6b00;
+}
+.legal-toggle {
+    color: #666;
+    transition: all 0.3s ease;
+}
+.legal-accordion-question:hover .legal-toggle {
+    color: #ff6b00;
+}
+.legal-accordion-answer {
+    display: none;
+    padding: 0 20px;
+    background: #fff;
+    transition: none;
+}
+.legal-accordion-question.active + .legal-accordion-answer {
+    display: block;
+    padding: 0 20px 20px;
+    border-top: 1px solid #e0e0e0;
+}
+.legal-accordion-question.active {
+    background: #fff5eb;
+    border-color: #ff6b00;
+}
+.legal-accordion-question.active h2 {
+    color: #ff6b00;
+}
+.legal-accordion-question.active .legal-toggle {
+    transform: rotate(45deg);
+    color: #ff6b00;
+}
+.legal-date {
+    font-style: italic;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    background: none;
+    border: none;
+    padding: 0;
+}
+.legal-intro {
+    margin-bottom: 1.2rem;
+    color: #333;
+    font-size: 1.05rem;
+    background: none;
+    border: none;
+    padding: 0;
 } 
