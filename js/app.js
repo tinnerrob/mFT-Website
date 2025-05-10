@@ -727,7 +727,7 @@ function initStackedCards(containerSelector, options = {}) {
             return;
         }
         const randomRotate = cardRotations[index];
-        const randomX = (Math.random() * 240 - 120);    // -120px to +120px
+        const randomX = (Math.random() * 440 - 220);    // -220px to +220px (more horizontal scatter)
         const randomY = (Math.random() * 120 - 60);     // -60px to +60px
         const randomGrey = Math.floor(Math.random() * 40) + 200;
         card.style.setProperty('--stack-rotate', `${randomRotate}deg`);
@@ -777,8 +777,12 @@ function initStackedCards(containerSelector, options = {}) {
         card.classList.add(moveClass);
         setTimeout(() => {
             stackOrder.push(stackOrder.shift()); // Move first to last
-            // Assign a new random rotation to the card that just left the top
+            // Assign a new random rotation and scatter to the card that just left the top
             cardRotations[topIdx] = Math.random() * 20 - 10;
+            const randomX = (Math.random() * 440 - 220);    // -220px to +220px
+            const randomY = (Math.random() * 120 - 60);     // -60px to +60px
+            card.style.setProperty('--stack-x', `${randomX}px`);
+            card.style.setProperty('--stack-y', `${randomY}px`);
             card.classList.add('inactive-grey');
             card.style.setProperty('--stack-grey', randomTestimonialGrey());
             card.classList.add('move-back-in');
@@ -793,9 +797,13 @@ function initStackedCards(containerSelector, options = {}) {
         // The card that will become active is currently at the end of the stackOrder
         const newTopIdx = stackOrder[stackOrder.length - 1];
         const card = cards[newTopIdx];
-        // Assign a new random rotation to the card that is about to leave the top (current top)
+        // Assign a new random rotation and scatter to the card that is about to leave the top (current top)
         const oldTopIdx = stackOrder[0];
         cardRotations[oldTopIdx] = Math.random() * 20 - 10;
+        const randomX = (Math.random() * 440 - 220);    // -220px to +220px
+        const randomY = (Math.random() * 120 - 60);     // -60px to +60px
+        cards[oldTopIdx].style.setProperty('--stack-x', `${randomX}px`);
+        cards[oldTopIdx].style.setProperty('--stack-y', `${randomY}px`);
         // Randomly choose direction
         const dir = Math.random() < 0.5 ? 'right' : 'left';
         const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
