@@ -48,11 +48,11 @@ class PageNavigator {
             e.preventDefault();
         });
     });
-    // Mobile menu toggle
+        // Mobile menu toggle
         this.burger.addEventListener('click', () => {
             this.nav.classList.toggle('active');
             this.burger.classList.toggle('toggle');
-    });
+        });
         // Hash-based navigation
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.substring(1);
@@ -72,7 +72,14 @@ class PageNavigator {
         // Hide all pages
         this.pages.forEach(page => page.classList.remove('active'));
         // Show selected page
-        document.getElementById(pageId).classList.add('active');
+        const page = document.getElementById(pageId);
+        if (page) {
+            page.classList.add('active');
+            // Animate stack cards if about, features, or testimonials
+            if (pageId === 'about') animateStackIn('.about-stack');
+            if (pageId === 'features') animateStackIn('.features-stack');
+            if (pageId === 'testimonials') animateStackIn('.testimonial-stack');
+        }
         // Update nav link
         this.navLinks.forEach(link => {
             if (link.getAttribute('data-page') === pageId) {
@@ -328,7 +335,6 @@ const setupEventListeners = () => {
     
     // Sign up link in login modal
     signupLink?.addEventListener('click', (e) => {
-        // Close the modal and navigate to signup page
         loginModal.style.display = 'none';
         navigateTo('signup');
     });
@@ -336,13 +342,8 @@ const setupEventListeners = () => {
     // Signup buttons
     signupBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Get the selected plan from the data attribute
             const selectedPlan = btn.getAttribute('data-plan');
-            
-            // Set the plan info in the subscription modal
             updateSelectedPlanInfo(selectedPlan);
-            
-            // Open the subscription modal
             openSubscriptionModal();
         });
     });
@@ -355,12 +356,9 @@ const setupEventListeners = () => {
     // Login form submission
     loginForm?.addEventListener('submit', (e) => {
         e.preventDefault();
-        
-        // Here you would typically make an API call to verify credentials
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
-        
-        // For demo purposes, always succeed
+        // For demo: always succeed
         loginSuccess({
             username: email.split('@')[0],
             email: email,
@@ -373,14 +371,8 @@ const setupEventListeners = () => {
     // Subscription form submission
     subscriptionForm?.addEventListener('submit', (e) => {
         e.preventDefault();
-        
-        // Here you would typically make an API call to process the subscription
         alert('Thank you for subscribing! Your account has been created.');
-        
-        // Close the modal and redirect to account or dashboard
         subscriptionModal.style.display = 'none';
-        
-        // For demo purposes, simulate login success
         loginSuccess({
             username: document.getElementById('fullName').value,
             email: document.getElementById('signupEmail').value,
@@ -394,12 +386,8 @@ const setupEventListeners = () => {
     accountMenuItems.forEach(item => {
         item.addEventListener('click', () => {
             const section = item.getAttribute('data-section');
-            
-            // Remove active class from all items and sections
             accountMenuItems.forEach(i => i.classList.remove('active'));
             accountSections.forEach(s => s.classList.remove('active'));
-            
-            // Set active class on selected item and section
             item.classList.add('active');
             document.querySelector(`.account-section.${section}`).classList.add('active');
         });
@@ -408,23 +396,14 @@ const setupEventListeners = () => {
     // Support form submission
     supportForm?.addEventListener('submit', (e) => {
         e.preventDefault();
-        
-        // Get form data
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const subject = document.getElementById('subject').value;
         const message = document.getElementById('message').value;
-    
-        // In a real app, send email to support@myfinancialtracker.com 
-        // using a server-side API or email service
         console.log(`Support request from ${name} (${email})`);
         console.log(`Subject: ${subject}`);
         console.log(`Message: ${message}`);
-        
-        // Show thank you modal
         thankYouModal.style.display = 'flex';
-        
-        // Reset form
         supportForm.reset();
     });
     
@@ -432,9 +411,28 @@ const setupEventListeners = () => {
     thankYouClose?.addEventListener('click', () => {
         thankYouModal.style.display = 'none';
     });
+    
+    // Logout button
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            logout();
+        });
+    }
 };
 
-// Modal logic for Login and Sign Up
+// Utility to map plan data-plan attribute to display name
+function getPlanDisplayName(plan) {
+    switch (plan) {
+        case 'free': return 'Free';
+        case 'basic': return 'Individual Plan';
+        case 'premium': return 'Companion Plan';
+        case 'family': return 'Family Plan';
+        default: return plan.charAt(0).toUpperCase() + plan.slice(1);
+    }
+}
+
+// Update setupModalPopups to use display name
 function setupModalPopups() {
     // Open Login Modal
     loginBtn.addEventListener('click', (e) => {
@@ -451,8 +449,8 @@ function setupModalPopups() {
             // Set selected plan info if available
             const selectedPlan = btn.getAttribute('data-plan');
             if (selectedPlanInfo) {
-                selectedPlanInfo.textContent = selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1);
-}
+                selectedPlanInfo.textContent = getPlanDisplayName(selectedPlan);
+            }
         });
     });
     // Close modals on close button
@@ -474,6 +472,23 @@ function setupModalPopups() {
         loginModal.style.display = 'none';
     subscriptionModal.style.display = 'flex';
     });
+    // Terms/Privacy links in sign up modal
+    const termsLabel = document.querySelector('.form-group.terms label');
+    if (termsLabel) {
+        termsLabel.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                subscriptionModal.style.display = 'none';
+                const href = e.target.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const page = href.substring(1);
+                    if (document.getElementById(page)) {
+                        window.location.hash = page;
+                    }
+                }
+            }
+        });
+    }
 }
 // Utility to close all modals
 function closeAllModals() {
@@ -508,7 +523,7 @@ function parseCSV(text) {
             if (char === '\r' && text[i + 1] === '\n') i++;
         } else {
             value += char;
-}
+        }
     }
     if (value || row.length > 0) row.push(value);
     if (row.length > 0) rows.push(row);
@@ -526,8 +541,8 @@ async function loadCSV(url) {
     const res = await fetch(url);
     const text = await res.text();
     return parseCSV(text);
-    }
-    
+}
+
 // --- Populate About Stack from CSV ---
 async function populateAboutStack() {
     const data = await loadCSV('data/about.csv');
@@ -546,7 +561,7 @@ async function populateAboutStack() {
         if (item.title === 'Our Values' && item.description.includes(';')) {
             const bullets = item.description.split(';').map(s => s.trim()).filter(Boolean);
             descHtml = '<ul>' + bullets.map(b => `<li>${b}</li>`).join('') + '</ul>';
-        } else {
+    } else {
             descHtml = `<p>${item.description}</p>`;
         }
         card.innerHTML = `
@@ -749,7 +764,7 @@ function initLegalAccordion(section) {
     const container = document.getElementById(section + '-content');
     if (!container) return;
     const questions = container.querySelectorAll('.legal-accordion-question');
-    questions.forEach(question => {
+    questions.forEach((question, idx) => {
         const toggleIcon = question.querySelector('.legal-toggle');
         [question, toggleIcon].forEach(element => {
             if (element) {
@@ -759,19 +774,27 @@ function initLegalAccordion(section) {
                     const answer = question.nextElementSibling;
                     const isActive = question.classList.contains('active');
                     // Close all
-                    questions.forEach(q => {
+                    questions.forEach((q, i) => {
                         const a = q.nextElementSibling;
-                        q.classList.remove('active');
-                        a.style.maxHeight = '0';
+                        if (i !== idx) {
+                            q.classList.remove('active');
+                            if (a) a.style.display = 'none';
+                        }
                     });
-                    // Open if not already
+                    // Toggle current
                     if (!isActive) {
                         question.classList.add('active');
-                        answer.style.maxHeight = `${answer.scrollHeight + 32}px`;
+                        if (answer) answer.style.display = 'block';
+                    } else {
+                        question.classList.remove('active');
+                        if (answer) answer.style.display = 'none';
                     }
                 });
             }
         });
+        // Ensure all answers are hidden initially
+        const answer = question.nextElementSibling;
+        if (answer) answer.style.display = 'none';
     });
 }
 
@@ -970,4 +993,43 @@ if (billingToggle) {
     });
     // Set initial state on page load
     updatePricingDisplay();
+}
+
+// Animate stack cards in from random off-screen positions
+function animateStackIn(containerSelector) {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+    const cards = Array.from(container.querySelectorAll('.card-stack-item'));
+    cards.forEach((card, i) => {
+        // Pick random left or right
+        const fromLeft = Math.random() < 0.5;
+        const offscreenX = fromLeft
+            ? -(60 + Math.random() * 60) + 'vw'
+            : (60 + Math.random() * 60) + 'vw';
+        card.style.transition = 'none';
+        card.style.opacity = '0';
+        card.style.transform = `translate(${offscreenX}, 0) scale(0.8)`;
+    });
+    // Force reflow
+    void container.offsetWidth;
+    setTimeout(() => {
+        cards.forEach((card, i) => {
+            card.style.transition = 'transform 0.8s cubic-bezier(.7,-0.2,.3,1.2), opacity 0.7s';
+            card.style.opacity = '1';
+            card.style.transform = '';
+        });
+    }, 60);
+}
+
+function openLoginModal() {
+    loginModal.style.display = 'flex';
+}
+
+function logout() {
+    AppState.isLoggedIn = false;
+    AppState.currentUser = null;
+    localStorage.removeItem('currentUser');
+    document.querySelector('.login-text').textContent = 'Login';
+    // Optionally reset account page fields
+    navigateTo('home');
 } 
