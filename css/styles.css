@@ -2242,4 +2242,21 @@ input:checked + .slider:before {
     .cards-stack-container {
         min-height: 60vh;
     }
+}
+
+.features-stack .card-stack-item {
+    max-width: 800px;
+}
+
+.features-stack .card-stack-item .feature-content {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    height: calc(100% - 3rem);
+    overflow: visible;
+    flex-direction: row;
+}
+
+.features-stack .card-stack-item.image-right .feature-content {
+    flex-direction: row-reverse;
 } 

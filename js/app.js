@@ -511,59 +511,15 @@ function initFaqAccordion() {
 
 // Initialize slideshows if they exist
 function initSlideshows() {
-    initFeaturesSlideshow();
+    // Remove old features slideshow logic
+    // initFeaturesSlideshow();
     initAboutStack();
     initTestimonialsStack();
+    initFeaturesStack();
 }
 
-// Initialize features slideshow
-function initFeaturesSlideshow() {
-    if (!featuresSlideshow) return;
-    
-    const slides = featuresSlideshow.querySelectorAll('.slide');
-    if (slides.length === 0) return;
-    
-    // Create dots for navigation
-    const dotsContainer = featuresSlideshow.querySelector('.dots-container');
-    if (dotsContainer) {
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                goToSlide(featuresSlideshow, index);
-                featuresCurrentSlide = index;
-                clearInterval(featuresSlideInterval);
-            });
-            dotsContainer.appendChild(dot);
-        });
-    }
-    
-    // Set up arrow navigation
-    const prevArrow = featuresSlideshow.querySelector('.prev');
-    const nextArrow = featuresSlideshow.querySelector('.next');
-    
-    if (prevArrow) {
-        prevArrow.addEventListener('click', () => {
-            featuresCurrentSlide = (featuresCurrentSlide - 1 + slides.length) % slides.length;
-            goToSlide(featuresSlideshow, featuresCurrentSlide);
-            clearInterval(featuresSlideInterval);
-        });
-    }
-    
-    if (nextArrow) {
-        nextArrow.addEventListener('click', () => {
-            featuresCurrentSlide = (featuresCurrentSlide + 1) % slides.length;
-            goToSlide(featuresSlideshow, featuresCurrentSlide);
-            clearInterval(featuresSlideInterval);
-        });
-    }
-    
-    // Auto-rotate slides
-    featuresSlideInterval = setInterval(() => {
-        featuresCurrentSlide = (featuresCurrentSlide + 1) % slides.length;
-        goToSlide(featuresSlideshow, featuresCurrentSlide);
-    }, 8000);
+function initFeaturesStack() {
+    initStackedCards('.features-stack');
 }
 
 // Initialize testimonials slideshow
@@ -747,10 +703,12 @@ function initStackedCards(containerSelector, options = {}) {
     const prevArrow = container.querySelector('.stack-arrow.prev');
     const nextArrow = container.querySelector('.stack-arrow.next');
     
-    let currentIndex = 0;
+    let stackOrder = cards.map((_, i) => i); // 0 is top, last is bottom
     const totalCards = cards.length;
+    let cardRotations = cards.map(() => (Math.random() * 20 - 10)); // Store random rotation for each card
 
     // Generate dots
+    dotsContainer.innerHTML = '';
     cards.forEach((_, index) => {
         const dot = document.createElement('div');
         dot.className = 'stack-dot' + (index === 0 ? ' active' : '');
@@ -765,14 +723,13 @@ function initStackedCards(containerSelector, options = {}) {
     cards.forEach((card, index) => {
         if (index === 0) {
             card.classList.add('active');
+            card.style.setProperty('--stack-rotate', '0deg');
             return;
         }
-        
-        const randomRotate = (Math.random() * 20 - 10); // -10deg to +10deg
+        const randomRotate = cardRotations[index];
         const randomX = (Math.random() * 240 - 120);    // -120px to +120px
         const randomY = (Math.random() * 120 - 60);     // -60px to +60px
         const randomGrey = Math.floor(Math.random() * 40) + 200;
-        
         card.style.setProperty('--stack-rotate', `${randomRotate}deg`);
         card.style.setProperty('--stack-x', `${randomX}px`);
         card.style.setProperty('--stack-y', `${randomY}px`);
@@ -781,58 +738,100 @@ function initStackedCards(containerSelector, options = {}) {
     });
 
     function updateStack() {
-        cards.forEach((card, index) => {
+        cards.forEach((card, i) => {
             card.classList.remove('active', 'move-out-right', 'move-out-left', 'move-back-in');
-            
-            if (index === currentIndex) {
-                card.classList.add('active');
-            } else {
+            card.style.zIndex = 2 + (cards.length - stackOrder.indexOf(i));
+            card.style.opacity = 1;
+            card.style.pointerEvents = 'none';
+            if (stackOrder[0] !== i) {
                 card.classList.add('inactive-grey');
+                // Set random rotation for inactive cards
+                card.style.setProperty('--stack-rotate', `${cardRotations[i]}deg`);
+            } else {
+                card.classList.remove('inactive-grey');
+                // Top card: no rotation
+                card.style.setProperty('--stack-rotate', '0deg');
             }
         });
-
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentIndex);
+        // Top card
+        const topIdx = stackOrder[0];
+        cards[topIdx].classList.add('active');
+        cards[topIdx].style.zIndex = 20;
+        cards[topIdx].style.pointerEvents = 'auto';
+        cards[topIdx].style.setProperty('--stack-x', '0px');
+        cards[topIdx].style.setProperty('--stack-y', '0px');
+        cards[topIdx].style.setProperty('--stack-grey', '#fff');
+        // Dots
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === topIdx);
         });
-    }
-
-    function goToCard(index) {
-        if (index === currentIndex) return;
-        
-        const oldIndex = currentIndex;
-        currentIndex = index;
-        
-        const oldCard = cards[oldIndex];
-        const newCard = cards[currentIndex];
-        
-        // Determine direction
-        const direction = index > oldIndex ? 'right' : 'left';
-        
-        // Move old card out
-        oldCard.classList.add(direction === 'right' ? 'move-out-left' : 'move-out-right');
-        
-        // Move new card in
-        newCard.classList.add('move-back-in');
-        
-        // Update stack after animation
-        setTimeout(updateStack, 500);
     }
 
     function goForward() {
-        const nextIndex = (currentIndex + 1) % totalCards;
-        goToCard(nextIndex);
+        const topIdx = stackOrder[0];
+        const card = cards[topIdx];
+        // Randomly choose direction
+        const dir = Math.random() < 0.5 ? 'right' : 'left';
+        const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
+        card.style.zIndex = 30;
+        card.classList.add(moveClass);
+        setTimeout(() => {
+            stackOrder.push(stackOrder.shift()); // Move first to last
+            // Assign a new random rotation to the card that just left the top
+            cardRotations[topIdx] = Math.random() * 20 - 10;
+            card.classList.add('inactive-grey');
+            card.style.setProperty('--stack-grey', randomTestimonialGrey());
+            card.classList.add('move-back-in');
+            updateStack();
+            setTimeout(() => {
+                card.classList.remove(moveClass, 'move-back-in');
+            }, 500);
+        }, 500);
     }
 
     function goBackward() {
-        const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
-        goToCard(prevIndex);
+        // The card that will become active is currently at the end of the stackOrder
+        const newTopIdx = stackOrder[stackOrder.length - 1];
+        const card = cards[newTopIdx];
+        // Assign a new random rotation to the card that is about to leave the top (current top)
+        const oldTopIdx = stackOrder[0];
+        cardRotations[oldTopIdx] = Math.random() * 20 - 10;
+        // Randomly choose direction
+        const dir = Math.random() < 0.5 ? 'right' : 'left';
+        const moveClass = dir === 'right' ? 'move-out-right' : 'move-out-left';
+        card.classList.add('move-back-in');
+        card.classList.add('inactive-grey');
+        card.style.setProperty('--stack-grey', '#fff'); // Will become active (white)
+        card.style.zIndex = 30;
+        stackOrder.unshift(stackOrder.pop());
+        updateStack();
+        setTimeout(() => {
+            card.classList.remove('move-back-in');
+            card.classList.remove('inactive-grey');
+            // All other cards get a new random grey
+            cards.forEach((c, i) => {
+                if (i !== stackOrder[0]) {
+                    c.classList.add('inactive-grey');
+                    c.style.setProperty('--stack-grey', randomTestimonialGrey());
+                }
+            });
+        }, 500);
     }
 
-    // Event listeners
+    function goToCard(index) {
+        // Find the position of the desired card in stackOrder
+        const currentPos = stackOrder.indexOf(index);
+        if (currentPos === -1 || currentPos === 0) return;
+        if (currentPos < cards.length / 2) {
+            for (let i = 0; i < currentPos; i++) goForward();
+        } else {
+            for (let i = 0; i < cards.length - currentPos; i++) goBackward();
+        }
+    }
+
     prevArrow.addEventListener('click', goBackward);
     nextArrow.addEventListener('click', goForward);
 
-    // Initialize
     updateStack();
 }
 
